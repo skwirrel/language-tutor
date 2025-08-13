@@ -2,7 +2,7 @@
 node_modules/
 
 # Build output
-public/build/
+# public/build/
 
 # Config with secrets
 config/config.php
