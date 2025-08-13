@@ -1,0 +1,10 @@
+<?php
+
+// OpenAI API Configuration
+// Get your API key from: https://platform.openai.com/api-keys
+// Make sure your account has access to the Realtime API
+define('OPENAI_API_KEY', 'sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
+// Optional: Additional configuration can be added here
+// define('OPENAI_ORG_ID', 'org-xxxxxxxxxxxxxxxxxxxxxxxx');
+// define('OPENAI_PROJECT_ID', 'proj_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
