@@ -371,7 +371,7 @@ export class LanguageTutor {
      * Play a portion of audio file as a hint (first 25% of duration)
      */
     async playAudioHint(text, language = null, speedMode = 'learning') {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
                 // Use target language if not specified
                 if (!language) {
@@ -380,15 +380,8 @@ export class LanguageTutor {
                 
                 this.log(5, `🎯 Playing audio hint for: "${text}" in ${language}`);
                 
-                // Generate the audio file URL using existing logic
-                const sanitizedText = text.toLowerCase()
-                    .replace(/[^\w\s]/g, '')
-                    .replace(/\s+/g, '_')
-                    .substring(0, 50);
-                
-                // Create hash for filename (using simple method to match existing system)
-                const hash = this.simpleHash(text);
-                const filename = `${sanitizedText}_${hash}.mp3`;
+                // Generate filename using same logic as speakText method
+                const filename = await this.generateAudioFilename(text);
                 const audioUrl = `${this.options.audioPath}${language}/${speedMode}/${filename}`;
                 
                 this.log(6, `🔊 Loading hint audio from: ${audioUrl}`);
@@ -441,18 +434,6 @@ export class LanguageTutor {
         });
     }
 
-    /**
-     * Simple hash function to match existing filename generation
-     */
-    simpleHash(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // Convert to 32-bit integer
-        }
-        return Math.abs(hash).toString(16);
-    }
     
     // ========== AUDIO RECORDING ==========
     async startRecording() {
