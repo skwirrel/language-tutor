@@ -212,6 +212,17 @@ export class LearningQueue {
     const passed = score >= this.options.passThreshold;
     currentTest.recentResults.push(passed ? 1 : 0);
     
+    // If the test failed, convert the most recent success to a failure
+    if (!passed) {
+      // Find the most recent success (working backwards from the end)
+      for (let i = currentTest.recentResults.length - 2; i >= 0; i--) {
+        if (currentTest.recentResults[i] === 1) {
+          currentTest.recentResults[i] = 0;
+          break; // Only convert one success
+        }
+      }
+    }
+    
     // Keep only last N results
     const memoryLength = this.options.memoryLength;
     if (currentTest.recentResults.length > memoryLength) {
