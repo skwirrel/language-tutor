@@ -384,16 +384,29 @@ class TTSGenerator {
             ]
         ];
         
+        // Build headers with optional organization and project IDs
+        $headers = [
+            'Authorization: Bearer ' . $this->openaiApiKey,
+            'Content-Type: application/json'
+        ];
+        
+        // Add optional OpenAI organization ID if defined
+        if (defined('OPENAI_ORG_ID') && !empty(OPENAI_ORG_ID)) {
+            $headers[] = 'OpenAI-Organization: ' . OPENAI_ORG_ID;
+        }
+        
+        // Add optional OpenAI project ID if defined
+        if (defined('OPENAI_PROJECT_ID') && !empty(OPENAI_PROJECT_ID)) {
+            $headers[] = 'OpenAI-Project: ' . OPENAI_PROJECT_ID;
+        }
+        
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => [
-                'Authorization: Bearer ' . $this->openaiApiKey,
-                'Content-Type: application/json'
-            ],
+            CURLOPT_HTTPHEADER => $headers,
             CURLOPT_TIMEOUT => 45,  // Longer timeout for chat completion
             CURLOPT_CONNECTTIMEOUT => 15
         ]);

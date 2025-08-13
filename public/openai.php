@@ -32,16 +32,29 @@ try {
         throw new Exception('OPENAI_API_KEY not defined in config.php');
     }
     
+    // Build headers with optional organization and project IDs
+    $headers = [
+        'Authorization: Bearer ' . OPENAI_API_KEY,
+        'Content-Type: application/json',
+        'OpenAI-Beta: realtime=v1'
+    ];
+    
+    // Add optional OpenAI organization ID if defined
+    if (defined('OPENAI_ORG_ID') && !empty(OPENAI_ORG_ID)) {
+        $headers[] = 'OpenAI-Organization: ' . OPENAI_ORG_ID;
+    }
+    
+    // Add optional OpenAI project ID if defined
+    if (defined('OPENAI_PROJECT_ID') && !empty(OPENAI_PROJECT_ID)) {
+        $headers[] = 'OpenAI-Project: ' . OPENAI_PROJECT_ID;
+    }
+    
     // Generate session token for Realtime API
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/realtime/sessions');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer ' . OPENAI_API_KEY,
-        'Content-Type: application/json',
-        'OpenAI-Beta: realtime=v1'
-    ]);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
         'model' => 'gpt-4o-realtime-preview-2024-10-01',
         'voice' => 'alloy'
