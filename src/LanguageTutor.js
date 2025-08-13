@@ -434,6 +434,26 @@ export class LanguageTutor {
         });
     }
 
+    /**
+     * Determine if an audio hint should be played based on phrase history
+     */
+    shouldPlayHint(recentResults) {
+        if (!recentResults || recentResults.length === 0) {
+            this.log(8, '🎯 No hint: no recent results');
+            return false;
+        }
+        
+        const successCount = recentResults.filter(r => r === 1).length;
+        const successRate = successCount / recentResults.length;
+        
+        this.log(8, `🎯 Hint check: ${successCount}/${recentResults.length} success rate: ${successRate.toFixed(2)}`, recentResults);
+        
+        // Play hint if: has some correct attempts (> 0) but success rate is less than 50%
+        const shouldHint = successCount > 0 && successRate < 0.5;
+        this.log(8, `🎯 Should play hint: ${shouldHint}`);
+        return shouldHint;
+    }
+
     
     // ========== AUDIO RECORDING ==========
     async startRecording() {
@@ -733,6 +753,19 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                         this.showStatus(`🎵 Listen to this ${this.sourceLanguage} phrase...`);
                         this.pauseListening();
                         await this.speakText(sourceText, this.sourceLanguage);
+                        
+                        // Check if we should play an audio hint
+                        if (this.options.enableAudioHints && this.shouldPlayHint(recentResults)) {
+                            try {
+                                this.showStatus("🎯 Here is a hint for you...");
+                                this.log(6, '🎯 Playing audio hint for struggling phrase');
+                                await this.playAudioHint(targetText);
+                                await new Promise(resolve => setTimeout(resolve, 1000)); // Brief pause after hint
+                            } catch (error) {
+                                this.log(4, '⚠️ Audio hint failed:', error);
+                                // Continue with normal flow even if hint fails
+                            }
+                        }
                         
                         this.showStatus(`🎤 Now say it in ${this.targetLanguage}...`);
                         

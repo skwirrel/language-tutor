@@ -141,6 +141,7 @@
       feedbackThreshold: currentSettings.translationThreshold,
       loggingVerbosity: currentSettings.loggingVerbosity,
       audioPath: 'audio/',
+      enableAudioHints: currentSettings.enableAudioHints,
       statusCallback: (message) => {
         if (!currentSettings.showFeedback && isLearning) {
           if (message.includes('Listen to this')) {
@@ -230,19 +231,6 @@
       currentPhrase = phrase;
       status = `Ready to listen to ${currentSettings.nativeLanguage} phrase...`;
       
-      // Check if we should play an audio hint
-      if (currentSettings.enableAudioHints && shouldPlayHint(phrase)) {
-        try {
-          status = "🎯 Here is a hint for you";
-          log(6, '🎯 Playing audio hint for struggling phrase');
-          await tutor.playAudioHint(phrase.target);
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Brief pause after hint
-        } catch (error) {
-          log(4, '⚠️ Audio hint failed:', error);
-          // Continue with normal flow even if hint fails
-        }
-      }
-      
       if (!isLearning) break;
       
       try {
@@ -286,22 +274,6 @@
     return isStruggling ? currentSettings.pauseWhenStruggling : currentSettings.pauseBetweenTests;
   }
   
-  function shouldPlayHint(phrase) {
-    if (!phrase.recentResults || phrase.recentResults.length === 0) {
-      log(8, '🎯 No hint: no recent results');
-      return false;
-    }
-    
-    const successCount = phrase.recentResults.filter(r => r === 1).length;
-    const successRate = successCount / phrase.recentResults.length;
-    
-    log(8, `🎯 Hint check: ${successCount}/${phrase.recentResults.length} success rate: ${successRate.toFixed(2)}`, phrase.recentResults);
-    
-    // Play hint if: has some correct attempts (> 0) but success rate is less than 50%
-    const shouldHint = successCount > 0 && successRate < 0.5;
-    log(8, `🎯 Should play hint: ${shouldHint}`);
-    return shouldHint;
-  }
   
   function stopLearningSession() {
     isLearning = false;
