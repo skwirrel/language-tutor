@@ -21,6 +21,9 @@ export class LanguageTutor {
             loggingVerbosity: 5,   // Logging verbosity level (0-10, 0=silent, 10=verbose)
             audioPath: 'audio/',   // Base path for pre-generated audio files
             enableBleep: true,     // Enable audible notification bleep (NEW)
+            enableAudioHints: false, // Enable audio hints for struggling phrases
+            audioHintDuration: 0.25, // Fraction of audio to play as hint (0.25 = 25%)
+            audioHintMinWords: 3,    // Minimum words in phrase to enable hints
             vad: {
                 threshold: 0.6,
                 prefixPaddingMs: 200,
@@ -391,11 +394,11 @@ export class LanguageTutor {
                 audio.onloadedmetadata = () => {
                     this.log(7, `✅ Audio metadata loaded, duration: ${audio.duration}s`);
                     
-                    // Calculate 25% of the duration for the hint
-                    const hintDuration = audio.duration * 0.25;
-                    this.log(7, `🎯 Playing first ${hintDuration.toFixed(2)}s as hint`);
+                    // Calculate hint duration based on configurable percentage
+                    const hintDuration = audio.duration * this.options.audioHintDuration;
+                    this.log(7, `🎯 Playing first ${hintDuration.toFixed(2)}s as hint (${(this.options.audioHintDuration * 100)}% of ${audio.duration.toFixed(2)}s)`);
                     
-                    // Set up a timer to stop playback after 25% duration
+                    // Set up a timer to stop playback after configured duration
                     const stopTimer = setTimeout(() => {
                         audio.pause();
                         audio.currentTime = 0;
@@ -435,18 +438,25 @@ export class LanguageTutor {
     }
 
     /**
-     * Determine if an audio hint should be played based on phrase history
+     * Determine if an audio hint should be played based on phrase history and word count
      */
-    shouldPlayHint(recentResults) {
+    shouldPlayHint(targetText, recentResults) {
         if (!recentResults || recentResults.length === 0) {
             this.log(8, '🎯 No hint: no recent results');
+            return false;
+        }
+        
+        // Check word count - skip hints for short phrases
+        const wordCount = targetText.trim().split(/\s+/).length;
+        if (wordCount < this.options.audioHintMinWords) {
+            this.log(8, `🎯 No hint: phrase too short (${wordCount} words < ${this.options.audioHintMinWords} minimum)`);
             return false;
         }
         
         const successCount = recentResults.filter(r => r === 1).length;
         const successRate = successCount / recentResults.length;
         
-        this.log(8, `🎯 Hint check: ${successCount}/${recentResults.length} success rate: ${successRate.toFixed(2)}`, recentResults);
+        this.log(8, `🎯 Hint check: ${successCount}/${recentResults.length} success rate: ${successRate.toFixed(2)}, words: ${wordCount}`, recentResults);
         
         // Play hint if: has some correct attempts (> 0) but success rate is less than 50%
         const shouldHint = successCount > 0 && successRate < 0.5;
@@ -755,7 +765,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                         await this.speakText(sourceText, this.sourceLanguage);
                         
                         // Check if we should play an audio hint
-                        if (this.options.enableAudioHints && this.shouldPlayHint(recentResults)) {
+                        if (this.options.enableAudioHints && this.shouldPlayHint(targetText, recentResults)) {
                             try {
                                 this.showStatus("🎯 Here is a hint for you...");
                                 this.log(6, '🎯 Playing audio hint for struggling phrase');
