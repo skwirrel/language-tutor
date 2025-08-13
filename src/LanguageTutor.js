@@ -770,7 +770,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                                 this.showStatus("🎯 Here is a hint for you...");
                                 this.log(6, '🎯 Playing audio hint for struggling phrase');
                                 await this.playAudioHint(targetText);
-                                await new Promise(resolve => setTimeout(resolve, 1000)); // Brief pause after hint
+                                await new Promise(resolve => setTimeout(resolve, 500)); // Brief pause after hint
                             } catch (error) {
                                 this.log(4, '⚠️ Audio hint failed:', error);
                                 // Continue with normal flow even if hint fails

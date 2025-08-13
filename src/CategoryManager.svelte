@@ -1,6 +1,7 @@
 <!-- CategoryManager.svelte -->
 <script>
   import { createEventDispatcher } from 'svelte';
+  import { settings } from './settingsStore.js';
   
   export let categories;
   export let enabledCategories;
@@ -16,13 +17,28 @@
   
   function handleCategoryToggle(category, enabled) {
     log(6, `🔘 Category toggle: ${category} → ${enabled}`);
-    log(8, '📋 enabledCategories before update:', enabledCategories);
     
-    const newEnabledCategories = { ...enabledCategories, [category]: enabled };
+    // Update the bound enabledCategories object directly
+    enabledCategories[category] = enabled;
+    // Force reactivity by creating new object reference
+    enabledCategories = { ...enabledCategories };
     
-    log(8, '📋 enabledCategories after update:', newEnabledCategories);
+    // Save to localStorage (matching the autoSave pattern)
+    if (typeof localStorage !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('languageTutorSettings');
+        const settings = saved ? JSON.parse(saved) : {};
+        if (!settings.enabledCategories) settings.enabledCategories = {};
+        settings.enabledCategories[category] = enabled;
+        localStorage.setItem('languageTutorSettings', JSON.stringify(settings));
+        console.log(`💾 Saved category ${category}:`, enabled);
+      } catch (error) {
+        console.error(`Failed to save category ${category}:`, error);
+      }
+    }
     
-    dispatch('categoryChange', { category, enabled, newEnabledCategories });
+    // Dispatch change for LearningQueue updates only
+    dispatch('categoryChange', { category, enabled });
   }
 </script>
 
@@ -36,10 +52,7 @@
             type="checkbox" 
             class="category-checkbox"
             checked={enabledCategories[category] || false}
-            on:change={(e) => {
-              log(6, `🖱️ Checkbox clicked: ${category}, checked: ${e.target.checked}`);
-              handleCategoryToggle(category, e.target.checked);
-            }}
+            on:change={(e) => handleCategoryToggle(category, e.target.checked)}
           />
           <span class="category-label">{category}</span>
         </label>

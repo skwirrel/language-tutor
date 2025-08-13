@@ -10,6 +10,7 @@
   import DisplaySettings from './DisplaySettings.svelte';
   import AlgorithmSettings from './AlgorithmSettings.svelte';
   import CategoryManager from './CategoryManager.svelte';
+  import DeveloperSettings from './DeveloperSettings.svelte';
   import LearningSession from './LearningSession.svelte';
   import QueueDisplay from './QueueDisplay.svelte';
   
@@ -28,11 +29,18 @@
   let currentSettings = {};
   
   // Subscribe to settings store
+  let previousNativeLanguage = '';
+  let previousLearningLanguage = '';
+  
   settings.subscribe(value => {
+    const oldSettings = currentSettings;
     currentSettings = value;
     
-    // Update systems when critical settings change
-    if (isInitialized) {
+    // Update systems only when language settings change (not other settings)
+    if (isInitialized && (
+      oldSettings.nativeLanguage !== value.nativeLanguage ||
+      oldSettings.learningLanguage !== value.learningLanguage
+    )) {
       updateSystems();
     }
   });
@@ -49,6 +57,24 @@
   // Reactive computed values
   $: canStart = Object.values(currentSettings.enabledCategories).some(enabled => enabled) &&
                 categories.length > 0;
+  
+  // Reactive updates for tutor and queue options (but not during language changes)
+  $: if (tutor && currentSettings.loggingVerbosity !== undefined && tutor.options) {
+    tutor.updateOptions({ loggingVerbosity: currentSettings.loggingVerbosity });
+  }
+  
+  $: if (learningQueue && currentSettings.loggingVerbosity !== undefined && learningQueue.options) {
+    learningQueue.updateOptions({ loggingVerbosity: currentSettings.loggingVerbosity });
+  }
+  
+  $: if (learningQueue && currentSettings.repetitivenessFactor !== undefined && learningQueue.options) {
+    learningQueue.updateOptions({ repetitivenessFactor: currentSettings.repetitivenessFactor });
+  }
+  
+  $: if (learningQueue && currentSettings.passThreshold !== undefined && learningQueue.options) {
+    learningQueue.updateOptions({ passThreshold: currentSettings.passThreshold });
+  }
+  
   
   // ========== LOGGING SYSTEM ==========
   function log(level, ...args) {
@@ -159,10 +185,10 @@
   // ========== EVENT HANDLERS ==========
   
   function handleCategoryChange(event) {
-    const { category, enabled, newEnabledCategories } = event.detail;
+    const { category, enabled } = event.detail;
     
-    settings.updateSetting('enabledCategories', newEnabledCategories);
-    
+    // No need to update settings here - binding handles that automatically
+    // Just update the LearningQueue
     if (learningQueue) {
       learningQueue.setCategory(category, enabled);
       updateUpcomingQueue();
@@ -429,15 +455,12 @@
         <AlgorithmSettings
           bind:passThreshold={currentSettings.passThreshold}
           bind:repetitivenessFactor={currentSettings.repetitivenessFactor}
-          showDeveloperSettings={currentSettings.showDeveloperSettings}
-          bind:loggingVerbosity={currentSettings.loggingVerbosity}
-          on:debugTest={handleDebugTest}
         />
 
         <!-- Categories -->
         <CategoryManager
           {categories}
-          enabledCategories={currentSettings.enabledCategories}
+          bind:enabledCategories={currentSettings.enabledCategories}
           loggingVerbosity={currentSettings.loggingVerbosity}
           on:categoryChange={handleCategoryChange}
         />
@@ -462,6 +485,13 @@
             </button>
           </div>
         </div>
+
+        <!-- Developer Settings -->
+        <DeveloperSettings
+          showDeveloperSettings={currentSettings.showDeveloperSettings}
+          bind:loggingVerbosity={currentSettings.loggingVerbosity}
+          on:debugTest={handleDebugTest}
+        />
       </div>
     {/if}
   </div>
