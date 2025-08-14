@@ -1,5 +1,7 @@
 <!-- AlgorithmSettings.svelte -->
 <script>
+  import { autoSave } from './autoSave.js';
+  
   export let passThreshold;
   export let repetitivenessFactor;
 </script>
@@ -20,6 +22,7 @@
       step="1"
       bind:value={passThreshold}
       class="threshold-slider"
+      use:autoSave={"passThreshold"}
     />
     <div class="threshold-labels">
       <span>Easy (1)</span>
@@ -44,6 +47,7 @@
       step="1"
       bind:value={repetitivenessFactor}
       class="threshold-slider"
+      use:autoSave={"repetitivenessFactor"}
     />
     <div class="threshold-labels">
       <span>Less (1)</span>
