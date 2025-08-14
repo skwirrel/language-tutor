@@ -359,7 +359,7 @@ class TTSGenerator {
         // Create different instructions based on speed requirement
         if ($isNativeSpeed) {
             // Native speed: normal, natural speed for native speakers
-            $instruction = "You are a text-to-speech system. Speak the following text in {$language} with clear, natural pronunciation and normal speaking pace. Use proper {$language} pronunciation and accent. Speak naturally as you would in normal conversation.";
+            $instruction = "You are a text-to-speech system. Speak the following text in {$language} with clear, natural pronunciation and normal speaking pace. Use proper {$language} pronunciation and accent. Speak naturally as you would in normal conversation. Instructions in brackets should be read out verbatim along with the rest of the text.";
         } else {
             // Learning speed: slow and clear for language learners
             $instruction = "You are a language learning pronunciation tutor. Speak the following text in {$language} with clear, slow, and natural pronunciation suitable for a language learner. Use proper {$language} pronunciation and accent. Speak slowly and clearly, pausing slightly between words to help the learner follow along, but maintain natural rhythm and intonation.";
@@ -379,7 +379,7 @@ class TTSGenerator {
                 ],
                 [
                     'role' => 'user',
-                    'content' => "Speak this text in {$language}: {$text}"
+                    'content' => "Speak this text in {$language} exactly as it is written including any test in parentheses: {$text}"
                 ]
             ]
         ];
