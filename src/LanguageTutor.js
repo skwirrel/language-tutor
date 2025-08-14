@@ -442,6 +442,7 @@ export class LanguageTutor {
      * Determine if an audio hint should be played based on phrase history and word count
      */
     shouldPlayHint(targetText, recentResults) {
+        // Validate inputs
         if (!recentResults || recentResults.length === 0) {
             this.log(8, '🎯 No hint: no recent results');
             return false;
@@ -454,14 +455,26 @@ export class LanguageTutor {
             return false;
         }
         
+        // Count successes (1s) and calculate success rate
         const successCount = recentResults.filter(r => r === 1).length;
-        const successRate = successCount / recentResults.length;
+        const totalAttempts = recentResults.length;
+        const successRate = successCount / totalAttempts;
         
-        this.log(8, `🎯 Hint check: ${successCount}/${recentResults.length} success rate: ${successRate.toFixed(2)}, words: ${wordCount}`, recentResults);
+        this.log(8, `🎯 Hint check: ${successCount}/${totalAttempts} success rate: ${successRate.toFixed(2)}, words: ${wordCount}`, recentResults);
         
-        // Play hint if: has some correct attempts (> 0) but success rate is less than 50%
-        const shouldHint = successCount > 0 && successRate < 0.5;
+        // Only play hint if:
+        // 1. User has had at least some success (successCount > 0)
+        // 2. But success rate is below 50% (struggling)
+        // 3. And has attempted the phrase at least twice (to have meaningful history)
+        const hasAttemptedMultipleTimes = totalAttempts >= 2;
+        const hasSomeSuccess = successCount > 0;
+        const isStruggling = successRate < 0.5;
+        
+        const shouldHint = hasAttemptedMultipleTimes && hasSomeSuccess && isStruggling;
+        
+        this.log(8, `🎯 Hint decision: attempts=${totalAttempts} >= 2: ${hasAttemptedMultipleTimes}, successes=${successCount} > 0: ${hasSomeSuccess}, struggling=${successRate.toFixed(2)} < 0.5: ${isStruggling}`);
         this.log(8, `🎯 Should play hint: ${shouldHint}`);
+        
         return shouldHint;
     }
 
@@ -721,27 +734,29 @@ export class LanguageTutor {
                     this.log(5, '✅ Connected to ChatGPT Realtime API');
                     
                     // Prepare the prompt for ChatGPT
-                    const prompt = `You are a language learning tutor. The user will attempt to translate "${sourceText}" from ${this.sourceLanguage} into ${this.targetLanguage}. Your job is to:
+                    const prompt = `You are a language learning tutor. Your job is to:
 
-1. Listen to their pronunciation and translation attempt in ${this.targetLanguage}
+1. Listen to their pronunciation and translation
 2. Rate their overall performance from 1-10 (1=can't translate, 4=most words correct, but some missing, 6=words correct, but pronunciation is poor, 8=Right words, OK pronunciation, 10=perfect!) considering both:
-   - Translation accuracy (did they get the meaning right?)
-   - Pronunciation quality (does it sound like proper ${this.targetLanguage}?)
 3. Special cases:
    - If they say "I don't know", "I give up", "skip", "pass", or similar phrases in ${this.sourceLanguage}, give them a score of 1 and provide encouraging feedback
    - If they say "again", "play it again", "repeat", "one more time", or similar in any language, give them a score of 0 with commentary explaining they'll hear it again
    - If they say "stop", "pause", "that's enough", "quit", "finish", "done" or similar in any language, respond with {"score": 0, "commentary": "User requested to stop", "stop": true}
-   - If they remain completely silent, score them 0 with appropriate commentary
+   - If they remain completely silent, score them 0 with no commentary
 4. Provide specific, helpful commentary on their attempt including:
-   - Specific tips for better ${this.targetLanguage} pronunciation
    - For "I don't know" responses, provide the correct answer and encouragement
-   - For "again" requests, acknowledge they'll hear the phrase repeated
+
+The phrase they should be saying in ${this.targetLanguage} is:
+=============================
+${targetText}
+=============================
+
 
 Respond with a JSON object in this exact format:
 {
     "score": [0-10],
     "commentary": "Detailed feedback on their pronunciation and translation accuracy, including specific suggestions for improvement",
-    "stop": false
+    "stop": true|false
 }
 
 IMPORTANT: Your response must be valid JSON only. Do not include any text outside the JSON object.`;
