@@ -40,6 +40,7 @@ export class LanguageTutor {
         this.audioProcessor = null;
         this.ws = null;
         this.isListening = false;
+        this.isLearningSessionActive = false; // Track if we're in a learning session
         
         // Session key management
         this.currentSessionKey = null;
@@ -465,6 +466,44 @@ export class LanguageTutor {
     }
 
     
+    // ========== LEARNING SESSION MANAGEMENT ==========
+    /**
+     * Start a learning session with persistent microphone access
+     * Call this once when learning starts to avoid repeated mic requests
+     */
+    async startLearningSession() {
+        if (this.isLearningSessionActive) {
+            this.log(6, '🎓 Learning session already active');
+            return;
+        }
+        
+        this.log(5, '🎓 Starting learning session with persistent microphone');
+        await this.startRecording();
+        this.isLearningSessionActive = true;
+    }
+    
+    /**
+     * Stop the learning session and release microphone access
+     * Call this when the user finishes learning or closes the app
+     */
+    stopLearningSession() {
+        if (!this.isLearningSessionActive) {
+            this.log(6, '🎓 No learning session to stop');
+            return;
+        }
+        
+        this.log(5, '🎓 Stopping learning session and releasing microphone');
+        this.stopRecording();
+        this.isLearningSessionActive = false;
+    }
+    
+    /**
+     * Check if a learning session is currently active
+     */
+    isSessionActive() {
+        return this.isLearningSessionActive;
+    }
+    
     // ========== AUDIO RECORDING ==========
     async startRecording() {
         try {
@@ -670,7 +709,7 @@ export class LanguageTutor {
             
             // Connect to ChatGPT Realtime API
             this.ws = new WebSocket(
-                'wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01&openai-beta=realtime%3Dv1',
+                'wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview&openai-beta=realtime%3Dv1',
                 [`realtime`, `openai-insecure-api-key.${sessionKey}`, "openai-beta.realtime-v1"]
             );
             
@@ -733,8 +772,17 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                         }
                     }));
                     
-                    // Start audio recording
-                    await this.startRecording();
+                    // Ensure we have an active learning session
+                    if (!this.isLearningSessionActive) {
+                        this.logError(2, '❌ test() called without active learning session');
+                        return {
+                            score: 0,
+                            commentary: 'No active learning session. Please start a learning session first.',
+                            stop: true
+                        };
+                    }
+                    
+                    this.log(6, '🎤 Using persistent microphone session');
                     
                     // Check if this is a brand new phrase (zero correct answers in history)
                     const correctAnswers = recentResults.reduce((sum, result) => sum + result, 0);
@@ -974,7 +1022,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
             this.ws.close();
             this.ws = null;
         }
-        this.stopRecording();
+        
+        // Only stop recording if we're not in a persistent learning session
+        if (!this.isLearningSessionActive) {
+            this.log(6, '🎤 Stopping temporary recording session');
+            this.stopRecording();
+        } else {
+            this.log(6, '🎤 Keeping persistent microphone session active');
+        }
     }
     
     // ========== LIFECYCLE MANAGEMENT ==========

@@ -1,6 +1,6 @@
 <!-- App-Refactored.svelte - Complete and Untruncated! -->
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { LearningQueue } from './LearningQueue.js';
   import { LanguageTutor } from './LanguageTutor.js';
   import { settings } from './settingsStore.js';
@@ -110,6 +110,21 @@
     
     isInitialized = true;
     log(4, '🎉 App initialization complete');
+  });
+  
+  // Clean up when component is destroyed
+  onDestroy(() => {
+    log(4, '🧹 App being destroyed, cleaning up...');
+    
+    // Stop any active learning session to release microphone
+    if (isLearning) {
+      stopLearningSession();
+    }
+    
+    // Clean up tutor and queue instances
+    if (tutor) {
+      tutor.destroy();
+    }
   });
   
   // ========== SYSTEM INITIALIZATION ==========
@@ -236,10 +251,20 @@
       return;
     }
 
-    isLearning = true;
-    status = "Right then, let's get cracking!";
-    
-    await runLearningLoop();
+    try {
+      // Start persistent microphone session to avoid repeated connections
+      log(5, '🎓 Starting persistent microphone session for learning');
+      await tutor.startLearningSession();
+      
+      isLearning = true;
+      status = "Right then, let's get cracking!";
+      
+      await runLearningLoop();
+    } catch (error) {
+      log(2, '❌ Failed to start learning session:', error);
+      status = "Couldn't access your microphone. Please check your permissions and try again.";
+      isLearning = false;
+    }
   }
   
   async function runLearningLoop() {
@@ -303,6 +328,13 @@
   
   function stopLearningSession() {
     isLearning = false;
+    
+    // Stop persistent microphone session
+    if (tutor && tutor.isSessionActive()) {
+      log(5, '🎓 Stopping persistent microphone session');
+      tutor.stopLearningSession();
+    }
+    
     if (!status.includes('Score:') && !status.includes('commentary')) {
       status = "Learning session stopped. Ready when you are!";
     }
