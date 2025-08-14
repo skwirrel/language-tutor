@@ -56,7 +56,7 @@ try {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-        'model' => 'gpt-4o-realtime-preview-2024-10-01',
+        'model' => 'gpt-4o-mini-realtime-preview',
         'voice' => 'alloy'
     ]));
     
