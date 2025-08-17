@@ -379,7 +379,7 @@ class TTSGenerator {
                 ],
                 [
                     'role' => 'user',
-                    'content' => "Speak this text in {$language} exactly as it is written including any test in parentheses: {$text}"
+                    'content' => "Speak this text in {$language} one once and exactly as it is written including any text in parentheses: \"{$text}\""
                 ]
             ]
         ];

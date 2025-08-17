@@ -624,30 +624,6 @@ class SmartLearningSession {
 }
 ```
 
-## Legacy Cache Management
-
-The class includes legacy methods for backward compatibility:
-
-### `clearTTSCache()`
-
-Clears any old client-side TTS cache data from previous versions.
-
-**Returns:** `boolean` - Success status
-
-### `getTTSCacheSize()`
-
-Returns minimal cache information (legacy compatibility).
-
-**Returns:** Object with cache information
-```javascript
-{
-    entries: 0,
-    chunks: 0,
-    sizeBytes: 0,
-    sizeMB: 0,
-    note: 'Using server-side audio files - no client cache needed'
-}
-```
 
 ## Supported Languages
 

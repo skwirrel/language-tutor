@@ -678,30 +678,6 @@ export class LanguageTutor {
         return { ...this.options }; // Return a copy to prevent external modification
     }
     
-    // ========== CACHE MANAGEMENT ==========
-    clearTTSCache() {
-        // Legacy method - now just clears any old cache data
-        try {
-            localStorage.removeItem('tts_audio_cache');
-            this.log(4, '🗑️ Legacy TTS cache cleared successfully');
-            return true;
-        } catch (error) {
-            this.logError(3, '❌ Error clearing legacy TTS cache:', error);
-            return false;
-        }
-    }
-    
-    getTTSCacheSize() {
-        // Legacy method - return minimal info since we're not using client-side cache anymore
-        return {
-            entries: 0,
-            chunks: 0,
-            sizeBytes: 0,
-            sizeMB: 0,
-            note: 'Using server-side audio files - no client cache needed'
-        };
-    }
-    
     // ========== MAIN TEST FUNCTION ==========
     async test(sourceText, targetText, recentResults = [], waitTime = 10) {
         try {

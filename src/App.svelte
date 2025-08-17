@@ -385,17 +385,6 @@
   }
   
   // ========== MANAGEMENT ACTIONS ==========
-  function clearTTSCache() {
-    if (tutor && confirm('Are you sure you want to clear the TTS cache? This will remove all cached audio.')) {
-      const success = tutor.clearTTSCache();
-      status = success ? 'TTS cache cleared successfully!' : 'Failed to clear TTS cache.';
-      
-      setTimeout(() => {
-        if (!isLearning) status = "Ready to start learning!";
-      }, 3000);
-    }
-  }
-  
   function resetLearningQueue() {
     if (learningQueue && confirm('Are you sure you want to reset the learning queue? This will clear all progress and start fresh.')) {
       learningQueue.reset();
@@ -437,8 +426,6 @@
     showFeedback={currentSettings.showFeedback}
     showExpectedOutput={currentSettings.showExpectedOutput}
     enableAudioHints={currentSettings.enableAudioHints}
-    nativeLanguage={currentSettings.nativeLanguage}
-    learningLanguage={currentSettings.learningLanguage}
     on:startStop={handleStartStop}
   />
 
@@ -501,14 +488,7 @@
         <div class="management-section">
           <h3 class="section-header">Management</h3>
           <div class="management-buttons">
-            <button 
-              class="management-btn clear-btn"
-              on:click={clearTTSCache}
-              disabled={!tutor}
-            >
-              🗑️ Clear TTS Cache
-            </button>
-            <button 
+<button 
               class="management-btn reset-btn"
               on:click={resetLearningQueue}
               disabled={!learningQueue}

@@ -10,8 +10,6 @@
   export let showFeedback;
   export let showExpectedOutput;
   export let enableAudioHints;
-  export let nativeLanguage;
-  export let learningLanguage;
   
   const dispatch = createEventDispatcher();
   

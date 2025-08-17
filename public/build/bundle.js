@@ -1,2 +1,6921 @@
-var app=function(){"use strict";function e(){}function t(e){return e()}function s(){return Object.create(null)}function n(e){e.forEach(t)}function o(e){return"function"==typeof e}function i(e,t){return e!=e?t==t:e!==t||e&&"object"==typeof e||"function"==typeof e}function a(t){return t&&o(t.destroy)?t.destroy:e}function r(e,t){e.appendChild(t)}function l(e,t,s){e.insertBefore(t,s||null)}function c(e){e.parentNode&&e.parentNode.removeChild(e)}function u(e,t){for(let s=0;s<e.length;s+=1)e[s]&&e[s].d(t)}function g(e){return document.createElement(e)}function h(e){return document.createTextNode(e)}function d(){return h(" ")}function p(){return h("")}function f(e,t,s,n){return e.addEventListener(t,s,n),()=>e.removeEventListener(t,s,n)}function m(e,t,s){null==s?e.removeAttribute(t):e.getAttribute(t)!==s&&e.setAttribute(t,s)}function y(e){return""===e?null:+e}function b(e,t){t=""+t,e.data!==t&&(e.data=t)}function w(e,t){e.value=null==t?"":t}function v(e,t,s){for(let s=0;s<e.options.length;s+=1){const n=e.options[s];if(n.__value===t)return void(n.selected=!0)}s&&void 0===t||(e.selectedIndex=-1)}function $(e){const t=e.querySelector(":checked");return t&&t.__value}function S(e,t,s){e.classList[s?"add":"remove"](t)}let T;function L(e){T=e}function x(){if(!T)throw new Error("Function called outside component initialization");return T}function k(){const e=x();return(t,s,{cancelable:n=!1}={})=>{const o=e.$$.callbacks[t];if(o){const i=function(e,t,{bubbles:s=!1,cancelable:n=!1}={}){const o=document.createEvent("CustomEvent");return o.initCustomEvent(e,s,n,t),o}(t,s,{cancelable:n});return o.slice().forEach(t=>{t.call(e,i)}),!i.defaultPrevented}return!0}}const C=[],E=[];let R=[];const A=[],_=Promise.resolve();let P=!1;function F(e){R.push(e)}function O(e){A.push(e)}const D=new Set;let N=0;function q(){if(0!==N)return;const e=T;do{try{for(;N<C.length;){const e=C[N];N++,L(e),I(e.$$)}}catch(e){throw C.length=0,N=0,e}for(L(null),C.length=0,N=0;E.length;)E.pop()();for(let e=0;e<R.length;e+=1){const t=R[e];D.has(t)||(D.add(t),t())}R.length=0}while(C.length);for(;A.length;)A.pop()();P=!1,D.clear(),L(e)}function I(e){if(null!==e.fragment){e.update(),n(e.before_update);const t=e.dirty;e.dirty=[-1],e.fragment&&e.fragment.p(e.ctx,t),e.after_update.forEach(F)}}const Q=new Set;let H;function V(e,t){e&&e.i&&(Q.delete(e),e.i(t))}function M(e,t,s,n){if(e&&e.o){if(Q.has(e))return;Q.add(e),H.c.push(()=>{Q.delete(e),n&&(s&&e.d(1),n())}),e.o(t)}else n&&n()}function U(e,t,s){const n=e.$$.props[t];void 0!==n&&(e.$$.bound[n]=s,s(e.$$.ctx[n]))}function B(e){e&&e.c()}function W(e,s,i,a){const{fragment:r,after_update:l}=e.$$;r&&r.m(s,i),a||F(()=>{const s=e.$$.on_mount.map(t).filter(o);e.$$.on_destroy?e.$$.on_destroy.push(...s):n(s),e.$$.on_mount=[]}),l.forEach(F)}function j(e,t){const s=e.$$;null!==s.fragment&&(!function(e){const t=[],s=[];R.forEach(n=>-1===e.indexOf(n)?t.push(n):s.push(n)),s.forEach(e=>e()),R=t}(s.after_update),n(s.on_destroy),s.fragment&&s.fragment.d(t),s.on_destroy=s.fragment=null,s.ctx=[])}function K(e,t){-1===e.$$.dirty[0]&&(C.push(e),P||(P=!0,_.then(q)),e.$$.dirty.fill(0)),e.$$.dirty[t/31|0]|=1<<t%31}function J(t,o,i,a,r,l,u,g=[-1]){const h=T;L(t);const d=t.$$={fragment:null,ctx:[],props:l,update:e,not_equal:r,bound:s(),on_mount:[],on_destroy:[],on_disconnect:[],before_update:[],after_update:[],context:new Map(o.context||(h?h.$$.context:[])),callbacks:s(),dirty:g,skip_bound:!1,root:o.target||h.$$.root};u&&u(d.root);let p=!1;if(d.ctx=i?i(t,o.props||{},(e,s,...n)=>{const o=n.length?n[0]:s;return d.ctx&&r(d.ctx[e],d.ctx[e]=o)&&(!d.skip_bound&&d.bound[e]&&d.bound[e](o),p&&K(t,e)),s}):[],d.update(),p=!0,n(d.before_update),d.fragment=!!a&&a(d.ctx),o.target){if(o.hydrate){const e=function(e){return Array.from(e.childNodes)}(o.target);d.fragment&&d.fragment.l(e),e.forEach(c)}else d.fragment&&d.fragment.c();o.intro&&V(t.$$.fragment),W(t,o.target,o.anchor,o.customElement),q()}L(h)}class z{$destroy(){j(this,1),this.$destroy=e}$on(t,s){if(!o(s))return e;const n=this.$$.callbacks[t]||(this.$$.callbacks[t]=[]);return n.push(s),()=>{const e=n.indexOf(s);-1!==e&&n.splice(e,1)}}$set(e){var t;this.$$set&&(t=e,0!==Object.keys(t).length)&&(this.$$.skip_bound=!0,this.$$set(e),this.$$.skip_bound=!1)}}class G{constructor(e,t,s="basic",n="/learning/",o={}){this.sourceLanguage=e,this.targetLanguage=t,this.baseDir=n,this.level=s,this.testDatabase={},this.queue=[],this.categories={},this.currentTestIndex=0,this.storageKey=`learning_queue_${e}_${t}_${s}`,this.options={passThreshold:7,memoryLength:20,repetitivenessFactor:5,...o}}async init(){await this.loadTestData(),this.loadState()}async loadTestData(){try{const e=`${this.sourceLanguage}-${this.targetLanguage}-${this.level}.json`,t=await fetch(`${this.baseDir}${e}`);if(!t.ok)throw new Error(`Failed to load test data: ${t.status}`);this.testDatabase=await t.json()}catch(e){console.error("Error loading test data:",e),this.testDatabase={travel:[{source:"Good morning",target:"Buongiorno"},{source:"Where is the station?",target:"Dove è la stazione?"},{source:"Thank you very much",target:"Grazie mille"}],food:[{source:"I would like a coffee",target:"Vorrei un caffè"},{source:"How much does it cost?",target:"Quanto costa?"},{source:"The bill please",target:"Il conto per favore"}]}}}loadState(){const e=localStorage.getItem(this.storageKey);if(e)try{const t=JSON.parse(e);this.categories=t.categories||{},this.queue=t.queue||[],this.syncQueueWithDatabase()}catch(e){console.error("Error loading saved state:",e),this.initializeAllCategories()}else this.initializeAllCategories()}syncQueueWithDatabase(){const e=new Set;for(const[t,s]of Object.entries(this.categories))s&&this.testDatabase[t]&&this.testDatabase[t].forEach(t=>{e.add(this.createTestId(t))});this.queue=this.queue.filter(t=>{const s=this.createTestId({source:t.source,target:t.target});return e.has(s)});const t=new Set(this.queue.map(e=>this.createTestId({source:e.source,target:e.target})));for(const[e,s]of Object.entries(this.categories))s&&this.testDatabase[e]&&this.testDatabase[e].forEach(s=>{const n=this.createTestId(s);t.has(n)||this.addTestToQueue(s,e)})}initializeAllCategories(){for(const e of Object.keys(this.testDatabase))this.categories[e]=!1}createTestId(e){return`${e.source}|${e.target}`}addTestToQueue(e,t){const s={source:e.source,target:e.target,inertia:-1,category:t,recentResults:new Array(this.options.memoryLength).fill(0)},n=Math.floor(Math.random()*(this.queue.length+1));this.queue.splice(n,0,s)}addCategoryToQueue(e){this.testDatabase[e]&&this.testDatabase[e].forEach(t=>{this.addTestToQueue(t,e)})}removeCategoryFromQueue(e){if(!this.testDatabase[e])return;const t=new Set(this.testDatabase[e].map(e=>this.createTestId(e)));this.queue=this.queue.filter(e=>{const s=this.createTestId({source:e.source,target:e.target});return!t.has(s)}),this.currentTestIndex>=this.queue.length&&(this.currentTestIndex=0)}getCategories(){return Object.keys(this.testDatabase)}setCategory(e,t){t&&!this.categories[e]?(this.categories[e]=!0,this.addCategoryToQueue(e)):!t&&this.categories[e]&&(this.categories[e]=!1,this.removeCategoryFromQueue(e)),this.saveState()}getNextTest(){if(0===this.queue.length)return null;this.currentTestIndex>=this.queue.length&&(this.currentTestIndex=0);const e=this.queue[this.currentTestIndex];return{source:e.source,target:e.target,inertia:e.inertia,category:e.category,recentResults:e.recentResults||[]}}scoreCurrentTest(e){if(0===this.queue.length||this.currentTestIndex>=this.queue.length)return;const t=this.queue.splice(this.currentTestIndex,1)[0];t.recentResults||(t.recentResults=[]);const s=e>=this.options.passThreshold;if(t.recentResults.push(s?1:0),!s)for(let e=t.recentResults.length-2;e>=0;e--)if(1===t.recentResults[e]){t.recentResults[e]=0;break}const n=this.options.memoryLength;t.recentResults.length>n&&(t.recentResults=t.recentResults.slice(-n));const o=t.recentResults.reduce((e,t)=>e+t,0),i=t.recentResults.length>0?o/t.recentResults.length:0,a=2+.2*(this.options.repetitivenessFactor-1),r=Math.pow(i,a),l=Math.min(Math.floor(r*this.queue.length),this.queue.length);this.queue.splice(l,0,t),this.currentTestIndex=0,this.saveState()}updateOptions(e){this.options={...this.options,...e}}saveState(){const e={categories:this.categories,queue:this.queue};try{localStorage.setItem(this.storageKey,JSON.stringify(e))}catch(e){console.error("Error saving state to localStorage:",e)}}getQueueLength(){return this.queue.length}getTopQueueItems(e=null){const t=e?Math.min(e,this.queue.length):this.queue.length;return this.queue.slice(0,t).map((e,t)=>{const s=e.recentResults?e.recentResults.reduce((e,t)=>e+t,0):0,n=e.recentResults&&e.recentResults.length>0?s/e.recentResults.length:0;return{position:t+1,source:e.source,target:e.target,inertia:e.inertia,category:e.category,recentResults:e.recentResults||[],successRate:n}})}reset(){console.log("🔄 Resetting LearningQueue to initial state"),this.queue=[],this.categories={},this.currentTestIndex=0,localStorage.removeItem(this.storageKey),this.initializeAllCategories(),console.log("✅ LearningQueue reset complete")}getQueueStats(){const e={totalItems:this.queue.length,categories:{},inertiaDistribution:{negative:0,neutral:0,positive:0}};return this.queue.forEach(t=>{e.categories[t.category]||(e.categories[t.category]=0),e.categories[t.category]++;const s=t.recentResults?t.recentResults.reduce((e,t)=>e+t,0):0,n=t.recentResults&&t.recentResults.length>0?s/t.recentResults.length:0;n<.3?e.inertiaDistribution.negative++:n>.7?e.inertiaDistribution.positive++:e.inertiaDistribution.neutral++}),e}}class Y{constructor(e,t="English",s="Italian",n={}){this.outputElement=e,this.sourceLanguage=t,this.targetLanguage=s;this.options=this.mergeOptions({apiKeyEndpoint:"?mode=get_key",feedbackThreshold:7,statusCallback:null,loggingVerbosity:5,audioPath:"audio/",enableBleep:!0,enableAudioHints:!1,audioHintDuration:.25,audioHintMinWords:3,vad:{threshold:.6,prefixPaddingMs:200,silenceDurationMs:800}},n),this.audioContext=null,this.currentAudioStream=null,this.audioProcessor=null,this.ws=null,this.isListening=!1,this.isLearningSessionActive=!1,this.currentSessionKey=null,this.keyRefreshInterval=null,this.log(3,`🎓 LanguageTutor initialized: ${t} → ${s}`),this.log(7,"📋 Options:",this.options),this.initializeSessionKeys()}log(e,...t){this.options.loggingVerbosity>=e&&console.log(...t)}logError(e,...t){this.options.loggingVerbosity>=e&&console.error(...t)}logWarn(e,...t){this.options.loggingVerbosity>=e&&console.warn(...t)}mergeOptions(e,t){const s={...e};for(const n in t)t.hasOwnProperty(n)&&("object"!=typeof t[n]||null===t[n]||Array.isArray(t[n])?s[n]=t[n]:s[n]={...e[n],...t[n]});return s}async playNotificationBleep(){if(this.options.enableBleep)try{this.log(6,"🎵 Playing notification bleep");const e=new(window.AudioContext||window.webkitAudioContext),t=.3,s=e.sampleRate,n=e.createBuffer(1,t*s,s),o=n.getChannelData(0);for(let e=0;e<n.length;e++){const t=e/s;let n,i;t<.15?(n=800,i=.1*Math.sin(Math.PI*t/.15)):(n=1e3,i=.1*Math.sin(Math.PI*(t-.15)/.15)),o[e]=i*Math.sin(2*Math.PI*n*t)}const i=e.createBufferSource();return i.buffer=n,i.connect(e.destination),new Promise(t=>{i.onended=()=>{e.close(),this.log(7,"✅ Notification bleep completed"),t()},i.start()})}catch(e){this.logWarn(4,"⚠️ Could not play notification bleep:",e.message)}else this.log(7,"🔇 Notification bleep disabled")}async initializeSessionKeys(){try{await this.refreshSessionKey(),this.startKeyRefreshTimer()}catch(e){this.logError(1,"❌ Failed to initialize session keys:",e)}}async refreshSessionKey(){try{this.log(5,"🔑 Refreshing session key...");const e=await fetch(this.options.apiKeyEndpoint);if(!e.ok)throw new Error(`HTTP error! status: ${e.status}`);const t=await e.json();if(t.error)throw new Error(t.error);return this.currentSessionKey=t.session_token,this.log(4,"✅ Session key refreshed successfully"),this.currentSessionKey}catch(e){return this.logError(2,"❌ Error refreshing session key:",e),this.showError("Failed to refresh session key: "+e.message),null}}async getSessionKey(){return this.currentSessionKey?(this.log(7,"🔑 Using cached session key"),this.currentSessionKey):(this.log(5,"🔑 Getting initial session key..."),await this.refreshSessionKey())}startKeyRefreshTimer(){this.keyRefreshInterval=setInterval(async()=>{await this.refreshSessionKey()},5e4),this.log(6,"⏰ Started key refresh timer (every 50 seconds)")}stopKeyRefreshTimer(){this.keyRefreshInterval&&(clearInterval(this.keyRefreshInterval),this.keyRefreshInterval=null,this.log(6,"⏰ Stopped key refresh timer"))}async speakText(e,t=null){return new Promise(async(s,n)=>{try{t||(t=this.detectLanguage(e)),this.log(4,`🎙️ Playing audio for "${e}" in ${t}`);const n=t===this.sourceLanguage,o=n?"native":"learning";this.log(6,`🎯 Speed mode: ${o} (${n?"normal speed":"slow/clear"})`);const i=await this.generateAudioFilename(e),a=`${this.options.audioPath}${t}/${o}/${i}`;this.log(6,`🔊 Loading audio from: ${a}`),await this.playAudioFromUrl(a),s()}catch(e){this.logError(3,"❌ Error playing audio:",e),this.showError("Audio playback failed: "+e.message),n(e)}})}async generateAudioFilename(e){const t=this.stringToUtf8Bytes(e).slice(0,20);let s="";for(let e=0;e<t.length;e++){const n=t[e],o=String.fromCharCode(n);/[a-zA-Z0-9]/.test(o)?s+=o:s+="_"}s=s.replace(/_+$/,""),s||(s="phrase");return`${s}_${(await this.sha256(e)).substring(0,8)}.mp3`}async sha256(e){const t=(new TextEncoder).encode(e),s=await crypto.subtle.digest("SHA-256",t);return Array.from(new Uint8Array(s)).map(e=>e.toString(16).padStart(2,"0")).join("")}stringToUtf8Bytes(e){const t=[];for(let s=0;s<e.length;s++){let n=e.charCodeAt(s);n<128?t.push(n):n<2048?(t.push(192|n>>6),t.push(128|63&n)):n<65536?(t.push(224|n>>12),t.push(128|n>>6&63),t.push(128|63&n)):(t.push(240|n>>18),t.push(128|n>>12&63),t.push(128|n>>6&63),t.push(128|63&n))}return t}async playAudioFromUrl(e){return new Promise((t,s)=>{try{this.log(6,"🔊 Creating audio element for playback");const n=new Audio;n.onloadeddata=()=>{this.log(7,"✅ Audio loaded successfully")},n.onended=()=>{this.log(6,"✅ Audio playback finished"),t()},n.onerror=t=>{this.logError(3,"❌ Audio playback error:",t),s(new Error(`Failed to load audio from ${e}`))},n.oncanplaythrough=()=>{this.log(7,"▶️ Starting audio playback"),n.play().catch(e=>{this.logError(3,"❌ Audio play() failed:",e),s(e)})},n.src=e,n.load()}catch(e){this.logError(3,"❌ Error setting up audio playback:",e),s(e)}})}async playAudioHint(e,t=null,s="learning"){return new Promise(async(n,o)=>{try{t||(t=this.targetLanguage),this.log(5,`🎯 Playing audio hint for: "${e}" in ${t}`);const i=await this.generateAudioFilename(e),a=`${this.options.audioPath}${t}/${s}/${i}`;this.log(6,`🔊 Loading hint audio from: ${a}`);const r=new Audio;r.onloadedmetadata=()=>{this.log(7,`✅ Audio metadata loaded, duration: ${r.duration}s`);const e=r.duration*this.options.audioHintDuration;this.log(7,`🎯 Playing first ${e.toFixed(2)}s as hint (${100*this.options.audioHintDuration}% of ${r.duration.toFixed(2)}s)`);const t=setTimeout(()=>{r.pause(),r.currentTime=0,this.log(7,"🔇 Hint playback completed"),n()},1e3*e);r.onended=()=>{clearTimeout(t),this.log(7,"🔇 Audio hint ended naturally"),n()},r.play().catch(e=>{clearTimeout(t),this.logError(3,"❌ Audio hint play() failed:",e),o(e)})},r.onerror=e=>{this.logError(3,"❌ Audio hint error:",e),o(new Error(`Failed to load audio hint from ${a}`))},r.src=a,r.load()}catch(e){this.logError(3,"❌ Error setting up audio hint:",e),o(e)}})}shouldPlayHint(e,t){if(!t||0===t.length)return this.log(8,"🎯 No hint: no recent results"),!1;const s=e.trim().split(/\s+/).length;if(s<this.options.audioHintMinWords)return this.log(8,`🎯 No hint: phrase too short (${s} words < ${this.options.audioHintMinWords} minimum)`),!1;const n=t.filter(e=>1===e).length,o=t.length,i=n/o;this.log(8,`🎯 Hint check: ${n}/${o} success rate: ${i.toFixed(2)}, words: ${s}`,t);const a=o>=2,r=n>0,l=i<.5,c=a&&r&&l;return this.log(8,`🎯 Hint decision: attempts=${o} >= 2: ${a}, successes=${n} > 0: ${r}, struggling=${i.toFixed(2)} < 0.5: ${l}`),this.log(8,`🎯 Should play hint: ${c}`),c}async startLearningSession(){this.isLearningSessionActive?this.log(6,"🎓 Learning session already active"):(this.log(5,"🎓 Starting learning session with persistent microphone"),await this.startRecording(),this.isLearningSessionActive=!0)}stopLearningSession(){this.isLearningSessionActive?(this.log(5,"🎓 Stopping learning session and releasing microphone"),this.stopRecording(),this.isLearningSessionActive=!1):this.log(6,"🎓 No learning session to stop")}isSessionActive(){return this.isLearningSessionActive}async startRecording(){try{const e=await navigator.mediaDevices.getUserMedia({audio:{sampleRate:24e3,channelCount:1,echoCancellation:!0,noiseSuppression:!0}});this.currentAudioStream=e,this.audioContext=new AudioContext({sampleRate:24e3});const t=this.audioContext.createMediaStreamSource(e);this.audioProcessor=this.audioContext.createScriptProcessor(1024,1,1),this.audioProcessor.onaudioprocess=e=>{if(this.ws&&this.ws.readyState===WebSocket.OPEN&&this.isListening){const t=e.inputBuffer.getChannelData(0),s=new Int16Array(t.length);for(let e=0;e<t.length;e++)s[e]=Math.max(-32768,Math.min(32767,32768*t[e]));const n=new Uint8Array(s.buffer),o=btoa(String.fromCharCode.apply(null,n));this.ws.send(JSON.stringify({type:"input_audio_buffer.append",audio:o}))}},t.connect(this.audioProcessor),this.audioProcessor.connect(this.audioContext.destination),this.isListening=!0,this.log(5,"🎤 Started recording and listening")}catch(e){throw this.logError(2,"Error starting recording:",e),this.showError("Could not access microphone: "+e.message),e}}pauseListening(){this.isListening=!1,this.log(6,"⏸️ Paused listening (microphone still active)")}resumeListening(){this.isListening=!0,this.log(6,"▶️ Resumed listening")}stopRecording(){this.isListening=!1,this.currentAudioStream&&(this.currentAudioStream.getTracks().forEach(e=>e.stop()),this.currentAudioStream=null),this.audioProcessor&&(this.audioProcessor.disconnect(),this.audioProcessor=null),this.audioContext&&"closed"!==this.audioContext.state&&(this.audioContext.close(),this.audioContext=null),this.log(5,"🛑 Stopped recording completely")}detectLanguage(e){const t=["the","a","an","is","are","was","were","and","or","but","in","on","at","to","for","of","with","by"],s=e.toLowerCase().split(/\s+/);return s.filter(e=>t.includes(e)).length/s.length>.2?this.sourceLanguage:this.targetLanguage}showStatus(e){this.log(7,"📢 Status:",e),this.options.statusCallback&&this.options.statusCallback(e),this.outputElement&&(this.outputElement.textContent=e)}showError(e){this.logError(2,"❌ Error:",e),this.outputElement&&(this.outputElement.textContent="Error: "+e,this.outputElement.style.color="red",setTimeout(()=>{this.outputElement.style.color=""},3e3))}showScore(e){return this.log(4,"📊 Score:",e),{score:e,message:this.getScoreMessage(e),emoji:this.getScoreEmoji(e)}}getScoreMessage(e){return e>=8?"Excellent work!":e>=6?"Good job!":"Keep practicing!"}getScoreEmoji(e){return e>=8?"🎉":e>=6?"👍":"📚"}updateOptions(e){return this.log(5,"🔧 Updating tutor options:",e),this.options=this.mergeOptions(this.options,e),this.log(6,"✅ Options updated:",this.options),this.options}getOptions(){return{...this.options}}clearTTSCache(){try{return localStorage.removeItem("tts_audio_cache"),this.log(4,"🗑️ Legacy TTS cache cleared successfully"),!0}catch(e){return this.logError(3,"❌ Error clearing legacy TTS cache:",e),!1}}getTTSCacheSize(){return{entries:0,chunks:0,sizeBytes:0,sizeMB:0,note:"Using server-side audio files - no client cache needed"}}async test(e,t,s=[],n=10){try{this.showStatus("Getting session key...");const o=await this.getSessionKey();return o?(this.showStatus("Connecting to ChatGPT..."),this.log(4,"🔗 Creating new ChatGPT WebSocket connection for testing"),this.log(6,"🎚️ Using VAD settings:",this.options.vad),this.log(6,"🎯 Feedback threshold:",this.options.feedbackThreshold),this.ws=new WebSocket("wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview&openai-beta=realtime%3Dv1",["realtime",`openai-insecure-api-key.${o}`,"openai-beta.realtime-v1"]),new Promise(o=>{let i,a=!1;this.ws.onopen=async()=>{this.log(5,"✅ Connected to ChatGPT Realtime API");const r=`You are a language learning tutor. Your job is to:\n\n1. Listen to their pronunciation and translation\n2. Rate their overall performance from 1-10 (1=can't translate, 4=most words correct, but some missing, 6=words correct, but pronunciation is poor, 8=Right words, OK pronunciation, 10=perfect!) considering both:\n3. Special cases:\n   - If they say "I don't know", "I give up", "skip", "pass", or similar phrases in ${this.sourceLanguage}, give them a score of 1 and provide encouraging feedback\n   - If they say "again", "play it again", "repeat", "one more time", or similar in any language, give them a score of 0 with commentary explaining they'll hear it again\n   - If they say "stop", "pause", "that's enough", "quit", "finish", "done" or similar in any language, respond with {"score": 0, "commentary": "User requested to stop", "stop": true}\n   - If they remain completely silent, score them 0 with no commentary\n4. Provide specific, helpful commentary on their attempt including:\n   - For "I don't know" responses, provide the correct answer and encouragement\n\nThe phrase they should be saying in ${this.targetLanguage} is:\n=============================\n${t}\n=============================\n\n\nRespond with a JSON object in this exact format:\n{\n    "score": [0-10],\n    "commentary": "Detailed feedback on their pronunciation and translation accuracy, including specific suggestions for improvement",\n    "stop": true|false\n}\n\nIMPORTANT: Your response must be valid JSON only. Do not include any text outside the JSON object.`;if(this.options.loggingVerbosity>=8&&(this.log(8,"📤 Sending prompt to ChatGPT:"),this.log(8,"------- PROMPT START -------"),this.log(8,r),this.log(8,"------- PROMPT END -------")),this.ws.send(JSON.stringify({type:"session.update",session:{modalities:["text"],instructions:r,input_audio_format:"pcm16",input_audio_transcription:{model:"whisper-1"},turn_detection:{type:"server_vad",threshold:this.options.vad.threshold,prefix_padding_ms:this.options.vad.prefixPaddingMs,silence_duration_ms:this.options.vad.silenceDurationMs}}})),!this.isLearningSessionActive)return this.logError(2,"❌ test() called without active learning session"),{score:0,commentary:"No active learning session. Please start a learning session first.",stop:!0};this.log(6,"🎤 Using persistent microphone session");if(0===s.reduce((e,t)=>e+t,0))this.showStatus(`🎵 New phrase! Listen to this ${this.sourceLanguage} phrase...`),this.pauseListening(),await this.speakText(e,this.sourceLanguage),this.showStatus(`🎵 Now here's how to say it in ${this.targetLanguage}...`),await this.speakText(t,this.targetLanguage),await new Promise(e=>setTimeout(e,1e3)),await this.speakText(t,this.targetLanguage),this.showStatus(`🎤 Now you try! Say it in ${this.targetLanguage}...`),await this.playNotificationBleep(),this.resumeListening();else{if(this.showStatus(`🎵 Listen to this ${this.sourceLanguage} phrase...`),this.pauseListening(),await this.speakText(e,this.sourceLanguage),this.options.enableAudioHints&&this.shouldPlayHint(t,s))try{this.showStatus("🎯 Here is a hint for you..."),this.log(6,"🎯 Playing audio hint for struggling phrase"),await this.playAudioHint(t),await new Promise(e=>setTimeout(e,500))}catch(e){this.log(4,"⚠️ Audio hint failed:",e)}this.showStatus(`🎤 Now say it in ${this.targetLanguage}...`),await this.playNotificationBleep(),this.resumeListening()}i=setTimeout(()=>{a||(this.log(4,"⏰ Silence timeout reached"),this.cleanup(),o({score:0,commentary:"No response detected within the time limit. Please try speaking closer to the microphone or check your audio settings.",stop:!1}))},1e3*n)},this.ws.onmessage=async e=>{const s=JSON.parse(e.data);if(this.log(8,"📨 Received message:",s.type),["response.done","error","response.text.delta"].includes(s.type)&&this.log(9,"📋 Full message details:",s),"session.updated"===s.type&&this.log(6,"✅ Session configured successfully"),"input_audio_buffer.speech_started"===s.type&&(this.log(6,"🎤 Speech detected, user started speaking"),clearTimeout(i)),"input_audio_buffer.speech_stopped"===s.type&&this.log(6,"🔇 Speech stopped, processing..."),"response.done"===s.type){this.log(5,"✅ Response complete from ChatGPT"),a=!0,clearTimeout(i);const e=s.response;let n={score:0,commentary:"Unable to process response",stop:!1};if(this.log(6,"🔍 Processing ChatGPT response..."),this.log(9,"📥 Raw response object:",JSON.stringify(e,null,2)),e.output&&e.output.length>0){for(const t of e.output)if(this.log(8,"📄 Processing output item:",t),t.content&&t.content.length>0)for(const e of t.content)if("text"===e.type&&e.text){this.options.loggingVerbosity>=7&&(this.log(7,"📥 Raw ChatGPT response text:"),this.log(7,"------- RESPONSE START -------"),this.log(7,e.text),this.log(7,"------- RESPONSE END -------"));try{const t=JSON.parse(e.text);this.log(6,"✅ Successfully parsed JSON response:",t),n={score:parseInt(t.score)||0,commentary:t.commentary||"No commentary provided",stop:Boolean(t.stop)},this.log(5,"📊 Processed result:",n)}catch(t){this.logWarn(4,"❌ Failed to parse JSON response, attempting fallback parsing"),this.logWarn(6,"Parse error:",t.message);const s=e.text.match(/score["\s]*:["\s]*(\d+)/i),o=e.text.toLowerCase().includes("stop")||e.text.toLowerCase().includes("pause")||e.text.toLowerCase().includes("enough");n={score:s?parseInt(s[1]):0,commentary:e.text,stop:o},this.log(5,"🔧 Fallback parsed result:",n)}}}else this.logWarn(3,"⚠️ No output found in ChatGPT response");if(n.stop)return this.log(4,"🛑 User requested to stop"),this.cleanup(),void o(n);this.showStatus("Test complete!");this.showScore(n.score);if(n.score>0&&n.score<=this.options.feedbackThreshold){this.log(5,`📢 Score ${n.score} below threshold ${this.options.feedbackThreshold}, speaking ${this.targetLanguage} target phrase...`);const e=this.isListening;if(e&&this.pauseListening(),n.score<3){this.log(4,`🔁 Score ${n.score} is very low, repeating target phrase 3 times for better learning`),this.showStatus(`🎵 Score ${n.score}/10 - Here's the ${this.targetLanguage} pronunciation (3 times)...`);for(let e=1;e<=3;e++)this.log(6,`🎵 Playing repetition ${e}/3`),await this.speakText(t,this.targetLanguage),e<3&&await new Promise(e=>setTimeout(e,800))}else this.showStatus(`🎵 Here's the ${this.targetLanguage} pronunciation...`),await this.speakText(t,this.targetLanguage);e&&this.resumeListening()}this.log(4,"📊 Final result returned:",n),this.cleanup(),o(n)}"error"===s.type&&(this.logError(2,"❌ ChatGPT WebSocket error:",s.error),this.log(8,"💥 Full error details:",JSON.stringify(s,null,2)),this.showError("Error: "+s.error.message),this.cleanup(),o({score:0,commentary:`Error occurred: ${s.error.message}`,stop:!1}))},this.ws.onerror=e=>{this.logError(2,"❌ WebSocket connection error:",e),this.showError("Connection error occurred"),this.cleanup(),o({score:0,commentary:"Connection error occurred. Please check your internet connection and try again.",stop:!1})}})):{score:0,commentary:"Failed to get session key",stop:!1}}catch(e){return this.logError(1,"💥 Error in test method:",e),this.log(8,"🔍 Error stack trace:",e.stack),this.showError("Error: "+e.message),{score:0,commentary:`Error occurred: ${e.message}`,stop:!1}}}cleanup(){this.ws&&this.ws.readyState===WebSocket.OPEN&&(this.log(5,"🔌 Closing ChatGPT WebSocket connection"),this.ws.close(),this.ws=null),this.isLearningSessionActive?this.log(6,"🎤 Keeping persistent microphone session active"):(this.log(6,"🎤 Stopping temporary recording session"),this.stopRecording())}destroy(){this.log(4,"🧹 Destroying LanguageTutor instance"),this.cleanup(),this.stopKeyRefreshTimer()}}const Z=[];const X={nativeLanguage:"English",learningLanguage:"Italian",showExpectedOutput:"always",showCategory:!0,showFeedback:!0,showUpcomingQueue:!1,enableAudioHints:!1,translationThreshold:7,pauseBetweenTests:3,pauseWhenStruggling:5,passThreshold:7,repetitivenessFactor:5,loggingVerbosity:5,showDeveloperSettings:!1,enabledCategories:{}};const ee=function(){const{subscribe:t,set:s,update:n}=function(t,s=e){let n;const o=new Set;function a(e){if(i(t,e)&&(t=e,n)){const e=!Z.length;for(const e of o)e[1](),Z.push(e,t);if(e){for(let e=0;e<Z.length;e+=2)Z[e][0](Z[e+1]);Z.length=0}}}return{set:a,update:function(e){a(e(t))},subscribe:function(i,r=e){const l=[i,r];return o.add(l),1===o.size&&(n=s(a)||e),i(t),()=>{o.delete(l),0===o.size&&n&&(n(),n=null)}}}}(X);return{subscribe:t,load:()=>{if("undefined"==typeof localStorage)return;const e=localStorage.getItem("languageTutorSettings");if(e)try{const t=JSON.parse(e);n(e=>({...e,...t})),console.log("✅ Settings loaded from localStorage")}catch(e){console.error("❌ Failed to parse saved settings:",e)}},save:e=>{if("undefined"!=typeof localStorage)try{localStorage.setItem("languageTutorSettings",JSON.stringify(e)),console.log("💾 Settings saved to localStorage")}catch(e){console.error("❌ Failed to save settings:",e)}},updateSetting:(e,t)=>{n(s=>{const n={...s,[e]:t};if("undefined"!=typeof localStorage)try{localStorage.setItem("languageTutorSettings",JSON.stringify(n))}catch(e){console.error("❌ Failed to save setting:",e)}return n})},updateSettings:e=>{n(t=>{const s={...t,...e};if("undefined"!=typeof localStorage)try{localStorage.setItem("languageTutorSettings",JSON.stringify(s))}catch(e){console.error("❌ Failed to save settings:",e)}return s})},reset:()=>{s(X),"undefined"!=typeof localStorage&&localStorage.removeItem("languageTutorSettings")}}}();function te(e,t){function s(e){const s="checkbox"===e.target.type?e.target.checked:e.target.value;if(t&&"undefined"!=typeof localStorage)try{const e=localStorage.getItem("languageTutorSettings"),n=e?JSON.parse(e):{};n[t]=s,localStorage.setItem("languageTutorSettings",JSON.stringify(n)),console.log(`💾 Saved ${t}:`,s)}catch(e){console.error(`Failed to save ${t}:`,e)}}return e.addEventListener("change",s),{destroy(){e.removeEventListener("change",s)}}}function se(e,t,s){const n=e.slice();return n[9]=t[s],n}function ne(e,t,s){const n=e.slice();return n[9]=t[s],n}function oe(e){let t,s,n,o,i=e[9]+"";return{c(){t=g("option"),s=h(i),n=d(),t.__value=o=e[9],t.value=t.__value},m(e,o){l(e,t,o),r(t,s),r(t,n)},p(e,n){4&n&&i!==(i=e[9]+"")&&b(s,i),4&n&&o!==(o=e[9])&&(t.__value=o,t.value=t.__value)},d(e){e&&c(t)}}}function ie(e){let t,s,n,o,i=e[9]+"";return{c(){t=g("option"),s=h(i),n=d(),t.__value=o=e[9],t.value=t.__value},m(e,o){l(e,t,o),r(t,s),r(t,n)},p(e,n){8&n&&i!==(i=e[9]+"")&&b(s,i),8&n&&o!==(o=e[9])&&(t.__value=o,t.value=t.__value)},d(e){e&&c(t)}}}function ae(t){let s,o,i,h,p,y,b,w,$,S,T,L,x,k,C=t[2],E=[];for(let e=0;e<C.length;e+=1)E[e]=oe(ne(t,C,e));let R=t[3],A=[];for(let e=0;e<R.length;e+=1)A[e]=ie(se(t,R,e));return{c(){s=g("h3"),s.textContent="Language Selection",o=d(),i=g("div"),h=g("div"),p=g("label"),p.textContent="Native Language",y=d(),b=g("select");for(let e=0;e<E.length;e+=1)E[e].c();w=d(),$=g("div"),S=g("label"),S.textContent="Learning Language",T=d(),L=g("select");for(let e=0;e<A.length;e+=1)A[e].c();m(s,"class","section-header"),m(p,"class","form-label"),m(b,"class","form-select"),void 0===t[0]&&F(()=>t[5].call(b)),m(h,"class","form-group"),m(S,"class","form-label"),m(L,"class","form-select"),void 0===t[1]&&F(()=>t[6].call(L)),m($,"class","form-group"),m(i,"class","language-grid")},m(e,n){l(e,s,n),l(e,o,n),l(e,i,n),r(i,h),r(h,p),r(h,y),r(h,b);for(let e=0;e<E.length;e+=1)E[e]&&E[e].m(b,null);v(b,t[0],!0),r(i,w),r(i,$),r($,S),r($,T),r($,L);for(let e=0;e<A.length;e+=1)A[e]&&A[e].m(L,null);v(L,t[1],!0),x||(k=[f(b,"change",t[5]),a(te.call(null,b,"nativeLanguage")),f(L,"change",t[6]),a(te.call(null,L,"learningLanguage"))],x=!0)},p(e,[t]){if(4&t){let s;for(C=e[2],s=0;s<C.length;s+=1){const n=ne(e,C,s);E[s]?E[s].p(n,t):(E[s]=oe(n),E[s].c(),E[s].m(b,null))}for(;s<E.length;s+=1)E[s].d(1);E.length=C.length}if(5&t&&v(b,e[0]),8&t){let s;for(R=e[3],s=0;s<R.length;s+=1){const n=se(e,R,s);A[s]?A[s].p(n,t):(A[s]=ie(n),A[s].c(),A[s].m(L,null))}for(;s<A.length;s+=1)A[s].d(1);A.length=R.length}10&t&&v(L,e[1])},i:e,o:e,d(e){e&&c(s),e&&c(o),e&&c(i),u(E,e),u(A,e),x=!1,n(k)}}}function re(e,t,s){let{nativeLanguage:n}=t,{learningLanguage:o}=t,{nativeLanguages:i}=t,{learningLanguages:a}=t,{loggingVerbosity:r=5}=t;return k(),e.$$set=e=>{"nativeLanguage"in e&&s(0,n=e.nativeLanguage),"learningLanguage"in e&&s(1,o=e.learningLanguage),"nativeLanguages"in e&&s(2,i=e.nativeLanguages),"learningLanguages"in e&&s(3,a=e.learningLanguages),"loggingVerbosity"in e&&s(4,r=e.loggingVerbosity)},[n,o,i,a,r,function(){n=$(this),s(0,n),s(2,i)},function(){o=$(this),s(1,o),s(3,a)}]}class le extends z{constructor(e){super(),J(this,e,re,ae,i,{nativeLanguage:0,learningLanguage:1,nativeLanguages:2,learningLanguages:3,loggingVerbosity:4})}}function ce(e){let t;return{c(){t=h("Expected translation shown only for phrases with success rate below 25%")},m(e,s){l(e,t,s)},d(e){e&&c(t)}}}function ue(e){let t;return{c(){t=h("Expected translation is never shown - test your memory!")},m(e,s){l(e,t,s)},d(e){e&&c(t)}}}function ge(e){let t;return{c(){t=h("Expected translation is always shown")},m(e,s){l(e,t,s)},d(e){e&&c(t)}}}function he(e){let t,s,o,i,u,p,y,v,$,S,T,L;return{c(){t=g("div"),s=g("label"),o=h("Pause When Struggling: "),i=h(e[7]),u=h("s\n      "),p=g("span"),p.textContent="Extra pause time for phrases with low success rate (<25%) or poor scores (<4)",y=d(),v=g("input"),$=d(),S=g("div"),S.innerHTML="<span>Quick (0.5s)</span> \n      <span>Default (5s)</span> \n      <span>Extended (15s)</span>",m(p,"class","threshold-description"),m(s,"class","form-label"),m(v,"type","range"),m(v,"min","0.5"),m(v,"max","15"),m(v,"step","0.5"),m(v,"class","threshold-slider"),m(S,"class","threshold-labels"),m(t,"class","threshold-setting")},m(n,c){l(n,t,c),r(t,s),r(s,o),r(s,i),r(s,u),r(s,p),r(t,y),r(t,v),w(v,e[7]),r(t,$),r(t,S),T||(L=[f(v,"change",e[16]),f(v,"input",e[16]),a(te.call(null,v,"pauseWhenStruggling"))],T=!0)},p(e,t){128&t&&b(i,e[7]),128&t&&w(v,e[7])},d(e){e&&c(t),T=!1,n(L)}}}function de(t){let s,o,i,u,p,y,$,S,T,L,x,k,C,E,R,A,_,P,O,D,N,q,I,Q,H,V,M,U,B,W,j,K,J,z,G,Y,Z,X,ee,se,ne,oe,ie,ae,re,le,de,pe,fe,me,ye,be,we,ve,$e,Se,Te,Le,xe,ke,Ce=0===t[5]?"Never repeat translation":10===t[5]?"Always repeat translation":`Repeat translation for scores below ${t[5]}`,Ee=t[6]<=1?"Quick - brief pause for score review":t[6]>=5?"Slow - plenty of time to read feedback":"Balanced - comfortable time to review your score";function Re(e,t){return"always"===e[0]?ge:"never"===e[0]?ue:"struggling"===e[0]?ce:void 0}let Ae=Re(t),_e=Ae&&Ae(t),Pe="struggling"===t[0]&&he(t);return{c(){s=g("h3"),s.textContent="Display Options",o=d(),i=g("div"),u=g("div"),p=g("label"),y=g("input"),$=d(),S=g("span"),S.textContent="Display Category",T=d(),L=g("label"),x=g("input"),k=d(),C=g("span"),C.textContent="Display Feedback",E=d(),R=g("label"),A=g("input"),_=d(),P=g("span"),P.textContent="Show Upcoming Queue",O=d(),D=g("label"),N=g("input"),q=d(),I=g("span"),I.textContent="Enable Audio Hints",Q=d(),H=g("div"),V=g("label"),V.textContent="Show Expected Translation",M=d(),U=g("select"),B=g("option"),B.textContent="Always",W=g("option"),W.textContent="Only when struggling",j=g("option"),j.textContent="Never",K=d(),J=g("p"),_e&&_e.c(),z=d(),G=g("div"),Y=g("label"),Z=h("Translation Repetition Threshold: "),X=h(t[5]),ee=d(),se=g("span"),ne=h(Ce),oe=d(),ie=g("input"),ae=d(),re=g("div"),re.innerHTML="<span>Never (0)</span> \n      <span>Default (7)</span> \n      <span>Always (10)</span>",le=d(),de=g("div"),pe=g("label"),fe=h("Pause Between Tests: "),me=h(t[6]),ye=h("s\n      "),be=g("span"),we=h(Ee),ve=d(),$e=g("input"),Se=d(),Te=g("div"),Te.innerHTML="<span>Quick (0.5s)</span> \n      <span>Default (3s)</span> \n      <span>Slow (10s)</span>",Le=d(),Pe&&Pe.c(),m(s,"class","section-header"),m(y,"type","checkbox"),m(y,"class","category-checkbox"),m(S,"class","category-label"),m(p,"class","category-item"),m(x,"type","checkbox"),m(x,"class","category-checkbox"),m(C,"class","category-label"),m(L,"class","category-item"),m(A,"type","checkbox"),m(A,"class","category-checkbox"),m(P,"class","category-label"),m(R,"class","category-item"),m(N,"type","checkbox"),m(N,"class","category-checkbox"),m(I,"class","category-label"),m(D,"class","category-item"),m(u,"class","display-options-list svelte-6s5pe4"),m(V,"class","form-label"),m(V,"for","expected-output-select"),B.__value="always",B.value=B.__value,W.__value="struggling",W.value=W.__value,j.__value="never",j.value=j.__value,m(U,"id","expected-output-select"),m(U,"class","form-select"),void 0===t[0]&&F(()=>t[13].call(U)),m(J,"class","setting-description"),m(H,"class","form-group expected-translation-section svelte-6s5pe4"),m(se,"class","threshold-description"),m(Y,"class","form-label"),m(ie,"type","range"),m(ie,"min","0"),m(ie,"max","10"),m(ie,"step","1"),m(ie,"class","threshold-slider"),m(re,"class","threshold-labels"),m(G,"class","threshold-setting"),m(be,"class","threshold-description"),m(pe,"class","form-label"),m($e,"type","range"),m($e,"min","0.5"),m($e,"max","10"),m($e,"step","0.5"),m($e,"class","threshold-slider"),m(Te,"class","threshold-labels"),m(de,"class","threshold-setting"),m(i,"class","display-options-section")},m(e,n){l(e,s,n),l(e,o,n),l(e,i,n),r(i,u),r(u,p),r(p,y),y.checked=t[1],r(p,$),r(p,S),r(u,T),r(u,L),r(L,x),x.checked=t[2],r(L,k),r(L,C),r(u,E),r(u,R),r(R,A),A.checked=t[3],r(R,_),r(R,P),r(u,O),r(u,D),r(D,N),N.checked=t[4],r(D,q),r(D,I),r(i,Q),r(i,H),r(H,V),r(H,M),r(H,U),r(U,B),r(U,W),r(U,j),v(U,t[0],!0),r(H,K),r(H,J),_e&&_e.m(J,null),r(i,z),r(i,G),r(G,Y),r(Y,Z),r(Y,X),r(Y,ee),r(Y,se),r(se,ne),r(G,oe),r(G,ie),w(ie,t[5]),r(G,ae),r(G,re),r(i,le),r(i,de),r(de,pe),r(pe,fe),r(pe,me),r(pe,ye),r(pe,be),r(be,we),r(de,ve),r(de,$e),w($e,t[6]),r(de,Se),r(de,Te),r(i,Le),Pe&&Pe.m(i,null),xe||(ke=[f(y,"change",t[9]),a(te.call(null,y,"showCategory")),f(x,"change",t[10]),a(te.call(null,x,"showFeedback")),f(A,"change",t[11]),f(A,"change",t[8]),a(te.call(null,A,"showUpcomingQueue")),f(N,"change",t[12]),a(te.call(null,N,"enableAudioHints")),f(U,"change",t[13]),a(te.call(null,U,"showExpectedOutput")),f(ie,"change",t[14]),f(ie,"input",t[14]),a(te.call(null,ie,"translationThreshold")),f($e,"change",t[15]),f($e,"input",t[15]),a(te.call(null,$e,"pauseBetweenTests"))],xe=!0)},p(e,[t]){2&t&&(y.checked=e[1]),4&t&&(x.checked=e[2]),8&t&&(A.checked=e[3]),16&t&&(N.checked=e[4]),1&t&&v(U,e[0]),Ae!==(Ae=Re(e))&&(_e&&_e.d(1),_e=Ae&&Ae(e),_e&&(_e.c(),_e.m(J,null))),32&t&&b(X,e[5]),32&t&&Ce!==(Ce=0===e[5]?"Never repeat translation":10===e[5]?"Always repeat translation":`Repeat translation for scores below ${e[5]}`)&&b(ne,Ce),32&t&&w(ie,e[5]),64&t&&b(me,e[6]),64&t&&Ee!==(Ee=e[6]<=1?"Quick - brief pause for score review":e[6]>=5?"Slow - plenty of time to read feedback":"Balanced - comfortable time to review your score")&&b(we,Ee),64&t&&w($e,e[6]),"struggling"===e[0]?Pe?Pe.p(e,t):(Pe=he(e),Pe.c(),Pe.m(i,null)):Pe&&(Pe.d(1),Pe=null)},i:e,o:e,d(e){e&&c(s),e&&c(o),e&&c(i),_e&&_e.d(),Pe&&Pe.d(),xe=!1,n(ke)}}}function pe(e,t,s){let{showExpectedOutput:n}=t,{showCategory:o}=t,{showFeedback:i}=t,{showUpcomingQueue:a}=t,{enableAudioHints:r}=t,{translationThreshold:l}=t,{pauseBetweenTests:c}=t,{pauseWhenStruggling:u}=t;const g=k();return e.$$set=e=>{"showExpectedOutput"in e&&s(0,n=e.showExpectedOutput),"showCategory"in e&&s(1,o=e.showCategory),"showFeedback"in e&&s(2,i=e.showFeedback),"showUpcomingQueue"in e&&s(3,a=e.showUpcomingQueue),"enableAudioHints"in e&&s(4,r=e.enableAudioHints),"translationThreshold"in e&&s(5,l=e.translationThreshold),"pauseBetweenTests"in e&&s(6,c=e.pauseBetweenTests),"pauseWhenStruggling"in e&&s(7,u=e.pauseWhenStruggling)},[n,o,i,a,r,l,c,u,function(){g("updateQueue")},function(){o=this.checked,s(1,o)},function(){i=this.checked,s(2,i)},function(){a=this.checked,s(3,a)},function(){r=this.checked,s(4,r)},function(){n=$(this),s(0,n)},function(){l=y(this.value),s(5,l)},function(){c=y(this.value),s(6,c)},function(){u=y(this.value),s(7,u)}]}class fe extends z{constructor(e){super(),J(this,e,pe,de,i,{showExpectedOutput:0,showCategory:1,showFeedback:2,showUpcomingQueue:3,enableAudioHints:4,translationThreshold:5,pauseBetweenTests:6,pauseWhenStruggling:7})}}function me(t){let s,o,i,u,p,y,v,$,S,T,L,x,k,C,E,R,A,_,P,F,O,D,N,q,I,Q,H,V,M,U,B=t[1]<=3?"Less repetitive - tests advance quickly":t[1]>=8?"Very repetitive - tests stay at front longer":"Balanced repetition";return{c(){s=g("div"),o=g("h3"),o.textContent="Learning Algorithm",i=d(),u=g("div"),p=g("label"),y=h("Pass Threshold: "),v=h(t[0]),$=d(),S=g("span"),T=h("Scores "),L=h(t[0]),x=h(" and above are considered a pass"),k=d(),C=g("input"),E=d(),R=g("div"),R.innerHTML="<span>Easy (1)</span> \n      <span>Default (7)</span> \n      <span>Hard (10)</span>",A=d(),_=g("div"),P=g("label"),F=h("Test Repetitiveness: "),O=h(t[1]),D=d(),N=g("span"),q=h(B),I=d(),Q=g("input"),H=d(),V=g("div"),V.innerHTML="<span>Less (1)</span> \n      <span>Default (5)</span> \n      <span>More (10)</span>",m(o,"class","section-header"),m(S,"class","threshold-description"),m(p,"class","form-label"),m(C,"type","range"),m(C,"min","1"),m(C,"max","10"),m(C,"step","1"),m(C,"class","threshold-slider"),m(R,"class","threshold-labels"),m(u,"class","threshold-setting"),m(N,"class","threshold-description"),m(P,"class","form-label"),m(Q,"type","range"),m(Q,"min","1"),m(Q,"max","10"),m(Q,"step","1"),m(Q,"class","threshold-slider"),m(V,"class","threshold-labels"),m(_,"class","threshold-setting"),m(s,"class","algorithm-settings svelte-1xttx29")},m(e,n){l(e,s,n),r(s,o),r(s,i),r(s,u),r(u,p),r(p,y),r(p,v),r(p,$),r(p,S),r(S,T),r(S,L),r(S,x),r(u,k),r(u,C),w(C,t[0]),r(u,E),r(u,R),r(s,A),r(s,_),r(_,P),r(P,F),r(P,O),r(P,D),r(P,N),r(N,q),r(_,I),r(_,Q),w(Q,t[1]),r(_,H),r(_,V),M||(U=[f(C,"change",t[2]),f(C,"input",t[2]),a(te.call(null,C,"passThreshold")),f(Q,"change",t[3]),f(Q,"input",t[3]),a(te.call(null,Q,"repetitivenessFactor"))],M=!0)},p(e,[t]){1&t&&b(v,e[0]),1&t&&b(L,e[0]),1&t&&w(C,e[0]),2&t&&b(O,e[1]),2&t&&B!==(B=e[1]<=3?"Less repetitive - tests advance quickly":e[1]>=8?"Very repetitive - tests stay at front longer":"Balanced repetition")&&b(q,B),2&t&&w(Q,e[1])},i:e,o:e,d(e){e&&c(s),M=!1,n(U)}}}function ye(e,t,s){let{passThreshold:n}=t,{repetitivenessFactor:o}=t;return e.$$set=e=>{"passThreshold"in e&&s(0,n=e.passThreshold),"repetitivenessFactor"in e&&s(1,o=e.repetitivenessFactor)},[n,o,function(){n=y(this.value),s(0,n)},function(){o=y(this.value),s(1,o)}]}class be extends z{constructor(e){super(),J(this,e,ye,me,i,{passThreshold:0,repetitivenessFactor:1})}}function we(e,t,s){const n=e.slice();return n[7]=t[s],n}function ve(e){let t,s,n,o,i,a,h,p=!Object.values(e[0]).some(Le),f=e[1],y=[];for(let t=0;t<f.length;t+=1)y[t]=$e(we(e,f,t));let b=p&&Se();return{c(){t=g("h3"),t.textContent="Learning Categories",s=d(),n=g("div"),o=g("div");for(let e=0;e<y.length;e+=1)y[e].c();i=d(),b&&b.c(),a=d(),h=g("style"),h.textContent="/* Component-specific styles for CategoryManager */\n  .categories-section {\n    margin-top: 1rem;\n  }\n  \n  .categories-list {\n    margin-top: 0.5rem;\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: 0.5rem;\n  }\n  \n  @media (min-width: 640px) {\n    .categories-list {\n      grid-template-columns: 1fr 1fr;\n    }\n  }\n  \n  /* Fieldset styling for categories */\n  fieldset {\n    border: none;\n    padding: 0;\n    margin: 0;\n  }\n  \n  legend {\n    padding: 0;\n    margin-bottom: 0.5rem;\n  }",m(t,"class","section-header"),m(o,"class","categories-list"),m(n,"class","categories-section")},m(e,c){l(e,t,c),l(e,s,c),l(e,n,c),r(n,o);for(let e=0;e<y.length;e+=1)y[e]&&y[e].m(o,null);r(n,i),b&&b.m(n,null),r(n,a),r(n,h)},p(e,t){if(7&t){let s;for(f=e[1],s=0;s<f.length;s+=1){const n=we(e,f,s);y[s]?y[s].p(n,t):(y[s]=$e(n),y[s].c(),y[s].m(o,null))}for(;s<y.length;s+=1)y[s].d(1);y.length=f.length}1&t&&(p=!Object.values(e[0]).some(Le)),p?b||(b=Se(),b.c(),b.m(n,a)):b&&(b.d(1),b=null)},d(e){e&&c(t),e&&c(s),e&&c(n),u(y,e),b&&b.d()}}}function $e(e){let t,s,n,o,i,a,u,p,y,w=e[7]+"";function v(...t){return e[4](e[7],...t)}return{c(){t=g("label"),s=g("input"),o=d(),i=g("span"),a=h(w),u=d(),m(s,"type","checkbox"),m(s,"class","category-checkbox"),s.checked=n=e[0][e[7]]||!1,m(i,"class","category-label"),m(t,"class","category-item")},m(e,n){l(e,t,n),r(t,s),r(t,o),r(t,i),r(i,a),r(t,u),p||(y=f(s,"change",v),p=!0)},p(t,o){e=t,3&o&&n!==(n=e[0][e[7]]||!1)&&(s.checked=n),2&o&&w!==(w=e[7]+"")&&b(a,w)},d(e){e&&c(t),p=!1,y()}}}function Se(e){let t;return{c(){t=g("div"),t.textContent="At least one category must be enabled to start learning!",m(t,"class","error-text")},m(e,s){l(e,t,s)},d(e){e&&c(t)}}}function Te(t){let s,n=t[1].length>0&&ve(t);return{c(){n&&n.c(),s=p()},m(e,t){n&&n.m(e,t),l(e,s,t)},p(e,[t]){e[1].length>0?n?n.p(e,t):(n=ve(e),n.c(),n.m(s.parentNode,s)):n&&(n.d(1),n=null)},i:e,o:e,d(e){n&&n.d(e),e&&c(s)}}}const Le=e=>e;function xe(e,t,s){let{categories:n}=t,{enabledCategories:o}=t,{loggingVerbosity:i=5}=t;const a=k();function r(e,t){if(function(e,...t){i>=e&&console.log(...t)}(6,`🔘 Category toggle: ${e} → ${t}`),s(0,o[e]=t,o),s(0,o={...o}),"undefined"!=typeof localStorage)try{const s=localStorage.getItem("languageTutorSettings"),n=s?JSON.parse(s):{};n.enabledCategories||(n.enabledCategories={}),n.enabledCategories[e]=t,localStorage.setItem("languageTutorSettings",JSON.stringify(n)),console.log(`💾 Saved category ${e}:`,t)}catch(t){console.error(`Failed to save category ${e}:`,t)}a("categoryChange",{category:e,enabled:t})}return e.$$set=e=>{"categories"in e&&s(1,n=e.categories),"enabledCategories"in e&&s(0,o=e.enabledCategories),"loggingVerbosity"in e&&s(3,i=e.loggingVerbosity)},[o,n,r,i,(e,t)=>r(e,t.target.checked)]}class ke extends z{constructor(e){super(),J(this,e,xe,Te,i,{categories:1,enabledCategories:0,loggingVerbosity:3})}}function Ce(e){let t,s,o,i,a,u,p,y,v,$,S,T,L,x,k,C,E,R,A,_,P,F=0===e[0]?"Silent - no console output":e[0]<=3?"Quiet - errors and warnings only":e[0]<=6?"Normal - important events":"Verbose - detailed debugging info";return{c(){t=g("div"),s=g("h3"),s.textContent="🛠️ Developer Settings",o=d(),i=g("div"),a=g("label"),u=h("Console Logging Verbosity: "),p=h(e[0]),y=d(),v=g("span"),$=h(F),S=d(),T=g("input"),L=d(),x=g("div"),x.innerHTML="<span>Silent (0)</span> \n        <span>Default (5)</span> \n        <span>Verbose (10)</span>",k=d(),C=g("div"),E=g("button"),E.textContent="✅ Pass Next Test",R=d(),A=g("button"),A.textContent="❌ Fail Next Test",m(s,"class","section-header"),m(v,"class","threshold-description"),m(a,"class","form-label"),m(T,"type","range"),m(T,"min","0"),m(T,"max","10"),m(T,"step","1"),m(T,"class","threshold-slider"),m(x,"class","threshold-labels"),m(E,"class","debug-btn pass-btn svelte-w1gebj"),m(A,"class","debug-btn fail-btn svelte-w1gebj"),m(C,"class","debug-buttons svelte-w1gebj"),m(i,"class","threshold-setting developer-setting svelte-w1gebj"),m(t,"class","developer-settings svelte-w1gebj")},m(n,c){l(n,t,c),r(t,s),r(t,o),r(t,i),r(i,a),r(a,u),r(a,p),r(a,y),r(a,v),r(v,$),r(i,S),r(i,T),w(T,e[0]),r(i,L),r(i,x),r(i,k),r(i,C),r(C,E),r(C,R),r(C,A),_||(P=[f(T,"change",e[3]),f(T,"input",e[3]),f(E,"click",e[4]),f(A,"click",e[5])],_=!0)},p(e,t){1&t&&b(p,e[0]),1&t&&F!==(F=0===e[0]?"Silent - no console output":e[0]<=3?"Quiet - errors and warnings only":e[0]<=6?"Normal - important events":"Verbose - detailed debugging info")&&b($,F),1&t&&w(T,e[0])},d(e){e&&c(t),_=!1,n(P)}}}function Ee(t){let s,n=t[1]&&Ce(t);return{c(){n&&n.c(),s=p()},m(e,t){n&&n.m(e,t),l(e,s,t)},p(e,[t]){e[1]?n?n.p(e,t):(n=Ce(e),n.c(),n.m(s.parentNode,s)):n&&(n.d(1),n=null)},i:e,o:e,d(e){n&&n.d(e),e&&c(s)}}}function Re(e,t,s){let{showDeveloperSettings:n}=t,{loggingVerbosity:o}=t;const i=k();return e.$$set=e=>{"showDeveloperSettings"in e&&s(1,n=e.showDeveloperSettings),"loggingVerbosity"in e&&s(0,o=e.loggingVerbosity)},[o,n,i,function(){o=y(this.value),s(0,o)},()=>i("debugTest",{action:"pass"}),()=>i("debugTest",{action:"fail"})]}class Ae extends z{constructor(e){super(),J(this,e,Re,Ee,i,{showDeveloperSettings:1,loggingVerbosity:0})}}function _e(t){let s;return{c(){s=g("p"),s.textContent="Ready to start learning",m(s,"class","placeholder-text")},m(e,t){l(e,s,t)},p:e,d(e){e&&c(s)}}}function Pe(e){let t,s,n,o,i,a,u,p=e[0].source+"",f=e[6](e[0]),y=e[4]&&Fe(e),w=f&&Oe(e);return{c(){t=g("div"),y&&y.c(),s=d(),n=g("p"),n.textContent="Translate this:",o=d(),i=g("p"),a=h(p),u=d(),w&&w.c(),m(n,"class","phrase-label"),m(i,"class","phrase-text"),m(t,"class","phrase-content")},m(e,c){l(e,t,c),y&&y.m(t,null),r(t,s),r(t,n),r(t,o),r(t,i),r(i,a),r(t,u),w&&w.m(t,null)},p(e,n){e[4]?y?y.p(e,n):(y=Fe(e),y.c(),y.m(t,s)):y&&(y.d(1),y=null),1&n&&p!==(p=e[0].source+"")&&b(a,p),1&n&&(f=e[6](e[0])),f?w?w.p(e,n):(w=Oe(e),w.c(),w.m(t,null)):w&&(w.d(1),w=null)},d(e){e&&c(t),y&&y.d(),w&&w.d()}}}function Fe(e){let t,s,n,o=e[0].category+"";return{c(){t=g("p"),s=h("Category: "),n=h(o),m(t,"class","phrase-category")},m(e,o){l(e,t,o),r(t,s),r(t,n)},p(e,t){1&t&&o!==(o=e[0].category+"")&&b(n,o)},d(e){e&&c(t)}}}function Oe(e){let t,s,n,o=e[0].target+"";return{c(){t=g("p"),s=h("Expected: "),n=h(o),m(t,"class","expected-text")},m(e,o){l(e,t,o),r(t,s),r(t,n)},p(e,t){1&t&&o!==(o=e[0].target+"")&&b(n,o)},d(e){e&&c(t)}}}function De(t){let s;return{c(){s=g("p"),s.textContent="Ready to start learning!",m(s,"class","status-text")},m(e,t){l(e,s,t)},p:e,d(e){e&&c(s)}}}function Ne(t){let s;return{c(){s=g("p"),s.textContent="Listening...",m(s,"class","status-text")},m(e,t){l(e,s,t)},p:e,d(e){e&&c(s)}}}function qe(t){let s;return{c(){s=g("p"),s.textContent="🎯 Here is a hint for you",m(s,"class","status-text")},m(e,t){l(e,s,t)},p:e,d(e){e&&c(s)}}}function Ie(e){let t,s;return{c(){t=g("p"),s=h(e[1]),m(t,"class","status-text")},m(e,n){l(e,t,n),r(t,s)},p(e,t){2&t&&b(s,e[1])},d(e){e&&c(t)}}}function Qe(t){let s,n,o,i,a,u,p,y,w,v,$,S,T,L,x,k=t[2]?"⏹️":"▶️",C=t[2]?"Stop Learning":"Start Learning";function E(e,t){return e[0]?Pe:_e}let R=E(t),A=R(t);function _(e,t){return 1&t&&(i=null),e[5]?Ie:(null==i&&(i=!(!e[0]||!e[7](e[0]))),i?qe:e[2]?Ne:De)}let P=_(t,-1),F=P(t);return{c(){s=g("div"),A.c(),n=d(),o=g("div"),F.c(),a=d(),u=g("div"),p=g("button"),y=g("span"),w=h(k),v=d(),$=h(C),m(s,"class","phrase-display"),m(o,"class","status-area"),m(y,"class","btn-icon"),m(p,"class",S="start-stop-btn "+(t[2]?"stop-btn":"start-btn")),p.disabled=T=!t[3]&&!t[2],m(u,"class","button-container")},m(e,i){l(e,s,i),A.m(s,null),l(e,n,i),l(e,o,i),F.m(o,null),l(e,a,i),l(e,u,i),r(u,p),r(p,y),r(y,w),r(p,v),r(p,$),L||(x=f(p,"click",t[8]),L=!0)},p(e,[t]){R===(R=E(e))&&A?A.p(e,t):(A.d(1),A=R(e),A&&(A.c(),A.m(s,null))),P===(P=_(e,t))&&F?F.p(e,t):(F.d(1),F=P(e),F&&(F.c(),F.m(o,null))),4&t&&k!==(k=e[2]?"⏹️":"▶️")&&b(w,k),4&t&&C!==(C=e[2]?"Stop Learning":"Start Learning")&&b($,C),4&t&&S!==(S="start-stop-btn "+(e[2]?"stop-btn":"start-btn"))&&m(p,"class",S),12&t&&T!==(T=!e[3]&&!e[2])&&(p.disabled=T)},i:e,o:e,d(e){e&&c(s),A.d(),e&&c(n),e&&c(o),F.d(),e&&c(a),e&&c(u),L=!1,x()}}}function He(e,t,s){let{currentPhrase:n}=t,{status:o}=t,{isLearning:i}=t,{canStart:a}=t,{showCategory:r}=t,{showFeedback:l}=t,{showExpectedOutput:c}=t,{enableAudioHints:u}=t,{nativeLanguage:g}=t,{learningLanguage:h}=t;const d=k();return e.$$set=e=>{"currentPhrase"in e&&s(0,n=e.currentPhrase),"status"in e&&s(1,o=e.status),"isLearning"in e&&s(2,i=e.isLearning),"canStart"in e&&s(3,a=e.canStart),"showCategory"in e&&s(4,r=e.showCategory),"showFeedback"in e&&s(5,l=e.showFeedback),"showExpectedOutput"in e&&s(9,c=e.showExpectedOutput),"enableAudioHints"in e&&s(10,u=e.enableAudioHints),"nativeLanguage"in e&&s(11,g=e.nativeLanguage),"learningLanguage"in e&&s(12,h=e.learningLanguage)},[n,o,i,a,r,l,function(e){if("always"===c)return!0;if("never"===c)return!1;if("struggling"===c){if(!e.recentResults||0===e.recentResults.length)return!0;return e.recentResults.filter(e=>1===e).length/e.recentResults.length<.25}return!0},function(e){if(!u||!e.recentResults||0===e.recentResults.length)return!1;const t=e.recentResults.filter(e=>1===e).length,s=t/e.recentResults.length;return t>0&&s<.5},function(){d("startStop")},c,u,g,h]}class Ve extends z{constructor(e){super(),J(this,e,He,Qe,i,{currentPhrase:0,status:1,isLearning:2,canStart:3,showCategory:4,showFeedback:5,showExpectedOutput:9,enableAudioHints:10,nativeLanguage:11,learningLanguage:12})}}function Me(e,t,s){const n=e.slice();return n[2]=t[s],n}function Ue(e){let t,s,n,o,i,a,p,f=e[1].length+"",y=e[1],w=[];for(let t=0;t<y.length;t+=1)w[t]=Be(Me(e,y,t));return{c(){t=g("div"),s=g("h3"),n=h("Complete Learning Queue ("),o=h(f),i=h(" items)"),a=d(),p=g("div");for(let e=0;e<w.length;e+=1)w[e].c();m(s,"class","queue-title"),m(p,"class","queue-list"),m(t,"class","queue-section")},m(e,c){l(e,t,c),r(t,s),r(s,n),r(s,o),r(s,i),r(t,a),r(t,p);for(let e=0;e<w.length;e+=1)w[e]&&w[e].m(p,null)},p(e,t){if(2&t&&f!==(f=e[1].length+"")&&b(o,f),2&t){let s;for(y=e[1],s=0;s<y.length;s+=1){const n=Me(e,y,s);w[s]?w[s].p(n,t):(w[s]=Be(n),w[s].c(),w[s].m(p,null))}for(;s<w.length;s+=1)w[s].d(1);w.length=y.length}},d(e){e&&c(t),u(w,e)}}}function Be(e){let t,s,n,o,i,a,u,p,f,y,w,v,$,T,L,x,k,C,E,R=e[2].position+"",A=e[2].source+"",_=e[2].category+"",P=0===e[2].recentResults.length?"New":`${(100*e[2].successRate).toFixed(0)}%`,F=e[2].recentResults.filter(je).length+"",O=e[2].recentResults.length+"";return{c(){t=g("div"),s=g("span"),n=h("#"),o=h(R),i=d(),a=g("span"),u=h(A),p=d(),f=g("span"),y=h(_),w=d(),v=g("span"),$=h(P),T=d(),L=g("span"),x=h(F),k=h("/"),C=h(O),E=d(),m(s,"class","queue-position"),m(a,"class","queue-text"),m(f,"class","queue-category"),m(v,"class","queue-success-rate"),S(v,"struggling",e[2].successRate<.3),S(v,"mastered",e[2].successRate>.7),m(L,"class","queue-success-count"),m(t,"class","queue-item"),S(t,"current",1===e[2].position)},m(e,c){l(e,t,c),r(t,s),r(s,n),r(s,o),r(t,i),r(t,a),r(a,u),r(t,p),r(t,f),r(f,y),r(t,w),r(t,v),r(v,$),r(t,T),r(t,L),r(L,x),r(L,k),r(L,C),r(t,E)},p(e,s){2&s&&R!==(R=e[2].position+"")&&b(o,R),2&s&&A!==(A=e[2].source+"")&&b(u,A),2&s&&_!==(_=e[2].category+"")&&b(y,_),2&s&&P!==(P=0===e[2].recentResults.length?"New":`${(100*e[2].successRate).toFixed(0)}%`)&&b($,P),2&s&&S(v,"struggling",e[2].successRate<.3),2&s&&S(v,"mastered",e[2].successRate>.7),2&s&&F!==(F=e[2].recentResults.filter(je).length+"")&&b(x,F),2&s&&O!==(O=e[2].recentResults.length+"")&&b(C,O),2&s&&S(t,"current",1===e[2].position)},d(e){e&&c(t)}}}function We(t){let s,n=t[0]&&t[1].length>0&&Ue(t);return{c(){n&&n.c(),s=p()},m(e,t){n&&n.m(e,t),l(e,s,t)},p(e,[t]){e[0]&&e[1].length>0?n?n.p(e,t):(n=Ue(e),n.c(),n.m(s.parentNode,s)):n&&(n.d(1),n=null)},i:e,o:e,d(e){n&&n.d(e),e&&c(s)}}}const je=e=>e;function Ke(e,t,s){let{showUpcomingQueue:n}=t,{upcomingQueue:o}=t;return e.$$set=e=>{"showUpcomingQueue"in e&&s(0,n=e.showUpcomingQueue),"upcomingQueue"in e&&s(1,o=e.upcomingQueue)},[n,o]}class Je extends z{constructor(e){super(),J(this,e,Ke,We,i,{showUpcomingQueue:0,upcomingQueue:1})}}function ze(e){let t,s,o,i,a,u,p,y,b,w,v,$,S,T,L,x,k,C,R,A,_,P,F,D,N,q,I,Q,H,K,J,z,G,Y,Z,X,ee;function te(t){e[22](t)}function se(t){e[23](t)}function ne(t){e[24](t)}function oe(t){e[25](t)}function ie(t){e[26](t)}function ae(t){e[27](t)}function re(t){e[28](t)}function ce(t){e[29](t)}s=new le({props:{nativeLanguage:e[3].nativeLanguage,learningLanguage:e[3].learningLanguage,nativeLanguages:e[11],learningLanguages:e[10],loggingVerbosity:e[3].loggingVerbosity}});let ue={};function ge(t){e[30](t)}function he(t){e[31](t)}void 0!==e[3].showExpectedOutput&&(ue.showExpectedOutput=e[3].showExpectedOutput),void 0!==e[3].showCategory&&(ue.showCategory=e[3].showCategory),void 0!==e[3].showFeedback&&(ue.showFeedback=e[3].showFeedback),void 0!==e[3].showUpcomingQueue&&(ue.showUpcomingQueue=e[3].showUpcomingQueue),void 0!==e[3].enableAudioHints&&(ue.enableAudioHints=e[3].enableAudioHints),void 0!==e[3].translationThreshold&&(ue.translationThreshold=e[3].translationThreshold),void 0!==e[3].pauseBetweenTests&&(ue.pauseBetweenTests=e[3].pauseBetweenTests),void 0!==e[3].pauseWhenStruggling&&(ue.pauseWhenStruggling=e[3].pauseWhenStruggling),i=new fe({props:ue}),E.push(()=>U(i,"showExpectedOutput",te)),E.push(()=>U(i,"showCategory",se)),E.push(()=>U(i,"showFeedback",ne)),E.push(()=>U(i,"showUpcomingQueue",oe)),E.push(()=>U(i,"enableAudioHints",ie)),E.push(()=>U(i,"translationThreshold",ae)),E.push(()=>U(i,"pauseBetweenTests",re)),E.push(()=>U(i,"pauseWhenStruggling",ce)),i.$on("updateQueue",e[14]);let de={};function pe(t){e[32](t)}void 0!==e[3].passThreshold&&(de.passThreshold=e[3].passThreshold),void 0!==e[3].repetitivenessFactor&&(de.repetitivenessFactor=e[3].repetitivenessFactor),T=new be({props:de}),E.push(()=>U(T,"passThreshold",ge)),E.push(()=>U(T,"repetitivenessFactor",he));let me={categories:e[2],loggingVerbosity:e[3].loggingVerbosity};function ye(t){e[33](t)}void 0!==e[3].enabledCategories&&(me.enabledCategories=e[3].enabledCategories),C=new ke({props:me}),E.push(()=>U(C,"enabledCategories",pe)),C.$on("categoryChange",e[12]);let we={showDeveloperSettings:e[3].showDeveloperSettings};return void 0!==e[3].loggingVerbosity&&(we.loggingVerbosity=e[3].loggingVerbosity),G=new Ae({props:we}),E.push(()=>U(G,"loggingVerbosity",ye)),G.$on("debugTest",e[13]),{c(){t=g("div"),B(s.$$.fragment),o=d(),B(i.$$.fragment),S=d(),B(T.$$.fragment),k=d(),B(C.$$.fragment),A=d(),_=g("div"),P=g("h3"),P.textContent="Management",F=d(),D=g("div"),N=g("button"),q=h("🗑️ Clear TTS Cache"),Q=d(),H=g("button"),K=h("🔄 Reset Learning Queue"),z=d(),B(G.$$.fragment),m(P,"class","section-header"),m(N,"class","management-btn clear-btn"),N.disabled=I=!e[1],m(H,"class","management-btn reset-btn"),H.disabled=J=!e[0],m(D,"class","management-buttons"),m(_,"class","management-section"),m(t,"class","settings-panel")},m(n,a){l(n,t,a),W(s,t,null),r(t,o),W(i,t,null),r(t,S),W(T,t,null),r(t,k),W(C,t,null),r(t,A),r(t,_),r(_,P),r(_,F),r(_,D),r(D,N),r(N,q),r(D,Q),r(D,H),r(H,K),r(t,z),W(G,t,null),Z=!0,X||(ee=[f(N,"click",e[20]),f(H,"click",e[21])],X=!0)},p(e,t){const n={};8&t[0]&&(n.nativeLanguage=e[3].nativeLanguage),8&t[0]&&(n.learningLanguage=e[3].learningLanguage),1024&t[0]&&(n.learningLanguages=e[10]),8&t[0]&&(n.loggingVerbosity=e[3].loggingVerbosity),s.$set(n);const o={};!a&&8&t[0]&&(a=!0,o.showExpectedOutput=e[3].showExpectedOutput,O(()=>a=!1)),!u&&8&t[0]&&(u=!0,o.showCategory=e[3].showCategory,O(()=>u=!1)),!p&&8&t[0]&&(p=!0,o.showFeedback=e[3].showFeedback,O(()=>p=!1)),!y&&8&t[0]&&(y=!0,o.showUpcomingQueue=e[3].showUpcomingQueue,O(()=>y=!1)),!b&&8&t[0]&&(b=!0,o.enableAudioHints=e[3].enableAudioHints,O(()=>b=!1)),!w&&8&t[0]&&(w=!0,o.translationThreshold=e[3].translationThreshold,O(()=>w=!1)),!v&&8&t[0]&&(v=!0,o.pauseBetweenTests=e[3].pauseBetweenTests,O(()=>v=!1)),!$&&8&t[0]&&($=!0,o.pauseWhenStruggling=e[3].pauseWhenStruggling,O(()=>$=!1)),i.$set(o);const r={};!L&&8&t[0]&&(L=!0,r.passThreshold=e[3].passThreshold,O(()=>L=!1)),!x&&8&t[0]&&(x=!0,r.repetitivenessFactor=e[3].repetitivenessFactor,O(()=>x=!1)),T.$set(r);const l={};4&t[0]&&(l.categories=e[2]),8&t[0]&&(l.loggingVerbosity=e[3].loggingVerbosity),!R&&8&t[0]&&(R=!0,l.enabledCategories=e[3].enabledCategories,O(()=>R=!1)),C.$set(l),(!Z||2&t[0]&&I!==(I=!e[1]))&&(N.disabled=I),(!Z||1&t[0]&&J!==(J=!e[0]))&&(H.disabled=J);const c={};8&t[0]&&(c.showDeveloperSettings=e[3].showDeveloperSettings),!Y&&8&t[0]&&(Y=!0,c.loggingVerbosity=e[3].loggingVerbosity,O(()=>Y=!1)),G.$set(c)},i(e){Z||(V(s.$$.fragment,e),V(i.$$.fragment,e),V(T.$$.fragment,e),V(C.$$.fragment,e),V(G.$$.fragment,e),Z=!0)},o(e){M(s.$$.fragment,e),M(i.$$.fragment,e),M(T.$$.fragment,e),M(C.$$.fragment,e),M(G.$$.fragment,e),Z=!1},d(e){e&&c(t),j(s),j(i),j(T),j(C),j(G),X=!1,n(ee)}}}function Ge(e){let t,s,o,i,a,u,p,y,w,v,$,T,L,x,k,C,E,R,A=e[4]?"⬆️":"⬇️";i=new Ve({props:{currentPhrase:e[6],status:e[7],isLearning:e[5],canStart:e[9],showCategory:e[3].showCategory,showFeedback:e[3].showFeedback,showExpectedOutput:e[3].showExpectedOutput,enableAudioHints:e[3].enableAudioHints,nativeLanguage:e[3].nativeLanguage,learningLanguage:e[3].learningLanguage}}),i.$on("startStop",e[15]);let _=e[4]&&ze(e);return k=new Je({props:{showUpcomingQueue:e[3].showUpcomingQueue,upcomingQueue:e[8]}}),{c(){t=g("main"),s=g("div"),s.innerHTML="<h1>Language Tutor</h1> \n    <p>Your personal AI language learning companion</p>",o=d(),B(i.$$.fragment),a=d(),u=g("div"),p=g("button"),y=g("span"),y.textContent="⚙️",w=h("\n      Settings\n      "),v=g("span"),$=h(A),L=d(),_&&_.c(),x=d(),B(k.$$.fragment),m(s,"class","title"),m(y,"class","settings-icon svelte-15o4qf2"),S(y,"developer-mode",e[3].showDeveloperSettings),m(v,"class","chevron-icon"),m(p,"class","settings-toggle"),m(p,"title",T=e[3].showDeveloperSettings?"Developer mode active! Long press again to disable.":"Long press for developer settings"),m(u,"class","settings-section"),m(t,"class","app-container")},m(n,c){l(n,t,c),r(t,s),r(t,o),W(i,t,null),r(t,a),r(t,u),r(u,p),r(p,y),r(p,w),r(p,v),r(v,$),r(u,L),_&&_.m(u,null),r(t,x),W(k,t,null),C=!0,E||(R=[f(p,"click",e[16]),f(p,"mousedown",e[17]),f(p,"mouseup",e[18]),f(p,"mouseleave",e[19]),f(p,"touchstart",e[17],{passive:!0}),f(p,"touchend",e[18],{passive:!0})],E=!0)},p(e,t){const s={};64&t[0]&&(s.currentPhrase=e[6]),128&t[0]&&(s.status=e[7]),32&t[0]&&(s.isLearning=e[5]),512&t[0]&&(s.canStart=e[9]),8&t[0]&&(s.showCategory=e[3].showCategory),8&t[0]&&(s.showFeedback=e[3].showFeedback),8&t[0]&&(s.showExpectedOutput=e[3].showExpectedOutput),8&t[0]&&(s.enableAudioHints=e[3].enableAudioHints),8&t[0]&&(s.nativeLanguage=e[3].nativeLanguage),8&t[0]&&(s.learningLanguage=e[3].learningLanguage),i.$set(s),(!C||8&t[0])&&S(y,"developer-mode",e[3].showDeveloperSettings),(!C||16&t[0])&&A!==(A=e[4]?"⬆️":"⬇️")&&b($,A),(!C||8&t[0]&&T!==(T=e[3].showDeveloperSettings?"Developer mode active! Long press again to disable.":"Long press for developer settings"))&&m(p,"title",T),e[4]?_?(_.p(e,t),16&t[0]&&V(_,1)):(_=ze(e),_.c(),V(_,1),_.m(u,null)):_&&(H={r:0,c:[],p:H},M(_,1,1,()=>{_=null}),H.r||n(H.c),H=H.p);const o={};8&t[0]&&(o.showUpcomingQueue=e[3].showUpcomingQueue),256&t[0]&&(o.upcomingQueue=e[8]),k.$set(o)},i(e){C||(V(i.$$.fragment,e),V(_),V(k.$$.fragment,e),C=!0)},o(e){M(i.$$.fragment,e),M(_),M(k.$$.fragment,e),C=!1},d(e){e&&c(t),j(i),_&&_.d(),j(k),E=!1,n(R)}}}function Ye(e,t,s){let n,o,i=!1,a=!1,r=null,l="Ready to start learning!",c=null,u=null,g=[],h=[],d=!1,p={};ee.subscribe(e=>{const t=p;s(3,p=e),!d||t.nativeLanguage===e.nativeLanguage&&t.learningLanguage===e.learningLanguage||async function(){(c||u)&&(await w(),v())}()});const f={English:["Italian","Spanish"]},m=Object.keys(f);function y(e,...t){p.loggingVerbosity>=e&&console.log(...t)}var b;async function w(){y(5,"🏗️ Initializing LearningQueue for:",p.nativeLanguage,"→",p.learningLanguage),s(2,g=[]),s(0,c=new G(p.nativeLanguage,p.learningLanguage,"basic","learning/",{passThreshold:p.passThreshold,memoryLength:20,repetitivenessFactor:p.repetitivenessFactor})),await c.init();const e=c.getCategories();s(2,g=e);const t={};e.forEach(e=>{t[e]=p.enabledCategories[e]??!0,c.setCategory(e,t[e])}),ee.updateSetting("enabledCategories",t),$(),y(5,"✅ LearningQueue initialization complete")}function v(){s(1,u=new Y(null,p.nativeLanguage,p.learningLanguage,{apiKeyEndpoint:"openai.php",feedbackThreshold:p.translationThreshold,loggingVerbosity:p.loggingVerbosity,audioPath:"audio/",enableAudioHints:p.enableAudioHints,statusCallback:e=>{!p.showFeedback&&a?e.includes("Listen to this")?s(7,l=`Listen to the ${p.nativeLanguage} phrase...`):e.includes("Now say it in")&&s(7,l=`Now say it in ${p.learningLanguage}...`):s(7,l=e)}}))}function $(){c&&p.showUpcomingQueue&&(s(8,h=c.getTopQueueItems()),y(7,"📋 Updated upcoming queue:",h.length,"items"))}async function S(){if(c&&u)try{y(5,"🎓 Starting persistent microphone session for learning"),await u.startLearningSession(),s(5,a=!0),s(7,l="Right then, let's get cracking!"),await async function(){for(;a;){const e=c.getNextTest();if(!e){s(7,l="No more phrases available! Check your category settings."),L();break}if(y(8,"📋 Got phrase from queue:",e),y(8,"📊 Phrase recentResults:",e.recentResults,"length:",e.recentResults?.length),s(6,r=e),s(7,l=`Ready to listen to ${p.nativeLanguage} phrase...`),!a)break;try{const t=await u.test(e.source,e.target,e.recentResults||[]);if(t.stop||!a){L();break}if(0===t.score)s(7,l=`No response detected - ${t.commentary}`),y(6,`⏳ Pausing ${p.pauseBetweenTests} seconds before repeating phrase`),await new Promise(e=>setTimeout(e,1e3*p.pauseBetweenTests));else{c.scoreCurrentTest(t.score),$(),s(7,l=`Score: ${t.score}/10 - ${t.commentary}`);const n=T(e,t.score);y(6,`⏳ Pausing ${n} seconds before next phrase`),await new Promise(e=>setTimeout(e,1e3*n))}}catch(e){s(7,l="Smeg! Something went wrong with the AI. Try again."),L();break}}}()}catch(e){y(2,"❌ Failed to start learning session:",e),s(7,l="Couldn't access your microphone. Please check your permissions and try again."),s(5,a=!1)}else s(7,l="Blimey! Something's gone wrong with the initialisation.")}function T(e,t){if(!e||!e.recentResults||0===e.recentResults.length)return p.pauseBetweenTests;return e.recentResults.filter(e=>1===e).length/e.recentResults.length<.25||t<4?p.pauseWhenStruggling:p.pauseBetweenTests}function L(){s(5,a=!1),u&&u.isSessionActive()&&(y(5,"🎓 Stopping persistent microphone session"),u.stopLearningSession()),l.includes("Score:")||l.includes("commentary")||s(7,l="Learning session stopped. Ready when you are!"),s(6,r=null)}b=async()=>{y(4,"🚀 App mounted, loading settings..."),ee.load(),await new Promise(e=>setTimeout(e,0)),await async function(){await w(),v()}(),d=!0,y(4,"🎉 App initialization complete")},x().$$.on_mount.push(b),function(e){x().$$.on_destroy.push(e)}(()=>{y(4,"🧹 App being destroyed, cleaning up..."),a&&L(),u&&u.destroy()});let k=null;return e.$$.update=()=>{8&e.$$.dirty[0]&&s(10,n=f[p.nativeLanguage]||[]),12&e.$$.dirty[0]&&s(9,o=Object.values(p.enabledCategories).some(e=>e)&&g.length>0),10&e.$$.dirty[0]&&u&&void 0!==p.loggingVerbosity&&u.options&&u.updateOptions({loggingVerbosity:p.loggingVerbosity}),9&e.$$.dirty[0]&&c&&void 0!==p.loggingVerbosity&&c.options&&c.updateOptions({loggingVerbosity:p.loggingVerbosity}),9&e.$$.dirty[0]&&c&&void 0!==p.repetitivenessFactor&&c.options&&c.updateOptions({repetitivenessFactor:p.repetitivenessFactor}),9&e.$$.dirty[0]&&c&&void 0!==p.passThreshold&&c.options&&c.updateOptions({passThreshold:p.passThreshold})},[c,u,g,p,i,a,r,l,h,o,n,m,function(e){const{category:t,enabled:s}=e.detail;c&&(c.setCategory(t,s),$())},function(e){const{action:t}=e.detail;if(!c)return void y(3,"❌ Debug test failed: no learning queue");const n=c.getNextTest();if(!n)return void y(3,"❌ Debug test failed: no phrases available");const o="pass"===t?10:0;y(5,`🐛 Debug ${t}: "${n.source}" → "${n.target}" (score: ${o})`),c.scoreCurrentTest(o),$(),s(7,l=`Debug ${t}: "${n.source}" scored ${o}/10`)},$,function(){a?L():S()},function(){s(4,i=!i)},function(){k=setTimeout(()=>{ee.updateSetting("showDeveloperSettings",!p.showDeveloperSettings),y(3,"🥚 Developer settings easter egg triggered!",p.showDeveloperSettings?"Enabled":"Disabled");const e=document.querySelector(".settings-toggle");e&&(e.style.transform="scale(0.95)",setTimeout(()=>e.style.transform="",150))},2e3)},function(){k&&(clearTimeout(k),k=null)},function(){k&&(clearTimeout(k),k=null)},function(){if(u&&confirm("Are you sure you want to clear the TTS cache? This will remove all cached audio.")){const e=u.clearTTSCache();s(7,l=e?"TTS cache cleared successfully!":"Failed to clear TTS cache."),setTimeout(()=>{a||s(7,l="Ready to start learning!")},3e3)}},function(){if(c&&confirm("Are you sure you want to reset the learning queue? This will clear all progress and start fresh.")){c.reset();const e=c.getCategories();s(2,g=e);const t={};e.forEach(e=>{t[e]=!0,c.setCategory(e,!0)}),ee.updateSetting("enabledCategories",t),$(),s(7,l="Learning queue reset successfully!"),setTimeout(()=>{a||s(7,l="Ready to start learning!")},3e3)}},function(t){e.$$.not_equal(p.showExpectedOutput,t)&&(p.showExpectedOutput=t,s(3,p))},function(t){e.$$.not_equal(p.showCategory,t)&&(p.showCategory=t,s(3,p))},function(t){e.$$.not_equal(p.showFeedback,t)&&(p.showFeedback=t,s(3,p))},function(t){e.$$.not_equal(p.showUpcomingQueue,t)&&(p.showUpcomingQueue=t,s(3,p))},function(t){e.$$.not_equal(p.enableAudioHints,t)&&(p.enableAudioHints=t,s(3,p))},function(t){e.$$.not_equal(p.translationThreshold,t)&&(p.translationThreshold=t,s(3,p))},function(t){e.$$.not_equal(p.pauseBetweenTests,t)&&(p.pauseBetweenTests=t,s(3,p))},function(t){e.$$.not_equal(p.pauseWhenStruggling,t)&&(p.pauseWhenStruggling=t,s(3,p))},function(t){e.$$.not_equal(p.passThreshold,t)&&(p.passThreshold=t,s(3,p))},function(t){e.$$.not_equal(p.repetitivenessFactor,t)&&(p.repetitivenessFactor=t,s(3,p))},function(t){e.$$.not_equal(p.enabledCategories,t)&&(p.enabledCategories=t,s(3,p))},function(t){e.$$.not_equal(p.loggingVerbosity,t)&&(p.loggingVerbosity=t,s(3,p))}]}return new class extends z{constructor(e){super(),J(this,e,Ye,Ge,i,{},null,[-1,-1])}}({target:document.body})}();
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+var app = (function () {
+    'use strict';
+
+    function noop() { }
+    function add_location(element, file, line, column, char) {
+        element.__svelte_meta = {
+            loc: { file, line, column, char }
+        };
+    }
+    function run(fn) {
+        return fn();
+    }
+    function blank_object() {
+        return Object.create(null);
+    }
+    function run_all(fns) {
+        fns.forEach(run);
+    }
+    function is_function(thing) {
+        return typeof thing === 'function';
+    }
+    function safe_not_equal(a, b) {
+        return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
+    }
+    function is_empty(obj) {
+        return Object.keys(obj).length === 0;
+    }
+    function action_destroyer(action_result) {
+        return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
+    }
+
+    const globals = (typeof window !== 'undefined'
+        ? window
+        : typeof globalThis !== 'undefined'
+            ? globalThis
+            : global);
+    function append(target, node) {
+        target.appendChild(node);
+    }
+    function insert(target, node, anchor) {
+        target.insertBefore(node, anchor || null);
+    }
+    function detach(node) {
+        if (node.parentNode) {
+            node.parentNode.removeChild(node);
+        }
+    }
+    function destroy_each(iterations, detaching) {
+        for (let i = 0; i < iterations.length; i += 1) {
+            if (iterations[i])
+                iterations[i].d(detaching);
+        }
+    }
+    function element(name) {
+        return document.createElement(name);
+    }
+    function text(data) {
+        return document.createTextNode(data);
+    }
+    function space() {
+        return text(' ');
+    }
+    function empty() {
+        return text('');
+    }
+    function listen(node, event, handler, options) {
+        node.addEventListener(event, handler, options);
+        return () => node.removeEventListener(event, handler, options);
+    }
+    function attr(node, attribute, value) {
+        if (value == null)
+            node.removeAttribute(attribute);
+        else if (node.getAttribute(attribute) !== value)
+            node.setAttribute(attribute, value);
+    }
+    function to_number(value) {
+        return value === '' ? null : +value;
+    }
+    function children(element) {
+        return Array.from(element.childNodes);
+    }
+    function set_input_value(input, value) {
+        input.value = value == null ? '' : value;
+    }
+    function select_option(select, value, mounting) {
+        for (let i = 0; i < select.options.length; i += 1) {
+            const option = select.options[i];
+            if (option.__value === value) {
+                option.selected = true;
+                return;
+            }
+        }
+        if (!mounting || value !== undefined) {
+            select.selectedIndex = -1; // no option should be selected
+        }
+    }
+    function select_value(select) {
+        const selected_option = select.querySelector(':checked');
+        return selected_option && selected_option.__value;
+    }
+    function toggle_class(element, name, toggle) {
+        element.classList[toggle ? 'add' : 'remove'](name);
+    }
+    function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
+        const e = document.createEvent('CustomEvent');
+        e.initCustomEvent(type, bubbles, cancelable, detail);
+        return e;
+    }
+
+    let current_component;
+    function set_current_component(component) {
+        current_component = component;
+    }
+    function get_current_component() {
+        if (!current_component)
+            throw new Error('Function called outside component initialization');
+        return current_component;
+    }
+    /**
+     * The `onMount` function schedules a callback to run as soon as the component has been mounted to the DOM.
+     * It must be called during the component's initialisation (but doesn't need to live *inside* the component;
+     * it can be called from an external module).
+     *
+     * `onMount` does not run inside a [server-side component](/docs#run-time-server-side-component-api).
+     *
+     * https://svelte.dev/docs#run-time-svelte-onmount
+     */
+    function onMount(fn) {
+        get_current_component().$$.on_mount.push(fn);
+    }
+    /**
+     * Schedules a callback to run immediately before the component is unmounted.
+     *
+     * Out of `onMount`, `beforeUpdate`, `afterUpdate` and `onDestroy`, this is the
+     * only one that runs inside a server-side component.
+     *
+     * https://svelte.dev/docs#run-time-svelte-ondestroy
+     */
+    function onDestroy(fn) {
+        get_current_component().$$.on_destroy.push(fn);
+    }
+    /**
+     * Creates an event dispatcher that can be used to dispatch [component events](/docs#template-syntax-component-directives-on-eventname).
+     * Event dispatchers are functions that can take two arguments: `name` and `detail`.
+     *
+     * Component events created with `createEventDispatcher` create a
+     * [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent).
+     * These events do not [bubble](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture).
+     * The `detail` argument corresponds to the [CustomEvent.detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail)
+     * property and can contain any type of data.
+     *
+     * https://svelte.dev/docs#run-time-svelte-createeventdispatcher
+     */
+    function createEventDispatcher() {
+        const component = get_current_component();
+        return (type, detail, { cancelable = false } = {}) => {
+            const callbacks = component.$$.callbacks[type];
+            if (callbacks) {
+                // TODO are there situations where events could be dispatched
+                // in a server (non-DOM) environment?
+                const event = custom_event(type, detail, { cancelable });
+                callbacks.slice().forEach(fn => {
+                    fn.call(component, event);
+                });
+                return !event.defaultPrevented;
+            }
+            return true;
+        };
+    }
+
+    const dirty_components = [];
+    const binding_callbacks = [];
+    let render_callbacks = [];
+    const flush_callbacks = [];
+    const resolved_promise = /* @__PURE__ */ Promise.resolve();
+    let update_scheduled = false;
+    function schedule_update() {
+        if (!update_scheduled) {
+            update_scheduled = true;
+            resolved_promise.then(flush);
+        }
+    }
+    function add_render_callback(fn) {
+        render_callbacks.push(fn);
+    }
+    function add_flush_callback(fn) {
+        flush_callbacks.push(fn);
+    }
+    // flush() calls callbacks in this order:
+    // 1. All beforeUpdate callbacks, in order: parents before children
+    // 2. All bind:this callbacks, in reverse order: children before parents.
+    // 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
+    //    for afterUpdates called during the initial onMount, which are called in
+    //    reverse order: children before parents.
+    // Since callbacks might update component values, which could trigger another
+    // call to flush(), the following steps guard against this:
+    // 1. During beforeUpdate, any updated components will be added to the
+    //    dirty_components array and will cause a reentrant call to flush(). Because
+    //    the flush index is kept outside the function, the reentrant call will pick
+    //    up where the earlier call left off and go through all dirty components. The
+    //    current_component value is saved and restored so that the reentrant call will
+    //    not interfere with the "parent" flush() call.
+    // 2. bind:this callbacks cannot trigger new flush() calls.
+    // 3. During afterUpdate, any updated components will NOT have their afterUpdate
+    //    callback called a second time; the seen_callbacks set, outside the flush()
+    //    function, guarantees this behavior.
+    const seen_callbacks = new Set();
+    let flushidx = 0; // Do *not* move this inside the flush() function
+    function flush() {
+        // Do not reenter flush while dirty components are updated, as this can
+        // result in an infinite loop. Instead, let the inner flush handle it.
+        // Reentrancy is ok afterwards for bindings etc.
+        if (flushidx !== 0) {
+            return;
+        }
+        const saved_component = current_component;
+        do {
+            // first, call beforeUpdate functions
+            // and update components
+            try {
+                while (flushidx < dirty_components.length) {
+                    const component = dirty_components[flushidx];
+                    flushidx++;
+                    set_current_component(component);
+                    update(component.$$);
+                }
+            }
+            catch (e) {
+                // reset dirty state to not end up in a deadlocked state and then rethrow
+                dirty_components.length = 0;
+                flushidx = 0;
+                throw e;
+            }
+            set_current_component(null);
+            dirty_components.length = 0;
+            flushidx = 0;
+            while (binding_callbacks.length)
+                binding_callbacks.pop()();
+            // then, once components are updated, call
+            // afterUpdate functions. This may cause
+            // subsequent updates...
+            for (let i = 0; i < render_callbacks.length; i += 1) {
+                const callback = render_callbacks[i];
+                if (!seen_callbacks.has(callback)) {
+                    // ...so guard against infinite loops
+                    seen_callbacks.add(callback);
+                    callback();
+                }
+            }
+            render_callbacks.length = 0;
+        } while (dirty_components.length);
+        while (flush_callbacks.length) {
+            flush_callbacks.pop()();
+        }
+        update_scheduled = false;
+        seen_callbacks.clear();
+        set_current_component(saved_component);
+    }
+    function update($$) {
+        if ($$.fragment !== null) {
+            $$.update();
+            run_all($$.before_update);
+            const dirty = $$.dirty;
+            $$.dirty = [-1];
+            $$.fragment && $$.fragment.p($$.ctx, dirty);
+            $$.after_update.forEach(add_render_callback);
+        }
+    }
+    /**
+     * Useful for example to execute remaining `afterUpdate` callbacks before executing `destroy`.
+     */
+    function flush_render_callbacks(fns) {
+        const filtered = [];
+        const targets = [];
+        render_callbacks.forEach((c) => fns.indexOf(c) === -1 ? filtered.push(c) : targets.push(c));
+        targets.forEach((c) => c());
+        render_callbacks = filtered;
+    }
+    const outroing = new Set();
+    let outros;
+    function group_outros() {
+        outros = {
+            r: 0,
+            c: [],
+            p: outros // parent group
+        };
+    }
+    function check_outros() {
+        if (!outros.r) {
+            run_all(outros.c);
+        }
+        outros = outros.p;
+    }
+    function transition_in(block, local) {
+        if (block && block.i) {
+            outroing.delete(block);
+            block.i(local);
+        }
+    }
+    function transition_out(block, local, detach, callback) {
+        if (block && block.o) {
+            if (outroing.has(block))
+                return;
+            outroing.add(block);
+            outros.c.push(() => {
+                outroing.delete(block);
+                if (callback) {
+                    if (detach)
+                        block.d(1);
+                    callback();
+                }
+            });
+            block.o(local);
+        }
+        else if (callback) {
+            callback();
+        }
+    }
+
+    function bind(component, name, callback) {
+        const index = component.$$.props[name];
+        if (index !== undefined) {
+            component.$$.bound[index] = callback;
+            callback(component.$$.ctx[index]);
+        }
+    }
+    function create_component(block) {
+        block && block.c();
+    }
+    function mount_component(component, target, anchor, customElement) {
+        const { fragment, after_update } = component.$$;
+        fragment && fragment.m(target, anchor);
+        if (!customElement) {
+            // onMount happens before the initial afterUpdate
+            add_render_callback(() => {
+                const new_on_destroy = component.$$.on_mount.map(run).filter(is_function);
+                // if the component was destroyed immediately
+                // it will update the `$$.on_destroy` reference to `null`.
+                // the destructured on_destroy may still reference to the old array
+                if (component.$$.on_destroy) {
+                    component.$$.on_destroy.push(...new_on_destroy);
+                }
+                else {
+                    // Edge case - component was destroyed immediately,
+                    // most likely as a result of a binding initialising
+                    run_all(new_on_destroy);
+                }
+                component.$$.on_mount = [];
+            });
+        }
+        after_update.forEach(add_render_callback);
+    }
+    function destroy_component(component, detaching) {
+        const $$ = component.$$;
+        if ($$.fragment !== null) {
+            flush_render_callbacks($$.after_update);
+            run_all($$.on_destroy);
+            $$.fragment && $$.fragment.d(detaching);
+            // TODO null out other refs, including component.$$ (but need to
+            // preserve final state?)
+            $$.on_destroy = $$.fragment = null;
+            $$.ctx = [];
+        }
+    }
+    function make_dirty(component, i) {
+        if (component.$$.dirty[0] === -1) {
+            dirty_components.push(component);
+            schedule_update();
+            component.$$.dirty.fill(0);
+        }
+        component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
+    }
+    function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty = [-1]) {
+        const parent_component = current_component;
+        set_current_component(component);
+        const $$ = component.$$ = {
+            fragment: null,
+            ctx: [],
+            // state
+            props,
+            update: noop,
+            not_equal,
+            bound: blank_object(),
+            // lifecycle
+            on_mount: [],
+            on_destroy: [],
+            on_disconnect: [],
+            before_update: [],
+            after_update: [],
+            context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
+            // everything else
+            callbacks: blank_object(),
+            dirty,
+            skip_bound: false,
+            root: options.target || parent_component.$$.root
+        };
+        append_styles && append_styles($$.root);
+        let ready = false;
+        $$.ctx = instance
+            ? instance(component, options.props || {}, (i, ret, ...rest) => {
+                const value = rest.length ? rest[0] : ret;
+                if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
+                    if (!$$.skip_bound && $$.bound[i])
+                        $$.bound[i](value);
+                    if (ready)
+                        make_dirty(component, i);
+                }
+                return ret;
+            })
+            : [];
+        $$.update();
+        ready = true;
+        run_all($$.before_update);
+        // `false` as a special case of no DOM component
+        $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
+        if (options.target) {
+            if (options.hydrate) {
+                const nodes = children(options.target);
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment && $$.fragment.l(nodes);
+                nodes.forEach(detach);
+            }
+            else {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment && $$.fragment.c();
+            }
+            if (options.intro)
+                transition_in(component.$$.fragment);
+            mount_component(component, options.target, options.anchor, options.customElement);
+            flush();
+        }
+        set_current_component(parent_component);
+    }
+    /**
+     * Base class for Svelte components. Used when dev=false.
+     */
+    class SvelteComponent {
+        $destroy() {
+            destroy_component(this, 1);
+            this.$destroy = noop;
+        }
+        $on(type, callback) {
+            if (!is_function(callback)) {
+                return noop;
+            }
+            const callbacks = (this.$$.callbacks[type] || (this.$$.callbacks[type] = []));
+            callbacks.push(callback);
+            return () => {
+                const index = callbacks.indexOf(callback);
+                if (index !== -1)
+                    callbacks.splice(index, 1);
+            };
+        }
+        $set($$props) {
+            if (this.$$set && !is_empty($$props)) {
+                this.$$.skip_bound = true;
+                this.$$set($$props);
+                this.$$.skip_bound = false;
+            }
+        }
+    }
+
+    function dispatch_dev(type, detail) {
+        document.dispatchEvent(custom_event(type, Object.assign({ version: '3.59.2' }, detail), { bubbles: true }));
+    }
+    function append_dev(target, node) {
+        dispatch_dev('SvelteDOMInsert', { target, node });
+        append(target, node);
+    }
+    function insert_dev(target, node, anchor) {
+        dispatch_dev('SvelteDOMInsert', { target, node, anchor });
+        insert(target, node, anchor);
+    }
+    function detach_dev(node) {
+        dispatch_dev('SvelteDOMRemove', { node });
+        detach(node);
+    }
+    function listen_dev(node, event, handler, options, has_prevent_default, has_stop_propagation, has_stop_immediate_propagation) {
+        const modifiers = options === true ? ['capture'] : options ? Array.from(Object.keys(options)) : [];
+        if (has_prevent_default)
+            modifiers.push('preventDefault');
+        if (has_stop_propagation)
+            modifiers.push('stopPropagation');
+        if (has_stop_immediate_propagation)
+            modifiers.push('stopImmediatePropagation');
+        dispatch_dev('SvelteDOMAddEventListener', { node, event, handler, modifiers });
+        const dispose = listen(node, event, handler, options);
+        return () => {
+            dispatch_dev('SvelteDOMRemoveEventListener', { node, event, handler, modifiers });
+            dispose();
+        };
+    }
+    function attr_dev(node, attribute, value) {
+        attr(node, attribute, value);
+        if (value == null)
+            dispatch_dev('SvelteDOMRemoveAttribute', { node, attribute });
+        else
+            dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
+    }
+    function prop_dev(node, property, value) {
+        node[property] = value;
+        dispatch_dev('SvelteDOMSetProperty', { node, property, value });
+    }
+    function set_data_dev(text, data) {
+        data = '' + data;
+        if (text.data === data)
+            return;
+        dispatch_dev('SvelteDOMSetData', { node: text, data });
+        text.data = data;
+    }
+    function validate_each_argument(arg) {
+        if (typeof arg !== 'string' && !(arg && typeof arg === 'object' && 'length' in arg)) {
+            let msg = '{#each} only iterates over array-like objects.';
+            if (typeof Symbol === 'function' && arg && Symbol.iterator in arg) {
+                msg += ' You can use a spread to convert this iterable into an array.';
+            }
+            throw new Error(msg);
+        }
+    }
+    function validate_slots(name, slot, keys) {
+        for (const slot_key of Object.keys(slot)) {
+            if (!~keys.indexOf(slot_key)) {
+                console.warn(`<${name}> received an unexpected slot "${slot_key}".`);
+            }
+        }
+    }
+    /**
+     * Base class for Svelte components with some minor dev-enhancements. Used when dev=true.
+     */
+    class SvelteComponentDev extends SvelteComponent {
+        constructor(options) {
+            if (!options || (!options.target && !options.$$inline)) {
+                throw new Error("'target' is a required option");
+            }
+            super();
+        }
+        $destroy() {
+            super.$destroy();
+            this.$destroy = () => {
+                console.warn('Component was already destroyed'); // eslint-disable-line no-console
+            };
+        }
+        $capture_state() { }
+        $inject_state() { }
+    }
+
+    /**
+     * LearningQueue - Adaptive Spaced Repetition System
+     * 
+     * A sophisticated queue-based language learning system that uses AI-scored responses
+     * and inertia-based movement to optimize vocabulary retention.
+     */
+
+    class LearningQueue {
+      constructor(sourceLanguage, targetLanguage, level = 'basic', baseDir = '/learning/', options = {}) {
+        this.sourceLanguage = sourceLanguage;
+        this.targetLanguage = targetLanguage;
+        this.baseDir = baseDir;
+        this.level = level;
+        this.testDatabase = {};
+        this.queue = [];
+        this.categories = {};
+        this.currentTestIndex = 0;
+        this.storageKey = `learning_queue_${sourceLanguage}_${targetLanguage}_${level}`;
+        
+        // Initialize options with defaults
+        this.options = {
+          passThreshold: 7,
+          memoryLength: 20,
+          repetitivenessFactor: 5,
+          ...options
+        };
+        
+        // Don't call init() automatically - let the caller control when it happens
+      }
+      
+      async init() {
+        await this.loadTestData();
+        this.loadState();
+      }
+      
+      async loadTestData() {
+        try {
+          const filename = `${this.sourceLanguage}-${this.targetLanguage}-${this.level}.json`;
+          const response = await fetch(`${this.baseDir}${filename}`);
+          
+          if (!response.ok) {
+            throw new Error(`Failed to load test data: ${response.status}`);
+          }
+          
+          this.testDatabase = await response.json();
+        } catch (error) {
+          console.error('Error loading test data:', error);
+          // Fallback to sample data for demo
+          this.testDatabase = {
+            "travel": [
+              { source: "Good morning", target: "Buongiorno" },
+              { source: "Where is the station?", target: "Dove è la stazione?" },
+              { source: "Thank you very much", target: "Grazie mille" }
+            ],
+            "food": [
+              { source: "I would like a coffee", target: "Vorrei un caffè" },
+              { source: "How much does it cost?", target: "Quanto costa?" },
+              { source: "The bill please", target: "Il conto per favore" }
+            ]
+          };
+        }
+      }
+      
+      loadState() {
+        const savedState = localStorage.getItem(this.storageKey);
+        
+        if (savedState) {
+          try {
+            const state = JSON.parse(savedState);
+            this.categories = state.categories || {};
+            this.queue = state.queue || [];
+            
+            this.syncQueueWithDatabase();
+          } catch (error) {
+            console.error('Error loading saved state:', error);
+            this.initializeAllCategories();
+          }
+        } else {
+          this.initializeAllCategories();
+        }
+      }
+      
+      syncQueueWithDatabase() {
+        const expectedTests = new Set();
+        
+        for (const [categoryName, isSelected] of Object.entries(this.categories)) {
+          if (isSelected && this.testDatabase[categoryName]) {
+            this.testDatabase[categoryName].forEach(test => {
+              expectedTests.add(this.createTestId(test));
+            });
+          }
+        }
+        
+        this.queue = this.queue.filter(item => {
+          const testId = this.createTestId({ source: item.source, target: item.target });
+          return expectedTests.has(testId);
+        });
+        
+        const currentTestIds = new Set(this.queue.map(item => 
+          this.createTestId({ source: item.source, target: item.target })
+        ));
+        
+        for (const [categoryName, isSelected] of Object.entries(this.categories)) {
+          if (isSelected && this.testDatabase[categoryName]) {
+            this.testDatabase[categoryName].forEach(test => {
+              const testId = this.createTestId(test);
+              if (!currentTestIds.has(testId)) {
+                this.addTestToQueue(test, categoryName);
+              }
+            });
+          }
+        }
+      }
+      
+      initializeAllCategories() {
+        // Don't automatically enable all categories - let the UI control this
+        for (const categoryName of Object.keys(this.testDatabase)) {
+          this.categories[categoryName] = false; // Start with all disabled
+        }
+      }
+      
+      createTestId(test) {
+        return `${test.source}|${test.target}`;
+      }
+      
+      addTestToQueue(test, categoryName) {
+        const queueItem = {
+          source: test.source,
+          target: test.target,
+          inertia: -1, // Start at maximum resistance - phrases are "sticky" until learned
+          category: categoryName,
+          recentResults: new Array(this.options.memoryLength).fill(0) // Initialize with full history of failures
+        };
+        
+        const randomIndex = Math.floor(Math.random() * (this.queue.length + 1));
+        this.queue.splice(randomIndex, 0, queueItem);
+      }
+      
+      addCategoryToQueue(categoryName) {
+        if (this.testDatabase[categoryName]) {
+          this.testDatabase[categoryName].forEach(test => {
+            this.addTestToQueue(test, categoryName);
+          });
+        }
+      }
+      
+      removeCategoryFromQueue(categoryName) {
+        if (!this.testDatabase[categoryName]) return;
+        
+        const categoryTestIds = new Set(
+          this.testDatabase[categoryName].map(test => this.createTestId(test))
+        );
+        
+        this.queue = this.queue.filter(item => {
+          const testId = this.createTestId({ source: item.source, target: item.target });
+          return !categoryTestIds.has(testId);
+        });
+        
+        if (this.currentTestIndex >= this.queue.length) {
+          this.currentTestIndex = 0;
+        }
+      }
+      
+      getCategories() {
+        return Object.keys(this.testDatabase);
+      }
+      
+      setCategory(categoryName, enabled) {
+        if (enabled && !this.categories[categoryName]) {
+          this.categories[categoryName] = true;
+          this.addCategoryToQueue(categoryName);
+        } else if (!enabled && this.categories[categoryName]) {
+          this.categories[categoryName] = false;
+          this.removeCategoryFromQueue(categoryName);
+        }
+        
+        this.saveState();
+      }
+      
+      getNextTest() {
+        if (this.queue.length === 0) {
+          return null;
+        }
+        
+        if (this.currentTestIndex >= this.queue.length) {
+          this.currentTestIndex = 0;
+        }
+        
+        const test = this.queue[this.currentTestIndex];
+        return {
+          source: test.source,
+          target: test.target,
+          inertia: test.inertia,
+          category: test.category,
+          recentResults: test.recentResults || [] // Include history in response
+        };
+      }
+      
+      scoreCurrentTest(score) {
+        if (this.queue.length === 0 || this.currentTestIndex >= this.queue.length) {
+          return;
+        }
+        
+        const currentTest = this.queue.splice(this.currentTestIndex, 1)[0];
+        
+        // Update binary algorithm with memory
+        if (!currentTest.recentResults) {
+          currentTest.recentResults = [];
+        }
+        
+        // Add new result (1 for pass, 0 for fail)
+        const passed = score >= this.options.passThreshold;
+        currentTest.recentResults.push(passed ? 1 : 0);
+        
+        // If the test failed, convert the most recent success to a failure
+        if (!passed) {
+          // Find the most recent success (working backwards from the end)
+          for (let i = currentTest.recentResults.length - 2; i >= 0; i--) {
+            if (currentTest.recentResults[i] === 1) {
+              currentTest.recentResults[i] = 0;
+              break; // Only convert one success
+            }
+          }
+        }
+        
+        // Keep only last N results
+        const memoryLength = this.options.memoryLength;
+        if (currentTest.recentResults.length > memoryLength) {
+          currentTest.recentResults = currentTest.recentResults.slice(-memoryLength);
+        }
+        
+        // Calculate success rate
+        const successCount = currentTest.recentResults.reduce((sum, result) => sum + result, 0);
+        const successRate = currentTest.recentResults.length > 0 ? successCount / currentTest.recentResults.length : 0;
+        
+        // Calculate movement based on success rate and repetitiveness factor
+        const repetitivenessFactor = this.options.repetitivenessFactor;
+        const power = 2 + (repetitivenessFactor - 1) * 0.2; // Maps 1-10 to 2.0-3.8
+        const movement = Math.pow(successRate, power);
+        
+        // Calculate new position in queue
+        const newPosition = Math.min(Math.floor(movement * this.queue.length), this.queue.length);
+        
+        this.queue.splice(newPosition, 0, currentTest);
+        
+        this.currentTestIndex = 0;
+        
+        this.saveState();
+      }
+      
+      updateOptions(newOptions) {
+        this.options = { ...this.options, ...newOptions };
+      }
+      
+      saveState() {
+        const state = {
+          categories: this.categories,
+          queue: this.queue
+        };
+        
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(state));
+        } catch (error) {
+          console.error('Error saving state to localStorage:', error);
+        }
+      }
+      
+      getQueueLength() {
+        return this.queue.length;
+      }
+      
+      getTopQueueItems(count = null) {
+        const itemsToShow = count ? Math.min(count, this.queue.length) : this.queue.length;
+        return this.queue.slice(0, itemsToShow).map((item, index) => {
+          const successCount = item.recentResults ? item.recentResults.reduce((sum, result) => sum + result, 0) : 0;
+          const successRate = item.recentResults && item.recentResults.length > 0 ? successCount / item.recentResults.length : 0;
+          
+          return {
+            position: index + 1,
+            source: item.source,
+            target: item.target,
+            inertia: item.inertia,
+            category: item.category,
+            recentResults: item.recentResults || [],
+            successRate: successRate
+          };
+        });
+      }
+      
+      reset() {
+        console.log('🔄 Resetting LearningQueue to initial state');
+        this.queue = [];
+        this.categories = {};
+        this.currentTestIndex = 0;
+        localStorage.removeItem(this.storageKey);
+        this.initializeAllCategories();
+        console.log('✅ LearningQueue reset complete');
+      }
+      
+      getQueueStats() {
+        const stats = {
+          totalItems: this.queue.length,
+          categories: {},
+          inertiaDistribution: {
+            negative: 0,
+            neutral: 0,
+            positive: 0
+          }
+        };
+        
+        // Count items by category and success rate
+        this.queue.forEach(item => {
+          // Category stats
+          if (!stats.categories[item.category]) {
+            stats.categories[item.category] = 0;
+          }
+          stats.categories[item.category]++;
+          
+          // Success rate distribution (using recentResults for binary algorithm)
+          const successCount = item.recentResults ? item.recentResults.reduce((sum, result) => sum + result, 0) : 0;
+          const successRate = item.recentResults && item.recentResults.length > 0 ? successCount / item.recentResults.length : 0;
+          
+          if (successRate < 0.3) {
+            stats.inertiaDistribution.negative++;
+          } else if (successRate > 0.7) {
+            stats.inertiaDistribution.positive++;
+          } else {
+            stats.inertiaDistribution.neutral++;
+          }
+        });
+        
+        return stats;
+      }
+    }
+
+    /**
+     * LanguageTutor - AI-Powered Language Learning with Real-time Pronunciation Scoring
+     * 
+     * A powerful JavaScript class for building language learning applications with real-time 
+     * pronunciation scoring and text-to-speech feedback using OpenAI's Realtime API.
+     * Enhanced with audible notification bleeps for user interaction prompts.
+     */
+
+    class LanguageTutor {
+        constructor(outputElement, sourceLanguage = 'English', targetLanguage = 'Italian', options = {}) {
+            // Basic configuration
+            this.outputElement = outputElement;
+            this.sourceLanguage = sourceLanguage;
+            this.targetLanguage = targetLanguage;
+            
+            // Default options
+            const defaultOptions = {
+                apiKeyEndpoint: '?mode=get_key',
+                feedbackThreshold: 7,  // Score below which target pronunciation is played
+                statusCallback: null,  // Optional callback for status updates
+                loggingVerbosity: 5,   // Logging verbosity level (0-10, 0=silent, 10=verbose)
+                audioPath: 'audio/',   // Base path for pre-generated audio files
+                enableBleep: true,     // Enable audible notification bleep (NEW)
+                enableAudioHints: false, // Enable audio hints for struggling phrases
+                audioHintDuration: 0.25, // Fraction of audio to play as hint (0.25 = 25%)
+                audioHintMinWords: 3,    // Minimum words in phrase to enable hints
+                vad: {
+                    threshold: 0.6,
+                    prefixPaddingMs: 200,
+                    silenceDurationMs: 800
+                }
+            };
+            
+            // Merge user options with defaults
+            this.options = this.mergeOptions(defaultOptions, options);
+            
+            // Audio state
+            this.audioContext = null;
+            this.currentAudioStream = null;
+            this.audioProcessor = null;
+            this.ws = null;
+            this.isListening = false;
+            this.isLearningSessionActive = false; // Track if we're in a learning session
+            
+            // Session key management
+            this.currentSessionKey = null;
+            this.keyRefreshInterval = null;
+            
+            this.log(3, `🎓 LanguageTutor initialized: ${sourceLanguage} → ${targetLanguage}`);
+            this.log(7, '📋 Options:', this.options);
+            
+            // Start session key management
+            this.initializeSessionKeys();
+        }
+        
+        // ========== LOGGING SYSTEM ==========
+        log(level, ...args) {
+            if (this.options.loggingVerbosity >= level) {
+                console.log(...args);
+            }
+        }
+        
+        logError(level, ...args) {
+            if (this.options.loggingVerbosity >= level) {
+                console.error(...args);
+            }
+        }
+        
+        logWarn(level, ...args) {
+            if (this.options.loggingVerbosity >= level) {
+                console.warn(...args);
+            }
+        }
+        
+        // ========== UTILITY METHODS ==========
+        mergeOptions(defaults, userOptions) {
+            const merged = { ...defaults };
+            
+            for (const key in userOptions) {
+                if (userOptions.hasOwnProperty(key)) {
+                    if (typeof userOptions[key] === 'object' && userOptions[key] !== null && !Array.isArray(userOptions[key])) {
+                        // Deep merge for nested objects like 'vad'
+                        merged[key] = { ...defaults[key], ...userOptions[key] };
+                    } else {
+                        merged[key] = userOptions[key];
+                    }
+                }
+            }
+            
+            return merged;
+        }
+        
+        // ========== AUDIO NOTIFICATION SYSTEM (NEW) ==========
+        /**
+         * Generate a pleasant notification bleep to signal user interaction
+         */
+        async playNotificationBleep() {
+            if (!this.options.enableBleep) {
+                this.log(7, '🔇 Notification bleep disabled');
+                return;
+            }
+            
+            try {
+                this.log(6, '🎵 Playing notification bleep');
+                
+                // Create a temporary audio context for the bleep
+                const tempAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create a pleasant two-tone bleep (like a gentle chime)
+                const duration = 0.3; // 300ms total
+                const sampleRate = tempAudioContext.sampleRate;
+                const buffer = tempAudioContext.createBuffer(1, duration * sampleRate, sampleRate);
+                const data = buffer.getChannelData(0);
+                
+                // Generate a pleasant two-tone bleep: 800Hz then 1000Hz
+                for (let i = 0; i < buffer.length; i++) {
+                    const time = i / sampleRate;
+                    let frequency;
+                    let amplitude;
+                    
+                    if (time < 0.15) {
+                        // First tone: 800Hz
+                        frequency = 800;
+                        amplitude = 0.1 * Math.sin(Math.PI * time / 0.15); // Fade in/out
+                    } else {
+                        // Second tone: 1000Hz  
+                        frequency = 1000;
+                        amplitude = 0.1 * Math.sin(Math.PI * (time - 0.15) / 0.15); // Fade in/out
+                    }
+                    
+                    data[i] = amplitude * Math.sin(2 * Math.PI * frequency * time);
+                }
+                
+                // Play the bleep
+                const source = tempAudioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(tempAudioContext.destination);
+                
+                return new Promise((resolve) => {
+                    source.onended = () => {
+                        tempAudioContext.close();
+                        this.log(7, '✅ Notification bleep completed');
+                        resolve();
+                    };
+                    
+                    source.start();
+                });
+                
+            } catch (error) {
+                this.logWarn(4, '⚠️ Could not play notification bleep:', error.message);
+                // Don't throw - this is a nice-to-have feature
+            }
+        }
+        
+        // ========== SESSION KEY MANAGEMENT ==========
+        async initializeSessionKeys() {
+            try {
+                await this.refreshSessionKey();
+                this.startKeyRefreshTimer();
+            } catch (error) {
+                this.logError(1, '❌ Failed to initialize session keys:', error);
+            }
+        }
+        
+        async refreshSessionKey() {
+            try {
+                this.log(5, '🔑 Refreshing session key...');
+                const response = await fetch(this.options.apiKeyEndpoint);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                this.currentSessionKey = data.session_token;
+                this.log(4, '✅ Session key refreshed successfully');
+                return this.currentSessionKey;
+            } catch (error) {
+                this.logError(2, '❌ Error refreshing session key:', error);
+                this.showError('Failed to refresh session key: ' + error.message);
+                return null;
+            }
+        }
+        
+        async getSessionKey() {
+            if (this.currentSessionKey) {
+                this.log(7, '🔑 Using cached session key');
+                return this.currentSessionKey;
+            }
+            
+            this.log(5, '🔑 Getting initial session key...');
+            return await this.refreshSessionKey();
+        }
+        
+        startKeyRefreshTimer() {
+            // Refresh key every 50 seconds (10 second buffer before 60s expiry)
+            this.keyRefreshInterval = setInterval(async () => {
+                await this.refreshSessionKey();
+            }, 50000);
+            this.log(6, '⏰ Started key refresh timer (every 50 seconds)');
+        }
+        
+        stopKeyRefreshTimer() {
+            if (this.keyRefreshInterval) {
+                clearInterval(this.keyRefreshInterval);
+                this.keyRefreshInterval = null;
+                this.log(6, '⏰ Stopped key refresh timer');
+            }
+        }
+        
+        // ========== AUDIO PLAYBACK ==========
+        async speakText(text, language = null) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    // Auto-detect language if not specified
+                    if (!language) {
+                        language = this.detectLanguage(text);
+                    }
+                    
+                    this.log(4, `🎙️ Playing audio for "${text}" in ${language}`);
+                    
+                    // Determine if this is native or learning speed based on language
+                    const isNativeLanguage = (language === this.sourceLanguage);
+                    const speedMode = isNativeLanguage ? 'native' : 'learning';
+                    
+                    this.log(6, `🎯 Speed mode: ${speedMode} (${isNativeLanguage ? 'normal speed' : 'slow/clear'})`);
+                    
+                    // Generate filename using same logic as server-side script
+                    const filename = await this.generateAudioFilename(text);
+                    const audioUrl = `${this.options.audioPath}${language}/${speedMode}/${filename}`;
+                    
+                    this.log(6, `🔊 Loading audio from: ${audioUrl}`);
+                    
+                    // Load and play the audio file
+                    await this.playAudioFromUrl(audioUrl);
+                    resolve();
+                    
+                } catch (error) {
+                    this.logError(3, '❌ Error playing audio:', error);
+                    this.showError('Audio playback failed: ' + error.message);
+                    reject(error);
+                }
+            });
+        }
+        
+        /**
+         * Generate audio filename using same logic as server-side script
+         * Now uses SHA-256 instead of MD5 for better compatibility
+         */
+        async generateAudioFilename(text) {
+            // Convert to UTF-8 bytes first, then sanitize byte by byte to match server behavior
+            const utf8Bytes = this.stringToUtf8Bytes(text);
+            
+            // Take first 20 bytes (not characters) and convert each byte to char
+            const first20Bytes = utf8Bytes.slice(0, 20);
+            let sanitized = '';
+            
+            for (let i = 0; i < first20Bytes.length; i++) {
+                const byte = first20Bytes[i];
+                const char = String.fromCharCode(byte);
+                
+                // Replace non-alphanumeric with underscore (same regex as server: [^a-zA-Z0-9])
+                if (/[a-zA-Z0-9]/.test(char)) {
+                    sanitized += char;
+                } else {
+                    sanitized += '_';
+                }
+            }
+            
+            // Remove trailing underscores
+            sanitized = sanitized.replace(/_+$/, '');
+            
+            if (!sanitized) {
+                sanitized = 'phrase';
+            }
+            
+            // Generate SHA-256 hash of original text
+            const hash = await this.sha256(text);
+            
+            // Take first 8 characters of hash to match typical hash length expectations
+            const shortHash = hash.substring(0, 8);
+            
+            return `${sanitized}_${shortHash}.mp3`;
+        }
+        
+        /**
+         * SHA-256 hash implementation using Web Crypto API
+         * This will work consistently across modern browsers and match server-side implementations
+         */
+        async sha256(str) {
+            // Convert string to UTF-8 bytes
+            const utf8Bytes = new TextEncoder().encode(str);
+            
+            // Generate SHA-256 hash
+            const hashBuffer = await crypto.subtle.digest('SHA-256', utf8Bytes);
+            
+            // Convert buffer to hex string
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            
+            return hashHex;
+        }
+        
+        /**
+         * Convert string to UTF-8 byte array
+         */
+        stringToUtf8Bytes(str) {
+            const bytes = [];
+            for (let i = 0; i < str.length; i++) {
+                let code = str.charCodeAt(i);
+                if (code < 0x80) {
+                    bytes.push(code);
+                } else if (code < 0x800) {
+                    bytes.push(0xC0 | (code >> 6));
+                    bytes.push(0x80 | (code & 0x3F));
+                } else if (code < 0x10000) {
+                    bytes.push(0xE0 | (code >> 12));
+                    bytes.push(0x80 | ((code >> 6) & 0x3F));
+                    bytes.push(0x80 | (code & 0x3F));
+                } else {
+                    bytes.push(0xF0 | (code >> 18));
+                    bytes.push(0x80 | ((code >> 12) & 0x3F));
+                    bytes.push(0x80 | ((code >> 6) & 0x3F));
+                    bytes.push(0x80 | (code & 0x3F));
+                }
+            }
+            return bytes;
+        }
+        
+        /**
+         * Load and play audio from URL
+         */
+        async playAudioFromUrl(url) {
+            return new Promise((resolve, reject) => {
+                try {
+                    this.log(6, '🔊 Creating audio element for playback');
+                    
+                    const audio = new Audio();
+                    
+                    audio.onloadeddata = () => {
+                        this.log(7, '✅ Audio loaded successfully');
+                    };
+                    
+                    audio.onended = () => {
+                        this.log(6, '✅ Audio playback finished');
+                        resolve();
+                    };
+                    
+                    audio.onerror = (error) => {
+                        this.logError(3, '❌ Audio playback error:', error);
+                        reject(new Error(`Failed to load audio from ${url}`));
+                    };
+                    
+                    audio.oncanplaythrough = () => {
+                        this.log(7, '▶️ Starting audio playback');
+                        audio.play().catch(playError => {
+                            this.logError(3, '❌ Audio play() failed:', playError);
+                            reject(playError);
+                        });
+                    };
+                    
+                    // Set source and start loading
+                    audio.src = url;
+                    audio.load();
+                    
+                } catch (error) {
+                    this.logError(3, '❌ Error setting up audio playback:', error);
+                    reject(error);
+                }
+            });
+        }
+
+        /**
+         * Play a portion of audio file as a hint (first 25% of duration)
+         */
+        async playAudioHint(text, language = null, speedMode = 'learning') {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    // Use target language if not specified
+                    if (!language) {
+                        language = this.targetLanguage;
+                    }
+                    
+                    this.log(5, `🎯 Playing audio hint for: "${text}" in ${language}`);
+                    
+                    // Generate filename using same logic as speakText method
+                    const filename = await this.generateAudioFilename(text);
+                    const audioUrl = `${this.options.audioPath}${language}/${speedMode}/${filename}`;
+                    
+                    this.log(6, `🔊 Loading hint audio from: ${audioUrl}`);
+                    
+                    const audio = new Audio();
+                    
+                    audio.onloadedmetadata = () => {
+                        this.log(7, `✅ Audio metadata loaded, duration: ${audio.duration}s`);
+                        
+                        // Calculate hint duration based on configurable percentage
+                        const hintDuration = audio.duration * this.options.audioHintDuration;
+                        this.log(7, `🎯 Playing first ${hintDuration.toFixed(2)}s as hint (${(this.options.audioHintDuration * 100)}% of ${audio.duration.toFixed(2)}s)`);
+                        
+                        // Set up a timer to stop playback after configured duration
+                        const stopTimer = setTimeout(() => {
+                            audio.pause();
+                            audio.currentTime = 0;
+                            this.log(7, '🔇 Hint playback completed');
+                            resolve();
+                        }, hintDuration * 1000);
+                        
+                        // Clean up timer if audio ends naturally (shouldn't happen with hints)
+                        audio.onended = () => {
+                            clearTimeout(stopTimer);
+                            this.log(7, '🔇 Audio hint ended naturally');
+                            resolve();
+                        };
+                        
+                        // Start playback
+                        audio.play().catch(playError => {
+                            clearTimeout(stopTimer);
+                            this.logError(3, '❌ Audio hint play() failed:', playError);
+                            reject(playError);
+                        });
+                    };
+                    
+                    audio.onerror = (error) => {
+                        this.logError(3, '❌ Audio hint error:', error);
+                        reject(new Error(`Failed to load audio hint from ${audioUrl}`));
+                    };
+                    
+                    // Set source and start loading
+                    audio.src = audioUrl;
+                    audio.load();
+                    
+                } catch (error) {
+                    this.logError(3, '❌ Error setting up audio hint:', error);
+                    reject(error);
+                }
+            });
+        }
+
+        /**
+         * Determine if an audio hint should be played based on phrase history and word count
+         */
+        shouldPlayHint(targetText, recentResults) {
+            // Validate inputs
+            if (!recentResults || recentResults.length === 0) {
+                this.log(8, '🎯 No hint: no recent results');
+                return false;
+            }
+            
+            // Check word count - skip hints for short phrases
+            const wordCount = targetText.trim().split(/\s+/).length;
+            if (wordCount < this.options.audioHintMinWords) {
+                this.log(8, `🎯 No hint: phrase too short (${wordCount} words < ${this.options.audioHintMinWords} minimum)`);
+                return false;
+            }
+            
+            // Count successes (1s) and calculate success rate
+            const successCount = recentResults.filter(r => r === 1).length;
+            const totalAttempts = recentResults.length;
+            const successRate = successCount / totalAttempts;
+            
+            this.log(8, `🎯 Hint check: ${successCount}/${totalAttempts} success rate: ${successRate.toFixed(2)}, words: ${wordCount}`, recentResults);
+            
+            // Only play hint if:
+            // 1. User has had at least some success (successCount > 0)
+            // 2. But success rate is below 50% (struggling)
+            // 3. And has attempted the phrase at least twice (to have meaningful history)
+            const hasAttemptedMultipleTimes = totalAttempts >= 2;
+            const hasSomeSuccess = successCount > 0;
+            const isStruggling = successRate < 0.5;
+            
+            const shouldHint = hasAttemptedMultipleTimes && hasSomeSuccess && isStruggling;
+            
+            this.log(8, `🎯 Hint decision: attempts=${totalAttempts} >= 2: ${hasAttemptedMultipleTimes}, successes=${successCount} > 0: ${hasSomeSuccess}, struggling=${successRate.toFixed(2)} < 0.5: ${isStruggling}`);
+            this.log(8, `🎯 Should play hint: ${shouldHint}`);
+            
+            return shouldHint;
+        }
+
+        
+        // ========== LEARNING SESSION MANAGEMENT ==========
+        /**
+         * Start a learning session with persistent microphone access
+         * Call this once when learning starts to avoid repeated mic requests
+         */
+        async startLearningSession() {
+            if (this.isLearningSessionActive) {
+                this.log(6, '🎓 Learning session already active');
+                return;
+            }
+            
+            this.log(5, '🎓 Starting learning session with persistent microphone');
+            await this.startRecording();
+            this.isLearningSessionActive = true;
+        }
+        
+        /**
+         * Stop the learning session and release microphone access
+         * Call this when the user finishes learning or closes the app
+         */
+        stopLearningSession() {
+            if (!this.isLearningSessionActive) {
+                this.log(6, '🎓 No learning session to stop');
+                return;
+            }
+            
+            this.log(5, '🎓 Stopping learning session and releasing microphone');
+            this.stopRecording();
+            this.isLearningSessionActive = false;
+        }
+        
+        /**
+         * Check if a learning session is currently active
+         */
+        isSessionActive() {
+            return this.isLearningSessionActive;
+        }
+        
+        // ========== AUDIO RECORDING ==========
+        async startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        sampleRate: 24000,
+                        channelCount: 1,
+                        echoCancellation: true,
+                        noiseSuppression: true
+                    } 
+                });
+                
+                this.currentAudioStream = stream;
+                this.audioContext = new AudioContext({ sampleRate: 24000 });
+                const source = this.audioContext.createMediaStreamSource(stream);
+                
+                this.audioProcessor = this.audioContext.createScriptProcessor(1024, 1, 1);
+                this.audioProcessor.onaudioprocess = (event) => {
+                    if (this.ws && this.ws.readyState === WebSocket.OPEN && this.isListening) {
+                        const audioData = event.inputBuffer.getChannelData(0);
+                        const pcm16 = new Int16Array(audioData.length);
+                        
+                        for (let i = 0; i < audioData.length; i++) {
+                            pcm16[i] = Math.max(-32768, Math.min(32767, audioData[i] * 32768));
+                        }
+                        
+                        const uint8Array = new Uint8Array(pcm16.buffer);
+                        const base64Audio = btoa(String.fromCharCode.apply(null, uint8Array));
+                        
+                        this.ws.send(JSON.stringify({
+                            type: 'input_audio_buffer.append',
+                            audio: base64Audio
+                        }));
+                    }
+                };
+                
+                source.connect(this.audioProcessor);
+                this.audioProcessor.connect(this.audioContext.destination);
+                
+                this.isListening = true;
+                this.log(5, '🎤 Started recording and listening');
+                
+            } catch (error) {
+                this.logError(2, 'Error starting recording:', error);
+                this.showError('Could not access microphone: ' + error.message);
+                throw error;
+            }
+        }
+        
+        pauseListening() {
+            this.isListening = false;
+            this.log(6, '⏸️ Paused listening (microphone still active)');
+        }
+        
+        resumeListening() {
+            this.isListening = true;
+            this.log(6, '▶️ Resumed listening');
+        }
+        
+        stopRecording() {
+            this.isListening = false;
+            
+            if (this.currentAudioStream) {
+                this.currentAudioStream.getTracks().forEach(track => track.stop());
+                this.currentAudioStream = null;
+            }
+            
+            if (this.audioProcessor) {
+                this.audioProcessor.disconnect();
+                this.audioProcessor = null;
+            }
+            
+            if (this.audioContext && this.audioContext.state !== 'closed') {
+                this.audioContext.close();
+                this.audioContext = null;
+            }
+            
+            this.log(5, '🛑 Stopped recording completely');
+        }
+        
+        // Simple language detection based on known source/target languages
+        detectLanguage(text) {
+            // This is a simple heuristic - in a real app you might use a more sophisticated approach
+            // For now, assume shorter phrases or common English words are source language
+            const englishWords = ['the', 'a', 'an', 'is', 'are', 'was', 'were', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'];
+            const words = text.toLowerCase().split(/\s+/);
+            const englishWordCount = words.filter(word => englishWords.includes(word)).length;
+            
+            // If more than 20% are common English words, assume it's the source language
+            if (englishWordCount / words.length > 0.2) {
+                return this.sourceLanguage;
+            }
+            
+            // Otherwise assume target language
+            return this.targetLanguage;
+        }
+        
+        // ========== UI HELPERS ==========
+        showStatus(message) {
+            this.log(7, '📢 Status:', message);
+            
+            // Call status callback if provided
+            if (this.options.statusCallback) {
+                this.options.statusCallback(message);
+            }
+            
+            // Update output element if provided
+            if (this.outputElement) {
+                this.outputElement.textContent = message;
+            }
+        }
+        
+        showError(message) {
+            this.logError(2, '❌ Error:', message);
+            // Could emit an event or call a callback here
+            if (this.outputElement) {
+                this.outputElement.textContent = 'Error: ' + message;
+                this.outputElement.style.color = 'red';
+                setTimeout(() => {
+                    this.outputElement.style.color = '';
+                }, 3000);
+            }
+        }
+        
+        showScore(score) {
+            this.log(4, '📊 Score:', score);
+            // Return score info for UI to handle
+            return {
+                score: score,
+                message: this.getScoreMessage(score),
+                emoji: this.getScoreEmoji(score)
+            };
+        }
+        
+        getScoreMessage(score) {
+            if (score >= 8) return 'Excellent work!';
+            if (score >= 6) return 'Good job!';
+            return 'Keep practicing!';
+        }
+        
+        getScoreEmoji(score) {
+            if (score >= 8) return '🎉';
+            if (score >= 6) return '👍';
+            return '📚';
+        }
+        
+        // ========== OPTIONS MANAGEMENT ==========
+        updateOptions(newOptions) {
+            this.log(5, '🔧 Updating tutor options:', newOptions);
+            
+            // Merge new options with existing ones
+            this.options = this.mergeOptions(this.options, newOptions);
+            
+            this.log(6, '✅ Options updated:', this.options);
+            return this.options;
+        }
+        
+        getOptions() {
+            return { ...this.options }; // Return a copy to prevent external modification
+        }
+        
+        // ========== MAIN TEST FUNCTION ==========
+        async test(sourceText, targetText, recentResults = [], waitTime = 10) {
+            try {
+                this.showStatus('Getting session key...');
+                const sessionKey = await this.getSessionKey();
+                if (!sessionKey) {
+                    return {
+                        score: 0,
+                        commentary: 'Failed to get session key',
+                        stop: false
+                    };
+                }
+                
+                this.showStatus('Connecting to ChatGPT...');
+                this.log(4, '🔗 Creating new ChatGPT WebSocket connection for testing');
+                this.log(6, '🎚️ Using VAD settings:', this.options.vad);
+                this.log(6, '🎯 Feedback threshold:', this.options.feedbackThreshold);
+                
+                // Connect to ChatGPT Realtime API
+                this.ws = new WebSocket(
+                    'wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview&openai-beta=realtime%3Dv1',
+                    [`realtime`, `openai-insecure-api-key.${sessionKey}`, "openai-beta.realtime-v1"]
+                );
+                
+                return new Promise((resolve) => {
+                    let hasResponse = false;
+                    let silenceTimer;
+                    
+                    this.ws.onopen = async () => {
+                        this.log(5, '✅ Connected to ChatGPT Realtime API');
+                        
+                        // Prepare the prompt for ChatGPT
+                        const prompt = `You are a language learning tutor. Your job is to:
+
+1. Listen to their pronunciation and translation
+2. Rate their overall performance from 1-10 (1=can't translate, 4=most words correct, but some missing, 6=words correct, but pronunciation is poor, 8=Right words, OK pronunciation, 10=perfect!) considering both:
+3. Special cases:
+   - If they say "I don't know", "I give up", "skip", "pass", or similar phrases in ${this.sourceLanguage}, give them a score of 1 and provide encouraging feedback
+   - If they say "again", "play it again", "repeat", "one more time", or similar in any language, give them a score of 0 with commentary explaining they'll hear it again
+   - If they say "stop", "pause", "that's enough", "quit", "finish", "done" or similar in any language, respond with {"score": 0, "commentary": "User requested to stop", "stop": true}
+   - If they remain completely silent, score them 0 with no commentary
+4. Provide specific, helpful commentary on their attempt including:
+   - For "I don't know" responses, provide the correct answer and encouragement
+
+The phrase they should be saying in ${this.targetLanguage} is:
+=============================
+${targetText}
+=============================
+
+
+Respond with a JSON object in this exact format:
+{
+    "score": [0-10],
+    "commentary": "Detailed feedback on their pronunciation and translation accuracy, including specific suggestions for improvement",
+    "stop": true|false
+}
+
+IMPORTANT: Your response must be valid JSON only. Do not include any text outside the JSON object.`;
+
+                        if (this.options.loggingVerbosity >= 8) {
+                            this.log(8, '📤 Sending prompt to ChatGPT:');
+                            this.log(8, '------- PROMPT START -------');
+                            this.log(8, prompt);
+                            this.log(8, '------- PROMPT END -------');
+                        }
+                        
+                        // Configure session with dynamic language instructions and custom VAD
+                        this.ws.send(JSON.stringify({
+                            type: 'session.update',
+                            session: {
+                                modalities: ['text'],
+                                instructions: prompt,
+                                input_audio_format: 'pcm16',
+                                input_audio_transcription: {
+                                    model: 'whisper-1'
+                                },
+                                turn_detection: {
+                                    type: 'server_vad',
+                                    threshold: this.options.vad.threshold,
+                                    prefix_padding_ms: this.options.vad.prefixPaddingMs,
+                                    silence_duration_ms: this.options.vad.silenceDurationMs
+                                }
+                            }
+                        }));
+                        
+                        // Ensure we have an active learning session
+                        if (!this.isLearningSessionActive) {
+                            this.logError(2, '❌ test() called without active learning session');
+                            return {
+                                score: 0,
+                                commentary: 'No active learning session. Please start a learning session first.',
+                                stop: true
+                            };
+                        }
+                        
+                        this.log(6, '🎤 Using persistent microphone session');
+                        
+                        // Check if this is a brand new phrase (zero correct answers in history)
+                        const correctAnswers = recentResults.reduce((sum, result) => sum + result, 0);
+                        const isNewPhrase = correctAnswers === 0;
+                        if (isNewPhrase ) {
+                            // For completely new phrases, introduce them properly
+                            this.showStatus(`🎵 New phrase! Listen to this ${this.sourceLanguage} phrase...`);
+                            this.pauseListening();
+                            await this.speakText(sourceText, this.sourceLanguage);
+                            
+                            this.showStatus(`🎵 Now here's how to say it in ${this.targetLanguage}...`);
+                            await this.speakText(targetText, this.targetLanguage);
+                            // repeat it
+                            // Pause for 1 second (1000 milliseconds)
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+
+                            await this.speakText(targetText, this.targetLanguage);
+                            
+                            this.showStatus(`🎤 Now you try! Say it in ${this.targetLanguage}...`);
+                            
+                            // Play notification bleep before resuming listening
+                            await this.playNotificationBleep();
+                            this.resumeListening();
+                        } else {
+                            // Regular flow for phrases with some history
+                            this.showStatus(`🎵 Listen to this ${this.sourceLanguage} phrase...`);
+                            this.pauseListening();
+                            await this.speakText(sourceText, this.sourceLanguage);
+                            
+                            // Check if we should play an audio hint
+                            if (this.options.enableAudioHints && this.shouldPlayHint(targetText, recentResults)) {
+                                try {
+                                    this.showStatus("🎯 Here is a hint for you...");
+                                    this.log(6, '🎯 Playing audio hint for struggling phrase');
+                                    await this.playAudioHint(targetText);
+                                    await new Promise(resolve => setTimeout(resolve, 500)); // Brief pause after hint
+                                } catch (error) {
+                                    this.log(4, '⚠️ Audio hint failed:', error);
+                                    // Continue with normal flow even if hint fails
+                                }
+                            }
+                            
+                            this.showStatus(`🎤 Now say it in ${this.targetLanguage}...`);
+                            
+                            // Play notification bleep before resuming listening
+                            await this.playNotificationBleep();
+                            this.resumeListening();
+                        }
+                        
+                        // Set silence timer
+                        silenceTimer = setTimeout(() => {
+                            if (!hasResponse) {
+                                this.log(4, '⏰ Silence timeout reached');
+                                this.cleanup();
+                                resolve({
+                                    score: 0,
+                                    commentary: 'No response detected within the time limit. Please try speaking closer to the microphone or check your audio settings.',
+                                    stop: false
+                                });
+                            }
+                        }, waitTime * 1000);
+                    };
+                    
+                    this.ws.onmessage = async (event) => {
+                        const message = JSON.parse(event.data);
+                        this.log(8, '📨 Received message:', message.type);
+                        
+                        // Debug: Log full message for important types
+                        if (['response.done', 'error', 'response.text.delta'].includes(message.type)) {
+                            this.log(9, '📋 Full message details:', message);
+                        }
+                        
+                        if (message.type === 'session.updated') {
+                            this.log(6, '✅ Session configured successfully');
+                        }
+                        
+                        if (message.type === 'input_audio_buffer.speech_started') {
+                            this.log(6, '🎤 Speech detected, user started speaking');
+                            clearTimeout(silenceTimer);
+                        }
+                        
+                        if (message.type === 'input_audio_buffer.speech_stopped') {
+                            this.log(6, '🔇 Speech stopped, processing...');
+                        }
+                        
+                        if (message.type === 'response.done') {
+                            this.log(5, '✅ Response complete from ChatGPT');
+                            hasResponse = true;
+                            clearTimeout(silenceTimer);
+                            
+                            // Extract response from ChatGPT
+                            const response = message.response;
+                            let result = {
+                                score: 0,
+                                commentary: 'Unable to process response',
+                                stop: false
+                            };
+                            
+                            this.log(6, '🔍 Processing ChatGPT response...');
+                            this.log(9, '📥 Raw response object:', JSON.stringify(response, null, 2));
+                            
+                            if (response.output && response.output.length > 0) {
+                                for (const output of response.output) {
+                                    this.log(8, '📄 Processing output item:', output);
+                                    if (output.content && output.content.length > 0) {
+                                        for (const content of output.content) {
+                                            if (content.type === 'text' && content.text) {
+                                                if (this.options.loggingVerbosity >= 7) {
+                                                    this.log(7, '📥 Raw ChatGPT response text:');
+                                                    this.log(7, '------- RESPONSE START -------');
+                                                    this.log(7, content.text);
+                                                    this.log(7, '------- RESPONSE END -------');
+                                                }
+                                                
+                                                try {
+                                                    const parsed = JSON.parse(content.text);
+                                                    this.log(6, '✅ Successfully parsed JSON response:', parsed);
+                                                    
+                                                    result = {
+                                                        score: parseInt(parsed.score) || 0,
+                                                        commentary: parsed.commentary || 'No commentary provided',
+                                                        stop: Boolean(parsed.stop)
+                                                    };
+                                                    this.log(5, '📊 Processed result:', result);
+                                                } catch (e) {
+                                                    this.logWarn(4, '❌ Failed to parse JSON response, attempting fallback parsing');
+                                                    this.logWarn(6, 'Parse error:', e.message);
+                                                    
+                                                    // Fallback parsing for malformed JSON
+                                                    const scoreMatch = content.text.match(/score["\s]*:["\s]*(\d+)/i);
+                                                    const stopMatch = content.text.toLowerCase().includes('stop') || 
+                                                                    content.text.toLowerCase().includes('pause') ||
+                                                                    content.text.toLowerCase().includes('enough');
+                                                    
+                                                    result = {
+                                                        score: scoreMatch ? parseInt(scoreMatch[1]) : 0,
+                                                        commentary: content.text,
+                                                        stop: stopMatch
+                                                    };
+                                                    this.log(5, '🔧 Fallback parsed result:', result);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                this.logWarn(3, '⚠️ No output found in ChatGPT response');
+                            }
+                            
+                            // If user requested to stop, clean up and return immediately
+                            if (result.stop) {
+                                this.log(4, '🛑 User requested to stop');
+                                this.cleanup();
+                                resolve(result);
+                                return;
+                            }
+                            
+                            // Show score feedback and potentially play target pronunciation
+                            this.showStatus('Test complete!');
+                            const scoreInfo = this.showScore(result.score);
+                            
+                            // Speak target language if score is below or equal to configured threshold
+                            if (result.score > 0 && result.score <= this.options.feedbackThreshold) {
+                                this.log(5, `📢 Score ${result.score} below threshold ${this.options.feedbackThreshold}, speaking ${this.targetLanguage} target phrase...`);
+                                
+                                const wasListening = this.isListening;
+                                if (wasListening) this.pauseListening();
+                                
+                                // For very poor scores (< 3), repeat the phrase 3 times
+                                if (result.score < 3) {
+                                    this.log(4, `🔁 Score ${result.score} is very low, repeating target phrase 3 times for better learning`);
+                                    this.showStatus(`🎵 Score ${result.score}/10 - Here's the ${this.targetLanguage} pronunciation (3 times)...`);
+                                    
+                                    for (let i = 1; i <= 3; i++) {
+                                        this.log(6, `🎵 Playing repetition ${i}/3`);
+                                        await this.speakText(targetText, this.targetLanguage);
+                                        
+                                        // Short pause between repetitions (except after the last one)
+                                        if (i < 3) {
+                                            await new Promise(resolve => setTimeout(resolve, 800));
+                                        }
+                                    }
+                                } else {
+                                    // Normal single playback for scores 3-6 (below threshold but not terrible)
+                                    this.showStatus(`🎵 Here's the ${this.targetLanguage} pronunciation...`);
+                                    await this.speakText(targetText, this.targetLanguage);
+                                }
+                                
+                                if (wasListening) this.resumeListening();
+                            }
+                            
+                            this.log(4, '📊 Final result returned:', result);
+                            this.cleanup();
+                            resolve(result);
+                        }
+                        
+                        if (message.type === 'error') {
+                            this.logError(2, '❌ ChatGPT WebSocket error:', message.error);
+                            this.log(8, '💥 Full error details:', JSON.stringify(message, null, 2));
+                            this.showError('Error: ' + message.error.message);
+                            this.cleanup();
+                            resolve({
+                                score: 0,
+                                commentary: `Error occurred: ${message.error.message}`,
+                                stop: false
+                            });
+                        }
+                    };
+                    
+                    this.ws.onerror = (error) => {
+                        this.logError(2, '❌ WebSocket connection error:', error);
+                        this.showError('Connection error occurred');
+                        this.cleanup();
+                        resolve({
+                            score: 0,
+                            commentary: 'Connection error occurred. Please check your internet connection and try again.',
+                            stop: false
+                        });
+                    };
+                });
+                
+            } catch (error) {
+                this.logError(1, '💥 Error in test method:', error);
+                this.log(8, '🔍 Error stack trace:', error.stack);
+                this.showError('Error: ' + error.message);
+                return {
+                    score: 0,
+                    commentary: `Error occurred: ${error.message}`,
+                    stop: false
+                };
+            }
+        }
+        
+        cleanup() {
+            if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                this.log(5, '🔌 Closing ChatGPT WebSocket connection');
+                this.ws.close();
+                this.ws = null;
+            }
+            
+            // Only stop recording if we're not in a persistent learning session
+            if (!this.isLearningSessionActive) {
+                this.log(6, '🎤 Stopping temporary recording session');
+                this.stopRecording();
+            } else {
+                this.log(6, '🎤 Keeping persistent microphone session active');
+            }
+        }
+        
+        // ========== LIFECYCLE MANAGEMENT ==========
+        destroy() {
+            this.log(4, '🧹 Destroying LanguageTutor instance');
+            this.cleanup();
+            this.stopKeyRefreshTimer();
+        }
+    }
+
+    const subscriber_queue = [];
+    /**
+     * Create a `Writable` store that allows both updating and reading by subscription.
+     * @param {*=}value initial value
+     * @param {StartStopNotifier=} start
+     */
+    function writable(value, start = noop) {
+        let stop;
+        const subscribers = new Set();
+        function set(new_value) {
+            if (safe_not_equal(value, new_value)) {
+                value = new_value;
+                if (stop) { // store is ready
+                    const run_queue = !subscriber_queue.length;
+                    for (const subscriber of subscribers) {
+                        subscriber[1]();
+                        subscriber_queue.push(subscriber, value);
+                    }
+                    if (run_queue) {
+                        for (let i = 0; i < subscriber_queue.length; i += 2) {
+                            subscriber_queue[i][0](subscriber_queue[i + 1]);
+                        }
+                        subscriber_queue.length = 0;
+                    }
+                }
+            }
+        }
+        function update(fn) {
+            set(fn(value));
+        }
+        function subscribe(run, invalidate = noop) {
+            const subscriber = [run, invalidate];
+            subscribers.add(subscriber);
+            if (subscribers.size === 1) {
+                stop = start(set) || noop;
+            }
+            run(value);
+            return () => {
+                subscribers.delete(subscriber);
+                if (subscribers.size === 0 && stop) {
+                    stop();
+                    stop = null;
+                }
+            };
+        }
+        return { set, update, subscribe };
+    }
+
+    // settingsStore.js - Centralised settings management with localStorage persistence
+
+    // Default settings
+    const defaultSettings = {
+      // Language Configuration
+      nativeLanguage: 'English',
+      learningLanguage: 'Italian',
+      
+      // Display Options
+      showExpectedOutput: 'always', // 'always', 'never', 'struggling'
+      showCategory: true,
+      showFeedback: true,
+      showUpcomingQueue: false,
+      enableAudioHints: false,
+      
+      // Audio & Timing Controls
+      translationThreshold: 7,
+      pauseBetweenTests: 3,
+      pauseWhenStruggling: 5,
+      
+      // Binary Algorithm Controls
+      passThreshold: 7,
+      repetitivenessFactor: 5,
+      
+      // Developer Settings
+      loggingVerbosity: 5,
+      showDeveloperSettings: false,
+      
+      // Category Preferences
+      enabledCategories: {}
+    };
+
+    function createSettingsStore() {
+      const { subscribe, set, update } = writable(defaultSettings);
+      
+      return {
+        subscribe,
+        
+        // Load settings from localStorage
+        load: () => {
+          if (typeof localStorage === 'undefined') return;
+          
+          const saved = localStorage.getItem('languageTutorSettings');
+          if (saved) {
+            try {
+              const parsedSettings = JSON.parse(saved);
+              update(current => ({ ...current, ...parsedSettings }));
+              console.log('✅ Settings loaded from localStorage');
+            } catch (error) {
+              console.error('❌ Failed to parse saved settings:', error);
+            }
+          }
+        },
+        
+        // Save settings to localStorage
+        save: (settings) => {
+          if (typeof localStorage === 'undefined') return;
+          
+          try {
+            localStorage.setItem('languageTutorSettings', JSON.stringify(settings));
+            console.log('💾 Settings saved to localStorage');
+          } catch (error) {
+            console.error('❌ Failed to save settings:', error);
+          }
+        },
+        
+        // Update specific setting
+        updateSetting: (key, value) => {
+          update(current => {
+            const newSettings = { ...current, [key]: value };
+            
+            // Auto-save to localStorage
+            if (typeof localStorage !== 'undefined') {
+              try {
+                localStorage.setItem('languageTutorSettings', JSON.stringify(newSettings));
+              } catch (error) {
+                console.error('❌ Failed to save setting:', error);
+              }
+            }
+            
+            return newSettings;
+          });
+        },
+        
+        // Update multiple settings at once
+        updateSettings: (updates) => {
+          update(current => {
+            const newSettings = { ...current, ...updates };
+            
+            // Auto-save to localStorage
+            if (typeof localStorage !== 'undefined') {
+              try {
+                localStorage.setItem('languageTutorSettings', JSON.stringify(newSettings));
+              } catch (error) {
+                console.error('❌ Failed to save settings:', error);
+              }
+            }
+            
+            return newSettings;
+          });
+        },
+        
+        // Reset to defaults
+        reset: () => {
+          set(defaultSettings);
+          if (typeof localStorage !== 'undefined') {
+            localStorage.removeItem('languageTutorSettings');
+          }
+        }
+      };
+    }
+
+    const settings = createSettingsStore();
+
+    // autoSave.js - Reusable Svelte action for auto-saving settings to localStorage
+
+    function autoSave(node, settingName) {
+      function handleChange(event) {
+        const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        
+        if (settingName && typeof localStorage !== 'undefined') {
+          try {
+            const saved = localStorage.getItem('languageTutorSettings');
+            const settings = saved ? JSON.parse(saved) : {};
+            settings[settingName] = value;
+            localStorage.setItem('languageTutorSettings', JSON.stringify(settings));
+            console.log(`💾 Saved ${settingName}:`, value);
+          } catch (error) {
+            console.error(`Failed to save ${settingName}:`, error);
+          }
+        }
+      }
+      
+      node.addEventListener('change', handleChange);
+      
+      return {
+        destroy() {
+          node.removeEventListener('change', handleChange);
+        }
+      };
+    }
+
+    /* src/LanguageSettings.svelte generated by Svelte v3.59.2 */
+
+    const { console: console_1$2 } = globals;
+    const file$7 = "src/LanguageSettings.svelte";
+
+    function get_each_context$2(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[9] = list[i];
+    	return child_ctx;
+    }
+
+    function get_each_context_1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[9] = list[i];
+    	return child_ctx;
+    }
+
+    // (31:6) {#each nativeLanguages as lang}
+    function create_each_block_1(ctx) {
+    	let option;
+    	let t0_value = /*lang*/ ctx[9] + "";
+    	let t0;
+    	let t1;
+    	let option_value_value;
+
+    	const block = {
+    		c: function create() {
+    			option = element("option");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			option.__value = option_value_value = /*lang*/ ctx[9];
+    			option.value = option.__value;
+    			add_location(option, file$7, 31, 8, 792);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, option, anchor);
+    			append_dev(option, t0);
+    			append_dev(option, t1);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*nativeLanguages*/ 4 && t0_value !== (t0_value = /*lang*/ ctx[9] + "")) set_data_dev(t0, t0_value);
+
+    			if (dirty & /*nativeLanguages*/ 4 && option_value_value !== (option_value_value = /*lang*/ ctx[9])) {
+    				prop_dev(option, "__value", option_value_value);
+    				option.value = option.__value;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(option);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block_1.name,
+    		type: "each",
+    		source: "(31:6) {#each nativeLanguages as lang}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (46:6) {#each learningLanguages as lang}
+    function create_each_block$2(ctx) {
+    	let option;
+    	let t0_value = /*lang*/ ctx[9] + "";
+    	let t0;
+    	let t1;
+    	let option_value_value;
+
+    	const block = {
+    		c: function create() {
+    			option = element("option");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			option.__value = option_value_value = /*lang*/ ctx[9];
+    			option.value = option.__value;
+    			add_location(option, file$7, 46, 8, 1140);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, option, anchor);
+    			append_dev(option, t0);
+    			append_dev(option, t1);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*learningLanguages*/ 8 && t0_value !== (t0_value = /*lang*/ ctx[9] + "")) set_data_dev(t0, t0_value);
+
+    			if (dirty & /*learningLanguages*/ 8 && option_value_value !== (option_value_value = /*lang*/ ctx[9])) {
+    				prop_dev(option, "__value", option_value_value);
+    				option.value = option.__value;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(option);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block$2.name,
+    		type: "each",
+    		source: "(46:6) {#each learningLanguages as lang}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$7(ctx) {
+    	let h3;
+    	let t1;
+    	let div2;
+    	let div0;
+    	let label0;
+    	let t3;
+    	let select0;
+    	let t4;
+    	let div1;
+    	let label1;
+    	let t6;
+    	let select1;
+    	let mounted;
+    	let dispose;
+    	let each_value_1 = /*nativeLanguages*/ ctx[2];
+    	validate_each_argument(each_value_1);
+    	let each_blocks_1 = [];
+
+    	for (let i = 0; i < each_value_1.length; i += 1) {
+    		each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    	}
+
+    	let each_value = /*learningLanguages*/ ctx[3];
+    	validate_each_argument(each_value);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			h3 = element("h3");
+    			h3.textContent = "Language Selection";
+    			t1 = space();
+    			div2 = element("div");
+    			div0 = element("div");
+    			label0 = element("label");
+    			label0.textContent = "Native Language";
+    			t3 = space();
+    			select0 = element("select");
+
+    			for (let i = 0; i < each_blocks_1.length; i += 1) {
+    				each_blocks_1[i].c();
+    			}
+
+    			t4 = space();
+    			div1 = element("div");
+    			label1 = element("label");
+    			label1.textContent = "Learning Language";
+    			t6 = space();
+    			select1 = element("select");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			attr_dev(h3, "class", "section-header");
+    			add_location(h3, file$7, 21, 0, 468);
+    			attr_dev(label0, "class", "form-label");
+    			add_location(label0, file$7, 24, 4, 578);
+    			attr_dev(select0, "class", "form-select");
+    			if (/*nativeLanguage*/ ctx[0] === void 0) add_render_callback(() => /*select0_change_handler*/ ctx[5].call(select0));
+    			add_location(select0, file$7, 25, 4, 632);
+    			attr_dev(div0, "class", "form-group");
+    			add_location(div0, file$7, 23, 2, 549);
+    			attr_dev(label1, "class", "form-label");
+    			add_location(label1, file$7, 39, 4, 918);
+    			attr_dev(select1, "class", "form-select");
+    			if (/*learningLanguage*/ ctx[1] === void 0) add_render_callback(() => /*select1_change_handler*/ ctx[6].call(select1));
+    			add_location(select1, file$7, 40, 4, 974);
+    			attr_dev(div1, "class", "form-group");
+    			add_location(div1, file$7, 38, 2, 889);
+    			attr_dev(div2, "class", "language-grid");
+    			add_location(div2, file$7, 22, 0, 519);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h3, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, div2, anchor);
+    			append_dev(div2, div0);
+    			append_dev(div0, label0);
+    			append_dev(div0, t3);
+    			append_dev(div0, select0);
+
+    			for (let i = 0; i < each_blocks_1.length; i += 1) {
+    				if (each_blocks_1[i]) {
+    					each_blocks_1[i].m(select0, null);
+    				}
+    			}
+
+    			select_option(select0, /*nativeLanguage*/ ctx[0], true);
+    			append_dev(div2, t4);
+    			append_dev(div2, div1);
+    			append_dev(div1, label1);
+    			append_dev(div1, t6);
+    			append_dev(div1, select1);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				if (each_blocks[i]) {
+    					each_blocks[i].m(select1, null);
+    				}
+    			}
+
+    			select_option(select1, /*learningLanguage*/ ctx[1], true);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(select0, "change", /*select0_change_handler*/ ctx[5]),
+    					action_destroyer(autoSave.call(null, select0, "nativeLanguage")),
+    					listen_dev(select1, "change", /*select1_change_handler*/ ctx[6]),
+    					action_destroyer(autoSave.call(null, select1, "learningLanguage"))
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*nativeLanguages*/ 4) {
+    				each_value_1 = /*nativeLanguages*/ ctx[2];
+    				validate_each_argument(each_value_1);
+    				let i;
+
+    				for (i = 0; i < each_value_1.length; i += 1) {
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+    					if (each_blocks_1[i]) {
+    						each_blocks_1[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks_1[i] = create_each_block_1(child_ctx);
+    						each_blocks_1[i].c();
+    						each_blocks_1[i].m(select0, null);
+    					}
+    				}
+
+    				for (; i < each_blocks_1.length; i += 1) {
+    					each_blocks_1[i].d(1);
+    				}
+
+    				each_blocks_1.length = each_value_1.length;
+    			}
+
+    			if (dirty & /*nativeLanguage, nativeLanguages*/ 5) {
+    				select_option(select0, /*nativeLanguage*/ ctx[0]);
+    			}
+
+    			if (dirty & /*learningLanguages*/ 8) {
+    				each_value = /*learningLanguages*/ ctx[3];
+    				validate_each_argument(each_value);
+    				let i;
+
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context$2(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block$2(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(select1, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value.length;
+    			}
+
+    			if (dirty & /*learningLanguage, learningLanguages*/ 10) {
+    				select_option(select1, /*learningLanguage*/ ctx[1]);
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h3);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(div2);
+    			destroy_each(each_blocks_1, detaching);
+    			destroy_each(each_blocks, detaching);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$7.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$7($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('LanguageSettings', slots, []);
+    	let { nativeLanguage } = $$props;
+    	let { learningLanguage } = $$props;
+    	let { nativeLanguages } = $$props;
+    	let { learningLanguages } = $$props;
+    	let { loggingVerbosity = 5 } = $$props;
+    	const dispatch = createEventDispatcher();
+
+    	function log(level, ...args) {
+    		if (loggingVerbosity >= level) {
+    			console.log(...args);
+    		}
+    	}
+
+    	$$self.$$.on_mount.push(function () {
+    		if (nativeLanguage === undefined && !('nativeLanguage' in $$props || $$self.$$.bound[$$self.$$.props['nativeLanguage']])) {
+    			console_1$2.warn("<LanguageSettings> was created without expected prop 'nativeLanguage'");
+    		}
+
+    		if (learningLanguage === undefined && !('learningLanguage' in $$props || $$self.$$.bound[$$self.$$.props['learningLanguage']])) {
+    			console_1$2.warn("<LanguageSettings> was created without expected prop 'learningLanguage'");
+    		}
+
+    		if (nativeLanguages === undefined && !('nativeLanguages' in $$props || $$self.$$.bound[$$self.$$.props['nativeLanguages']])) {
+    			console_1$2.warn("<LanguageSettings> was created without expected prop 'nativeLanguages'");
+    		}
+
+    		if (learningLanguages === undefined && !('learningLanguages' in $$props || $$self.$$.bound[$$self.$$.props['learningLanguages']])) {
+    			console_1$2.warn("<LanguageSettings> was created without expected prop 'learningLanguages'");
+    		}
+    	});
+
+    	const writable_props = [
+    		'nativeLanguage',
+    		'learningLanguage',
+    		'nativeLanguages',
+    		'learningLanguages',
+    		'loggingVerbosity'
+    	];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$2.warn(`<LanguageSettings> was created with unknown prop '${key}'`);
+    	});
+
+    	function select0_change_handler() {
+    		nativeLanguage = select_value(this);
+    		$$invalidate(0, nativeLanguage);
+    		$$invalidate(2, nativeLanguages);
+    	}
+
+    	function select1_change_handler() {
+    		learningLanguage = select_value(this);
+    		$$invalidate(1, learningLanguage);
+    		$$invalidate(3, learningLanguages);
+    	}
+
+    	$$self.$$set = $$props => {
+    		if ('nativeLanguage' in $$props) $$invalidate(0, nativeLanguage = $$props.nativeLanguage);
+    		if ('learningLanguage' in $$props) $$invalidate(1, learningLanguage = $$props.learningLanguage);
+    		if ('nativeLanguages' in $$props) $$invalidate(2, nativeLanguages = $$props.nativeLanguages);
+    		if ('learningLanguages' in $$props) $$invalidate(3, learningLanguages = $$props.learningLanguages);
+    		if ('loggingVerbosity' in $$props) $$invalidate(4, loggingVerbosity = $$props.loggingVerbosity);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		createEventDispatcher,
+    		autoSave,
+    		nativeLanguage,
+    		learningLanguage,
+    		nativeLanguages,
+    		learningLanguages,
+    		loggingVerbosity,
+    		dispatch,
+    		log
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('nativeLanguage' in $$props) $$invalidate(0, nativeLanguage = $$props.nativeLanguage);
+    		if ('learningLanguage' in $$props) $$invalidate(1, learningLanguage = $$props.learningLanguage);
+    		if ('nativeLanguages' in $$props) $$invalidate(2, nativeLanguages = $$props.nativeLanguages);
+    		if ('learningLanguages' in $$props) $$invalidate(3, learningLanguages = $$props.learningLanguages);
+    		if ('loggingVerbosity' in $$props) $$invalidate(4, loggingVerbosity = $$props.loggingVerbosity);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [
+    		nativeLanguage,
+    		learningLanguage,
+    		nativeLanguages,
+    		learningLanguages,
+    		loggingVerbosity,
+    		select0_change_handler,
+    		select1_change_handler
+    	];
+    }
+
+    class LanguageSettings extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+
+    		init(this, options, instance$7, create_fragment$7, safe_not_equal, {
+    			nativeLanguage: 0,
+    			learningLanguage: 1,
+    			nativeLanguages: 2,
+    			learningLanguages: 3,
+    			loggingVerbosity: 4
+    		});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "LanguageSettings",
+    			options,
+    			id: create_fragment$7.name
+    		});
+    	}
+
+    	get nativeLanguage() {
+    		throw new Error("<LanguageSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set nativeLanguage(value) {
+    		throw new Error("<LanguageSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get learningLanguage() {
+    		throw new Error("<LanguageSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set learningLanguage(value) {
+    		throw new Error("<LanguageSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get nativeLanguages() {
+    		throw new Error("<LanguageSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set nativeLanguages(value) {
+    		throw new Error("<LanguageSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get learningLanguages() {
+    		throw new Error("<LanguageSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set learningLanguages(value) {
+    		throw new Error("<LanguageSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get loggingVerbosity() {
+    		throw new Error("<LanguageSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set loggingVerbosity(value) {
+    		throw new Error("<LanguageSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/DisplaySettings.svelte generated by Svelte v3.59.2 */
+    const file$6 = "src/DisplaySettings.svelte";
+
+    // (83:52) 
+    function create_if_block_3$1(ctx) {
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			t = text("Expected translation shown only for phrases with success rate below 25%");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(t);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_3$1.name,
+    		type: "if",
+    		source: "(83:52) ",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (81:47) 
+    function create_if_block_2$1(ctx) {
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			t = text("Expected translation is never shown - test your memory!");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(t);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2$1.name,
+    		type: "if",
+    		source: "(81:47) ",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (79:6) {#if showExpectedOutput === 'always'}
+    function create_if_block_1$2(ctx) {
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			t = text("Expected translation is always shown");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(t);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1$2.name,
+    		type: "if",
+    		source: "(79:6) {#if showExpectedOutput === 'always'}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (142:2) {#if showExpectedOutput === 'struggling'}
+    function create_if_block$5(ctx) {
+    	let div1;
+    	let label;
+    	let t0;
+    	let t1;
+    	let t2;
+    	let span0;
+    	let t4;
+    	let input;
+    	let t5;
+    	let div0;
+    	let span1;
+    	let t7;
+    	let span2;
+    	let t9;
+    	let span3;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			div1 = element("div");
+    			label = element("label");
+    			t0 = text("Pause When Struggling: ");
+    			t1 = text(/*pauseWhenStruggling*/ ctx[7]);
+    			t2 = text("s\n      ");
+    			span0 = element("span");
+    			span0.textContent = "Extra pause time for phrases with low success rate (<25%) or poor scores (<4)";
+    			t4 = space();
+    			input = element("input");
+    			t5 = space();
+    			div0 = element("div");
+    			span1 = element("span");
+    			span1.textContent = "Quick (0.5s)";
+    			t7 = space();
+    			span2 = element("span");
+    			span2.textContent = "Default (5s)";
+    			t9 = space();
+    			span3 = element("span");
+    			span3.textContent = "Extended (15s)";
+    			attr_dev(span0, "class", "threshold-description");
+    			add_location(span0, file$6, 145, 6, 4464);
+    			attr_dev(label, "class", "form-label");
+    			add_location(label, file$6, 143, 4, 4379);
+    			attr_dev(input, "type", "range");
+    			attr_dev(input, "min", "0.5");
+    			attr_dev(input, "max", "15");
+    			attr_dev(input, "step", "0.5");
+    			attr_dev(input, "class", "threshold-slider");
+    			add_location(input, file$6, 149, 4, 4624);
+    			add_location(span1, file$6, 159, 6, 4863);
+    			add_location(span2, file$6, 160, 6, 4895);
+    			add_location(span3, file$6, 161, 6, 4927);
+    			attr_dev(div0, "class", "threshold-labels");
+    			add_location(div0, file$6, 158, 4, 4826);
+    			attr_dev(div1, "class", "threshold-setting");
+    			add_location(div1, file$6, 142, 4, 4343);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, label);
+    			append_dev(label, t0);
+    			append_dev(label, t1);
+    			append_dev(label, t2);
+    			append_dev(label, span0);
+    			append_dev(div1, t4);
+    			append_dev(div1, input);
+    			set_input_value(input, /*pauseWhenStruggling*/ ctx[7]);
+    			append_dev(div1, t5);
+    			append_dev(div1, div0);
+    			append_dev(div0, span1);
+    			append_dev(div0, t7);
+    			append_dev(div0, span2);
+    			append_dev(div0, t9);
+    			append_dev(div0, span3);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[16]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[16]),
+    					action_destroyer(autoSave.call(null, input, "pauseWhenStruggling"))
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*pauseWhenStruggling*/ 128) set_data_dev(t1, /*pauseWhenStruggling*/ ctx[7]);
+
+    			if (dirty & /*pauseWhenStruggling*/ 128) {
+    				set_input_value(input, /*pauseWhenStruggling*/ ctx[7]);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div1);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$5.name,
+    		type: "if",
+    		source: "(142:2) {#if showExpectedOutput === 'struggling'}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$6(ctx) {
+    	let h3;
+    	let t1;
+    	let div6;
+    	let div0;
+    	let label0;
+    	let input0;
+    	let t2;
+    	let span0;
+    	let t4;
+    	let label1;
+    	let input1;
+    	let t5;
+    	let span1;
+    	let t7;
+    	let label2;
+    	let input2;
+    	let t8;
+    	let span2;
+    	let t10;
+    	let label3;
+    	let input3;
+    	let t11;
+    	let span3;
+    	let t13;
+    	let div1;
+    	let label4;
+    	let t15;
+    	let select;
+    	let option0;
+    	let option1;
+    	let option2;
+    	let t19;
+    	let p;
+    	let t20;
+    	let div3;
+    	let label5;
+    	let t21;
+    	let t22;
+    	let t23;
+    	let span4;
+
+    	let t24_value = (/*translationThreshold*/ ctx[5] === 0
+    	? 'Never repeat translation'
+    	: /*translationThreshold*/ ctx[5] === 10
+    		? 'Always repeat translation'
+    		: `Repeat translation for scores below ${/*translationThreshold*/ ctx[5]}`) + "";
+
+    	let t24;
+    	let t25;
+    	let input4;
+    	let t26;
+    	let div2;
+    	let span5;
+    	let t28;
+    	let span6;
+    	let t30;
+    	let span7;
+    	let t32;
+    	let div5;
+    	let label6;
+    	let t33;
+    	let t34;
+    	let t35;
+    	let span8;
+
+    	let t36_value = (/*pauseBetweenTests*/ ctx[6] <= 1
+    	? 'Quick - brief pause for score review'
+    	: /*pauseBetweenTests*/ ctx[6] >= 5
+    		? 'Slow - plenty of time to read feedback'
+    		: 'Balanced - comfortable time to review your score') + "";
+
+    	let t36;
+    	let t37;
+    	let input5;
+    	let t38;
+    	let div4;
+    	let span9;
+    	let t40;
+    	let span10;
+    	let t42;
+    	let span11;
+    	let t44;
+    	let mounted;
+    	let dispose;
+
+    	function select_block_type(ctx, dirty) {
+    		if (/*showExpectedOutput*/ ctx[0] === 'always') return create_if_block_1$2;
+    		if (/*showExpectedOutput*/ ctx[0] === 'never') return create_if_block_2$1;
+    		if (/*showExpectedOutput*/ ctx[0] === 'struggling') return create_if_block_3$1;
+    	}
+
+    	let current_block_type = select_block_type(ctx);
+    	let if_block0 = current_block_type && current_block_type(ctx);
+    	let if_block1 = /*showExpectedOutput*/ ctx[0] === 'struggling' && create_if_block$5(ctx);
+
+    	const block = {
+    		c: function create() {
+    			h3 = element("h3");
+    			h3.textContent = "Display Options";
+    			t1 = space();
+    			div6 = element("div");
+    			div0 = element("div");
+    			label0 = element("label");
+    			input0 = element("input");
+    			t2 = space();
+    			span0 = element("span");
+    			span0.textContent = "Display Category";
+    			t4 = space();
+    			label1 = element("label");
+    			input1 = element("input");
+    			t5 = space();
+    			span1 = element("span");
+    			span1.textContent = "Display Feedback";
+    			t7 = space();
+    			label2 = element("label");
+    			input2 = element("input");
+    			t8 = space();
+    			span2 = element("span");
+    			span2.textContent = "Show Upcoming Queue";
+    			t10 = space();
+    			label3 = element("label");
+    			input3 = element("input");
+    			t11 = space();
+    			span3 = element("span");
+    			span3.textContent = "Enable Audio Hints";
+    			t13 = space();
+    			div1 = element("div");
+    			label4 = element("label");
+    			label4.textContent = "Show Expected Translation";
+    			t15 = space();
+    			select = element("select");
+    			option0 = element("option");
+    			option0.textContent = "Always";
+    			option1 = element("option");
+    			option1.textContent = "Only when struggling";
+    			option2 = element("option");
+    			option2.textContent = "Never";
+    			t19 = space();
+    			p = element("p");
+    			if (if_block0) if_block0.c();
+    			t20 = space();
+    			div3 = element("div");
+    			label5 = element("label");
+    			t21 = text("Translation Repetition Threshold: ");
+    			t22 = text(/*translationThreshold*/ ctx[5]);
+    			t23 = space();
+    			span4 = element("span");
+    			t24 = text(t24_value);
+    			t25 = space();
+    			input4 = element("input");
+    			t26 = space();
+    			div2 = element("div");
+    			span5 = element("span");
+    			span5.textContent = "Never (0)";
+    			t28 = space();
+    			span6 = element("span");
+    			span6.textContent = "Default (7)";
+    			t30 = space();
+    			span7 = element("span");
+    			span7.textContent = "Always (10)";
+    			t32 = space();
+    			div5 = element("div");
+    			label6 = element("label");
+    			t33 = text("Pause Between Tests: ");
+    			t34 = text(/*pauseBetweenTests*/ ctx[6]);
+    			t35 = text("s\n      ");
+    			span8 = element("span");
+    			t36 = text(t36_value);
+    			t37 = space();
+    			input5 = element("input");
+    			t38 = space();
+    			div4 = element("div");
+    			span9 = element("span");
+    			span9.textContent = "Quick (0.5s)";
+    			t40 = space();
+    			span10 = element("span");
+    			span10.textContent = "Default (3s)";
+    			t42 = space();
+    			span11 = element("span");
+    			span11.textContent = "Slow (10s)";
+    			t44 = space();
+    			if (if_block1) if_block1.c();
+    			attr_dev(h3, "class", "section-header");
+    			add_location(h3, file$6, 22, 0, 513);
+    			attr_dev(input0, "type", "checkbox");
+    			attr_dev(input0, "class", "category-checkbox");
+    			add_location(input0, file$6, 26, 6, 676);
+    			attr_dev(span0, "class", "category-label");
+    			add_location(span0, file$6, 32, 6, 832);
+    			attr_dev(label0, "class", "category-item");
+    			add_location(label0, file$6, 25, 4, 640);
+    			attr_dev(input1, "type", "checkbox");
+    			attr_dev(input1, "class", "category-checkbox");
+    			add_location(input1, file$6, 35, 6, 938);
+    			attr_dev(span1, "class", "category-label");
+    			add_location(span1, file$6, 41, 6, 1094);
+    			attr_dev(label1, "class", "category-item");
+    			add_location(label1, file$6, 34, 4, 902);
+    			attr_dev(input2, "type", "checkbox");
+    			attr_dev(input2, "class", "category-checkbox");
+    			add_location(input2, file$6, 44, 6, 1200);
+    			attr_dev(span2, "class", "category-label");
+    			add_location(span2, file$6, 51, 6, 1398);
+    			attr_dev(label2, "class", "category-item");
+    			add_location(label2, file$6, 43, 4, 1164);
+    			attr_dev(input3, "type", "checkbox");
+    			attr_dev(input3, "class", "category-checkbox");
+    			add_location(input3, file$6, 54, 6, 1507);
+    			attr_dev(span3, "class", "category-label");
+    			add_location(span3, file$6, 60, 6, 1671);
+    			attr_dev(label3, "class", "category-item");
+    			add_location(label3, file$6, 53, 4, 1471);
+    			attr_dev(div0, "class", "display-options-list svelte-6s5pe4");
+    			add_location(div0, file$6, 24, 2, 601);
+    			attr_dev(label4, "class", "form-label");
+    			attr_dev(label4, "for", "expected-output-select");
+    			add_location(label4, file$6, 66, 4, 1854);
+    			option0.__value = "always";
+    			option0.value = option0.__value;
+    			add_location(option0, file$6, 73, 6, 2109);
+    			option1.__value = "struggling";
+    			option1.value = option1.__value;
+    			add_location(option1, file$6, 74, 6, 2154);
+    			option2.__value = "never";
+    			option2.value = option2.__value;
+    			add_location(option2, file$6, 75, 6, 2217);
+    			attr_dev(select, "id", "expected-output-select");
+    			attr_dev(select, "class", "form-select");
+    			if (/*showExpectedOutput*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[13].call(select));
+    			add_location(select, file$6, 67, 4, 1947);
+    			attr_dev(p, "class", "setting-description");
+    			add_location(p, file$6, 77, 4, 2272);
+    			attr_dev(div1, "class", "form-group expected-translation-section svelte-6s5pe4");
+    			add_location(div1, file$6, 65, 2, 1796);
+    			attr_dev(span4, "class", "threshold-description");
+    			add_location(span4, file$6, 92, 6, 2846);
+    			attr_dev(label5, "class", "form-label");
+    			add_location(label5, file$6, 90, 4, 2750);
+    			attr_dev(input4, "type", "range");
+    			attr_dev(input4, "min", "0");
+    			attr_dev(input4, "max", "10");
+    			attr_dev(input4, "step", "1");
+    			attr_dev(input4, "class", "threshold-slider");
+    			add_location(input4, file$6, 98, 4, 3124);
+    			add_location(span5, file$6, 108, 6, 3361);
+    			add_location(span6, file$6, 109, 6, 3390);
+    			add_location(span7, file$6, 110, 6, 3421);
+    			attr_dev(div2, "class", "threshold-labels");
+    			add_location(div2, file$6, 107, 4, 3324);
+    			attr_dev(div3, "class", "threshold-setting");
+    			add_location(div3, file$6, 89, 2, 2714);
+    			attr_dev(span8, "class", "threshold-description");
+    			add_location(span8, file$6, 118, 6, 3627);
+    			attr_dev(label6, "class", "form-label");
+    			add_location(label6, file$6, 116, 4, 3546);
+    			attr_dev(input5, "type", "range");
+    			attr_dev(input5, "min", "0.5");
+    			attr_dev(input5, "max", "10");
+    			attr_dev(input5, "step", "0.5");
+    			attr_dev(input5, "class", "threshold-slider");
+    			add_location(input5, file$6, 124, 4, 3908);
+    			add_location(span9, file$6, 134, 6, 4143);
+    			add_location(span10, file$6, 135, 6, 4175);
+    			add_location(span11, file$6, 136, 6, 4207);
+    			attr_dev(div4, "class", "threshold-labels");
+    			add_location(div4, file$6, 133, 4, 4106);
+    			attr_dev(div5, "class", "threshold-setting");
+    			add_location(div5, file$6, 115, 2, 3510);
+    			attr_dev(div6, "class", "display-options-section");
+    			add_location(div6, file$6, 23, 0, 561);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h3, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, div6, anchor);
+    			append_dev(div6, div0);
+    			append_dev(div0, label0);
+    			append_dev(label0, input0);
+    			input0.checked = /*showCategory*/ ctx[1];
+    			append_dev(label0, t2);
+    			append_dev(label0, span0);
+    			append_dev(div0, t4);
+    			append_dev(div0, label1);
+    			append_dev(label1, input1);
+    			input1.checked = /*showFeedback*/ ctx[2];
+    			append_dev(label1, t5);
+    			append_dev(label1, span1);
+    			append_dev(div0, t7);
+    			append_dev(div0, label2);
+    			append_dev(label2, input2);
+    			input2.checked = /*showUpcomingQueue*/ ctx[3];
+    			append_dev(label2, t8);
+    			append_dev(label2, span2);
+    			append_dev(div0, t10);
+    			append_dev(div0, label3);
+    			append_dev(label3, input3);
+    			input3.checked = /*enableAudioHints*/ ctx[4];
+    			append_dev(label3, t11);
+    			append_dev(label3, span3);
+    			append_dev(div6, t13);
+    			append_dev(div6, div1);
+    			append_dev(div1, label4);
+    			append_dev(div1, t15);
+    			append_dev(div1, select);
+    			append_dev(select, option0);
+    			append_dev(select, option1);
+    			append_dev(select, option2);
+    			select_option(select, /*showExpectedOutput*/ ctx[0], true);
+    			append_dev(div1, t19);
+    			append_dev(div1, p);
+    			if (if_block0) if_block0.m(p, null);
+    			append_dev(div6, t20);
+    			append_dev(div6, div3);
+    			append_dev(div3, label5);
+    			append_dev(label5, t21);
+    			append_dev(label5, t22);
+    			append_dev(label5, t23);
+    			append_dev(label5, span4);
+    			append_dev(span4, t24);
+    			append_dev(div3, t25);
+    			append_dev(div3, input4);
+    			set_input_value(input4, /*translationThreshold*/ ctx[5]);
+    			append_dev(div3, t26);
+    			append_dev(div3, div2);
+    			append_dev(div2, span5);
+    			append_dev(div2, t28);
+    			append_dev(div2, span6);
+    			append_dev(div2, t30);
+    			append_dev(div2, span7);
+    			append_dev(div6, t32);
+    			append_dev(div6, div5);
+    			append_dev(div5, label6);
+    			append_dev(label6, t33);
+    			append_dev(label6, t34);
+    			append_dev(label6, t35);
+    			append_dev(label6, span8);
+    			append_dev(span8, t36);
+    			append_dev(div5, t37);
+    			append_dev(div5, input5);
+    			set_input_value(input5, /*pauseBetweenTests*/ ctx[6]);
+    			append_dev(div5, t38);
+    			append_dev(div5, div4);
+    			append_dev(div4, span9);
+    			append_dev(div4, t40);
+    			append_dev(div4, span10);
+    			append_dev(div4, t42);
+    			append_dev(div4, span11);
+    			append_dev(div6, t44);
+    			if (if_block1) if_block1.m(div6, null);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(input0, "change", /*input0_change_handler*/ ctx[9]),
+    					action_destroyer(autoSave.call(null, input0, "showCategory")),
+    					listen_dev(input1, "change", /*input1_change_handler*/ ctx[10]),
+    					action_destroyer(autoSave.call(null, input1, "showFeedback")),
+    					listen_dev(input2, "change", /*input2_change_handler*/ ctx[11]),
+    					listen_dev(input2, "change", /*updateQueue*/ ctx[8], false, false, false, false),
+    					action_destroyer(autoSave.call(null, input2, "showUpcomingQueue")),
+    					listen_dev(input3, "change", /*input3_change_handler*/ ctx[12]),
+    					action_destroyer(autoSave.call(null, input3, "enableAudioHints")),
+    					listen_dev(select, "change", /*select_change_handler*/ ctx[13]),
+    					action_destroyer(autoSave.call(null, select, "showExpectedOutput")),
+    					listen_dev(input4, "change", /*input4_change_input_handler*/ ctx[14]),
+    					listen_dev(input4, "input", /*input4_change_input_handler*/ ctx[14]),
+    					action_destroyer(autoSave.call(null, input4, "translationThreshold")),
+    					listen_dev(input5, "change", /*input5_change_input_handler*/ ctx[15]),
+    					listen_dev(input5, "input", /*input5_change_input_handler*/ ctx[15]),
+    					action_destroyer(autoSave.call(null, input5, "pauseBetweenTests"))
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*showCategory*/ 2) {
+    				input0.checked = /*showCategory*/ ctx[1];
+    			}
+
+    			if (dirty & /*showFeedback*/ 4) {
+    				input1.checked = /*showFeedback*/ ctx[2];
+    			}
+
+    			if (dirty & /*showUpcomingQueue*/ 8) {
+    				input2.checked = /*showUpcomingQueue*/ ctx[3];
+    			}
+
+    			if (dirty & /*enableAudioHints*/ 16) {
+    				input3.checked = /*enableAudioHints*/ ctx[4];
+    			}
+
+    			if (dirty & /*showExpectedOutput*/ 1) {
+    				select_option(select, /*showExpectedOutput*/ ctx[0]);
+    			}
+
+    			if (current_block_type !== (current_block_type = select_block_type(ctx))) {
+    				if (if_block0) if_block0.d(1);
+    				if_block0 = current_block_type && current_block_type(ctx);
+
+    				if (if_block0) {
+    					if_block0.c();
+    					if_block0.m(p, null);
+    				}
+    			}
+
+    			if (dirty & /*translationThreshold*/ 32) set_data_dev(t22, /*translationThreshold*/ ctx[5]);
+
+    			if (dirty & /*translationThreshold*/ 32 && t24_value !== (t24_value = (/*translationThreshold*/ ctx[5] === 0
+    			? 'Never repeat translation'
+    			: /*translationThreshold*/ ctx[5] === 10
+    				? 'Always repeat translation'
+    				: `Repeat translation for scores below ${/*translationThreshold*/ ctx[5]}`) + "")) set_data_dev(t24, t24_value);
+
+    			if (dirty & /*translationThreshold*/ 32) {
+    				set_input_value(input4, /*translationThreshold*/ ctx[5]);
+    			}
+
+    			if (dirty & /*pauseBetweenTests*/ 64) set_data_dev(t34, /*pauseBetweenTests*/ ctx[6]);
+
+    			if (dirty & /*pauseBetweenTests*/ 64 && t36_value !== (t36_value = (/*pauseBetweenTests*/ ctx[6] <= 1
+    			? 'Quick - brief pause for score review'
+    			: /*pauseBetweenTests*/ ctx[6] >= 5
+    				? 'Slow - plenty of time to read feedback'
+    				: 'Balanced - comfortable time to review your score') + "")) set_data_dev(t36, t36_value);
+
+    			if (dirty & /*pauseBetweenTests*/ 64) {
+    				set_input_value(input5, /*pauseBetweenTests*/ ctx[6]);
+    			}
+
+    			if (/*showExpectedOutput*/ ctx[0] === 'struggling') {
+    				if (if_block1) {
+    					if_block1.p(ctx, dirty);
+    				} else {
+    					if_block1 = create_if_block$5(ctx);
+    					if_block1.c();
+    					if_block1.m(div6, null);
+    				}
+    			} else if (if_block1) {
+    				if_block1.d(1);
+    				if_block1 = null;
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h3);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(div6);
+
+    			if (if_block0) {
+    				if_block0.d();
+    			}
+
+    			if (if_block1) if_block1.d();
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$6.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$6($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('DisplaySettings', slots, []);
+    	let { showExpectedOutput } = $$props;
+    	let { showCategory } = $$props;
+    	let { showFeedback } = $$props;
+    	let { showUpcomingQueue } = $$props;
+    	let { enableAudioHints } = $$props;
+    	let { translationThreshold } = $$props;
+    	let { pauseBetweenTests } = $$props;
+    	let { pauseWhenStruggling } = $$props;
+    	const dispatch = createEventDispatcher();
+
+    	function updateQueue() {
+    		dispatch('updateQueue');
+    	}
+
+    	$$self.$$.on_mount.push(function () {
+    		if (showExpectedOutput === undefined && !('showExpectedOutput' in $$props || $$self.$$.bound[$$self.$$.props['showExpectedOutput']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'showExpectedOutput'");
+    		}
+
+    		if (showCategory === undefined && !('showCategory' in $$props || $$self.$$.bound[$$self.$$.props['showCategory']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'showCategory'");
+    		}
+
+    		if (showFeedback === undefined && !('showFeedback' in $$props || $$self.$$.bound[$$self.$$.props['showFeedback']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'showFeedback'");
+    		}
+
+    		if (showUpcomingQueue === undefined && !('showUpcomingQueue' in $$props || $$self.$$.bound[$$self.$$.props['showUpcomingQueue']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'showUpcomingQueue'");
+    		}
+
+    		if (enableAudioHints === undefined && !('enableAudioHints' in $$props || $$self.$$.bound[$$self.$$.props['enableAudioHints']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'enableAudioHints'");
+    		}
+
+    		if (translationThreshold === undefined && !('translationThreshold' in $$props || $$self.$$.bound[$$self.$$.props['translationThreshold']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'translationThreshold'");
+    		}
+
+    		if (pauseBetweenTests === undefined && !('pauseBetweenTests' in $$props || $$self.$$.bound[$$self.$$.props['pauseBetweenTests']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'pauseBetweenTests'");
+    		}
+
+    		if (pauseWhenStruggling === undefined && !('pauseWhenStruggling' in $$props || $$self.$$.bound[$$self.$$.props['pauseWhenStruggling']])) {
+    			console.warn("<DisplaySettings> was created without expected prop 'pauseWhenStruggling'");
+    		}
+    	});
+
+    	const writable_props = [
+    		'showExpectedOutput',
+    		'showCategory',
+    		'showFeedback',
+    		'showUpcomingQueue',
+    		'enableAudioHints',
+    		'translationThreshold',
+    		'pauseBetweenTests',
+    		'pauseWhenStruggling'
+    	];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<DisplaySettings> was created with unknown prop '${key}'`);
+    	});
+
+    	function input0_change_handler() {
+    		showCategory = this.checked;
+    		$$invalidate(1, showCategory);
+    	}
+
+    	function input1_change_handler() {
+    		showFeedback = this.checked;
+    		$$invalidate(2, showFeedback);
+    	}
+
+    	function input2_change_handler() {
+    		showUpcomingQueue = this.checked;
+    		$$invalidate(3, showUpcomingQueue);
+    	}
+
+    	function input3_change_handler() {
+    		enableAudioHints = this.checked;
+    		$$invalidate(4, enableAudioHints);
+    	}
+
+    	function select_change_handler() {
+    		showExpectedOutput = select_value(this);
+    		$$invalidate(0, showExpectedOutput);
+    	}
+
+    	function input4_change_input_handler() {
+    		translationThreshold = to_number(this.value);
+    		$$invalidate(5, translationThreshold);
+    	}
+
+    	function input5_change_input_handler() {
+    		pauseBetweenTests = to_number(this.value);
+    		$$invalidate(6, pauseBetweenTests);
+    	}
+
+    	function input_change_input_handler() {
+    		pauseWhenStruggling = to_number(this.value);
+    		$$invalidate(7, pauseWhenStruggling);
+    	}
+
+    	$$self.$$set = $$props => {
+    		if ('showExpectedOutput' in $$props) $$invalidate(0, showExpectedOutput = $$props.showExpectedOutput);
+    		if ('showCategory' in $$props) $$invalidate(1, showCategory = $$props.showCategory);
+    		if ('showFeedback' in $$props) $$invalidate(2, showFeedback = $$props.showFeedback);
+    		if ('showUpcomingQueue' in $$props) $$invalidate(3, showUpcomingQueue = $$props.showUpcomingQueue);
+    		if ('enableAudioHints' in $$props) $$invalidate(4, enableAudioHints = $$props.enableAudioHints);
+    		if ('translationThreshold' in $$props) $$invalidate(5, translationThreshold = $$props.translationThreshold);
+    		if ('pauseBetweenTests' in $$props) $$invalidate(6, pauseBetweenTests = $$props.pauseBetweenTests);
+    		if ('pauseWhenStruggling' in $$props) $$invalidate(7, pauseWhenStruggling = $$props.pauseWhenStruggling);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		createEventDispatcher,
+    		autoSave,
+    		showExpectedOutput,
+    		showCategory,
+    		showFeedback,
+    		showUpcomingQueue,
+    		enableAudioHints,
+    		translationThreshold,
+    		pauseBetweenTests,
+    		pauseWhenStruggling,
+    		dispatch,
+    		updateQueue
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('showExpectedOutput' in $$props) $$invalidate(0, showExpectedOutput = $$props.showExpectedOutput);
+    		if ('showCategory' in $$props) $$invalidate(1, showCategory = $$props.showCategory);
+    		if ('showFeedback' in $$props) $$invalidate(2, showFeedback = $$props.showFeedback);
+    		if ('showUpcomingQueue' in $$props) $$invalidate(3, showUpcomingQueue = $$props.showUpcomingQueue);
+    		if ('enableAudioHints' in $$props) $$invalidate(4, enableAudioHints = $$props.enableAudioHints);
+    		if ('translationThreshold' in $$props) $$invalidate(5, translationThreshold = $$props.translationThreshold);
+    		if ('pauseBetweenTests' in $$props) $$invalidate(6, pauseBetweenTests = $$props.pauseBetweenTests);
+    		if ('pauseWhenStruggling' in $$props) $$invalidate(7, pauseWhenStruggling = $$props.pauseWhenStruggling);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [
+    		showExpectedOutput,
+    		showCategory,
+    		showFeedback,
+    		showUpcomingQueue,
+    		enableAudioHints,
+    		translationThreshold,
+    		pauseBetweenTests,
+    		pauseWhenStruggling,
+    		updateQueue,
+    		input0_change_handler,
+    		input1_change_handler,
+    		input2_change_handler,
+    		input3_change_handler,
+    		select_change_handler,
+    		input4_change_input_handler,
+    		input5_change_input_handler,
+    		input_change_input_handler
+    	];
+    }
+
+    class DisplaySettings extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+
+    		init(this, options, instance$6, create_fragment$6, safe_not_equal, {
+    			showExpectedOutput: 0,
+    			showCategory: 1,
+    			showFeedback: 2,
+    			showUpcomingQueue: 3,
+    			enableAudioHints: 4,
+    			translationThreshold: 5,
+    			pauseBetweenTests: 6,
+    			pauseWhenStruggling: 7
+    		});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "DisplaySettings",
+    			options,
+    			id: create_fragment$6.name
+    		});
+    	}
+
+    	get showExpectedOutput() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showExpectedOutput(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get showCategory() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showCategory(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get showFeedback() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showFeedback(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get showUpcomingQueue() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showUpcomingQueue(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get enableAudioHints() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set enableAudioHints(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get translationThreshold() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set translationThreshold(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get pauseBetweenTests() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set pauseBetweenTests(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get pauseWhenStruggling() {
+    		throw new Error("<DisplaySettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set pauseWhenStruggling(value) {
+    		throw new Error("<DisplaySettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/AlgorithmSettings.svelte generated by Svelte v3.59.2 */
+    const file$5 = "src/AlgorithmSettings.svelte";
+
+    function create_fragment$5(ctx) {
+    	let div4;
+    	let h3;
+    	let t1;
+    	let div1;
+    	let label0;
+    	let t2;
+    	let t3;
+    	let t4;
+    	let span0;
+    	let t5;
+    	let t6;
+    	let t7;
+    	let t8;
+    	let input0;
+    	let t9;
+    	let div0;
+    	let span1;
+    	let t11;
+    	let span2;
+    	let t13;
+    	let span3;
+    	let t15;
+    	let div3;
+    	let label1;
+    	let t16;
+    	let t17;
+    	let t18;
+    	let span4;
+
+    	let t19_value = (/*repetitivenessFactor*/ ctx[1] <= 3
+    	? 'Less repetitive - tests advance quickly'
+    	: /*repetitivenessFactor*/ ctx[1] >= 8
+    		? 'Very repetitive - tests stay at front longer'
+    		: 'Balanced repetition') + "";
+
+    	let t19;
+    	let t20;
+    	let input1;
+    	let t21;
+    	let div2;
+    	let span5;
+    	let t23;
+    	let span6;
+    	let t25;
+    	let span7;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			div4 = element("div");
+    			h3 = element("h3");
+    			h3.textContent = "Learning Algorithm";
+    			t1 = space();
+    			div1 = element("div");
+    			label0 = element("label");
+    			t2 = text("Pass Threshold: ");
+    			t3 = text(/*passThreshold*/ ctx[0]);
+    			t4 = space();
+    			span0 = element("span");
+    			t5 = text("Scores ");
+    			t6 = text(/*passThreshold*/ ctx[0]);
+    			t7 = text(" and above are considered a pass");
+    			t8 = space();
+    			input0 = element("input");
+    			t9 = space();
+    			div0 = element("div");
+    			span1 = element("span");
+    			span1.textContent = "Easy (1)";
+    			t11 = space();
+    			span2 = element("span");
+    			span2.textContent = "Default (7)";
+    			t13 = space();
+    			span3 = element("span");
+    			span3.textContent = "Hard (10)";
+    			t15 = space();
+    			div3 = element("div");
+    			label1 = element("label");
+    			t16 = text("Test Repetitiveness: ");
+    			t17 = text(/*repetitivenessFactor*/ ctx[1]);
+    			t18 = space();
+    			span4 = element("span");
+    			t19 = text(t19_value);
+    			t20 = space();
+    			input1 = element("input");
+    			t21 = space();
+    			div2 = element("div");
+    			span5 = element("span");
+    			span5.textContent = "Less (1)";
+    			t23 = space();
+    			span6 = element("span");
+    			span6.textContent = "Default (5)";
+    			t25 = space();
+    			span7 = element("span");
+    			span7.textContent = "More (10)";
+    			attr_dev(h3, "class", "section-header");
+    			add_location(h3, file$5, 9, 2, 199);
+    			attr_dev(span0, "class", "threshold-description");
+    			add_location(span0, file$5, 13, 6, 359);
+    			attr_dev(label0, "class", "form-label");
+    			add_location(label0, file$5, 11, 4, 288);
+    			attr_dev(input0, "type", "range");
+    			attr_dev(input0, "min", "1");
+    			attr_dev(input0, "max", "10");
+    			attr_dev(input0, "step", "1");
+    			attr_dev(input0, "class", "threshold-slider");
+    			add_location(input0, file$5, 17, 4, 490);
+    			add_location(span1, file$5, 27, 6, 713);
+    			add_location(span2, file$5, 28, 6, 741);
+    			add_location(span3, file$5, 29, 6, 772);
+    			attr_dev(div0, "class", "threshold-labels");
+    			add_location(div0, file$5, 26, 4, 676);
+    			attr_dev(div1, "class", "threshold-setting");
+    			add_location(div1, file$5, 10, 2, 252);
+    			attr_dev(span4, "class", "threshold-description");
+    			add_location(span4, file$5, 36, 6, 939);
+    			attr_dev(label1, "class", "form-label");
+    			add_location(label1, file$5, 34, 4, 856);
+    			attr_dev(input1, "type", "range");
+    			attr_dev(input1, "min", "1");
+    			attr_dev(input1, "max", "10");
+    			attr_dev(input1, "step", "1");
+    			attr_dev(input1, "class", "threshold-slider");
+    			add_location(input1, file$5, 42, 4, 1206);
+    			add_location(span5, file$5, 52, 6, 1443);
+    			add_location(span6, file$5, 53, 6, 1471);
+    			add_location(span7, file$5, 54, 6, 1502);
+    			attr_dev(div2, "class", "threshold-labels");
+    			add_location(div2, file$5, 51, 4, 1406);
+    			attr_dev(div3, "class", "threshold-setting");
+    			add_location(div3, file$5, 33, 2, 820);
+    			attr_dev(div4, "class", "algorithm-settings svelte-1xttx29");
+    			add_location(div4, file$5, 8, 0, 164);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div4, anchor);
+    			append_dev(div4, h3);
+    			append_dev(div4, t1);
+    			append_dev(div4, div1);
+    			append_dev(div1, label0);
+    			append_dev(label0, t2);
+    			append_dev(label0, t3);
+    			append_dev(label0, t4);
+    			append_dev(label0, span0);
+    			append_dev(span0, t5);
+    			append_dev(span0, t6);
+    			append_dev(span0, t7);
+    			append_dev(div1, t8);
+    			append_dev(div1, input0);
+    			set_input_value(input0, /*passThreshold*/ ctx[0]);
+    			append_dev(div1, t9);
+    			append_dev(div1, div0);
+    			append_dev(div0, span1);
+    			append_dev(div0, t11);
+    			append_dev(div0, span2);
+    			append_dev(div0, t13);
+    			append_dev(div0, span3);
+    			append_dev(div4, t15);
+    			append_dev(div4, div3);
+    			append_dev(div3, label1);
+    			append_dev(label1, t16);
+    			append_dev(label1, t17);
+    			append_dev(label1, t18);
+    			append_dev(label1, span4);
+    			append_dev(span4, t19);
+    			append_dev(div3, t20);
+    			append_dev(div3, input1);
+    			set_input_value(input1, /*repetitivenessFactor*/ ctx[1]);
+    			append_dev(div3, t21);
+    			append_dev(div3, div2);
+    			append_dev(div2, span5);
+    			append_dev(div2, t23);
+    			append_dev(div2, span6);
+    			append_dev(div2, t25);
+    			append_dev(div2, span7);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(input0, "change", /*input0_change_input_handler*/ ctx[2]),
+    					listen_dev(input0, "input", /*input0_change_input_handler*/ ctx[2]),
+    					action_destroyer(autoSave.call(null, input0, "passThreshold")),
+    					listen_dev(input1, "change", /*input1_change_input_handler*/ ctx[3]),
+    					listen_dev(input1, "input", /*input1_change_input_handler*/ ctx[3]),
+    					action_destroyer(autoSave.call(null, input1, "repetitivenessFactor"))
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*passThreshold*/ 1) set_data_dev(t3, /*passThreshold*/ ctx[0]);
+    			if (dirty & /*passThreshold*/ 1) set_data_dev(t6, /*passThreshold*/ ctx[0]);
+
+    			if (dirty & /*passThreshold*/ 1) {
+    				set_input_value(input0, /*passThreshold*/ ctx[0]);
+    			}
+
+    			if (dirty & /*repetitivenessFactor*/ 2) set_data_dev(t17, /*repetitivenessFactor*/ ctx[1]);
+
+    			if (dirty & /*repetitivenessFactor*/ 2 && t19_value !== (t19_value = (/*repetitivenessFactor*/ ctx[1] <= 3
+    			? 'Less repetitive - tests advance quickly'
+    			: /*repetitivenessFactor*/ ctx[1] >= 8
+    				? 'Very repetitive - tests stay at front longer'
+    				: 'Balanced repetition') + "")) set_data_dev(t19, t19_value);
+
+    			if (dirty & /*repetitivenessFactor*/ 2) {
+    				set_input_value(input1, /*repetitivenessFactor*/ ctx[1]);
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div4);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$5.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$5($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('AlgorithmSettings', slots, []);
+    	let { passThreshold } = $$props;
+    	let { repetitivenessFactor } = $$props;
+
+    	$$self.$$.on_mount.push(function () {
+    		if (passThreshold === undefined && !('passThreshold' in $$props || $$self.$$.bound[$$self.$$.props['passThreshold']])) {
+    			console.warn("<AlgorithmSettings> was created without expected prop 'passThreshold'");
+    		}
+
+    		if (repetitivenessFactor === undefined && !('repetitivenessFactor' in $$props || $$self.$$.bound[$$self.$$.props['repetitivenessFactor']])) {
+    			console.warn("<AlgorithmSettings> was created without expected prop 'repetitivenessFactor'");
+    		}
+    	});
+
+    	const writable_props = ['passThreshold', 'repetitivenessFactor'];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<AlgorithmSettings> was created with unknown prop '${key}'`);
+    	});
+
+    	function input0_change_input_handler() {
+    		passThreshold = to_number(this.value);
+    		$$invalidate(0, passThreshold);
+    	}
+
+    	function input1_change_input_handler() {
+    		repetitivenessFactor = to_number(this.value);
+    		$$invalidate(1, repetitivenessFactor);
+    	}
+
+    	$$self.$$set = $$props => {
+    		if ('passThreshold' in $$props) $$invalidate(0, passThreshold = $$props.passThreshold);
+    		if ('repetitivenessFactor' in $$props) $$invalidate(1, repetitivenessFactor = $$props.repetitivenessFactor);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		autoSave,
+    		passThreshold,
+    		repetitivenessFactor
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('passThreshold' in $$props) $$invalidate(0, passThreshold = $$props.passThreshold);
+    		if ('repetitivenessFactor' in $$props) $$invalidate(1, repetitivenessFactor = $$props.repetitivenessFactor);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [
+    		passThreshold,
+    		repetitivenessFactor,
+    		input0_change_input_handler,
+    		input1_change_input_handler
+    	];
+    }
+
+    class AlgorithmSettings extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+
+    		init(this, options, instance$5, create_fragment$5, safe_not_equal, {
+    			passThreshold: 0,
+    			repetitivenessFactor: 1
+    		});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "AlgorithmSettings",
+    			options,
+    			id: create_fragment$5.name
+    		});
+    	}
+
+    	get passThreshold() {
+    		throw new Error("<AlgorithmSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set passThreshold(value) {
+    		throw new Error("<AlgorithmSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get repetitivenessFactor() {
+    		throw new Error("<AlgorithmSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set repetitivenessFactor(value) {
+    		throw new Error("<AlgorithmSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/CategoryManager.svelte generated by Svelte v3.59.2 */
+
+    const { Object: Object_1$1, console: console_1$1 } = globals;
+    const file$4 = "src/CategoryManager.svelte";
+
+    function get_each_context$1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[7] = list[i];
+    	return child_ctx;
+    }
+
+    // (45:0) {#if categories.length > 0}
+    function create_if_block$4(ctx) {
+    	let h3;
+    	let t1;
+    	let div1;
+    	let div0;
+    	let t2;
+    	let show_if = !Object.values(/*enabledCategories*/ ctx[0]).some(func$1);
+    	let t3;
+    	let style;
+    	let each_value = /*categories*/ ctx[1];
+    	validate_each_argument(each_value);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+    	}
+
+    	let if_block = show_if && create_if_block_1$1(ctx);
+
+    	const block = {
+    		c: function create() {
+    			h3 = element("h3");
+    			h3.textContent = "Learning Categories";
+    			t1 = space();
+    			div1 = element("div");
+    			div0 = element("div");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			t2 = space();
+    			if (if_block) if_block.c();
+    			t3 = space();
+    			style = element("style");
+    			style.textContent = "/* Component-specific styles for CategoryManager */\n  .categories-section {\n    margin-top: 1rem;\n  }\n  \n  .categories-list {\n    margin-top: 0.5rem;\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: 0.5rem;\n  }\n  \n  @media (min-width: 640px) {\n    .categories-list {\n      grid-template-columns: 1fr 1fr;\n    }\n  }\n  \n  /* Fieldset styling for categories */\n  fieldset {\n    border: none;\n    padding: 0;\n    margin: 0;\n  }\n  \n  legend {\n    padding: 0;\n    margin-bottom: 0.5rem;\n  }";
+    			attr_dev(h3, "class", "section-header");
+    			add_location(h3, file$4, 45, 2, 1514);
+    			attr_dev(div0, "class", "categories-list");
+    			add_location(div0, file$4, 47, 4, 1605);
+    			add_location(style, file$4, 68, 0, 2272);
+    			attr_dev(div1, "class", "categories-section");
+    			add_location(div1, file$4, 46, 2, 1568);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h3, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, div0);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				if (each_blocks[i]) {
+    					each_blocks[i].m(div0, null);
+    				}
+    			}
+
+    			append_dev(div1, t2);
+    			if (if_block) if_block.m(div1, null);
+    			append_dev(div1, t3);
+    			append_dev(div1, style);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*categories, enabledCategories, handleCategoryToggle*/ 7) {
+    				each_value = /*categories*/ ctx[1];
+    				validate_each_argument(each_value);
+    				let i;
+
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context$1(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block$1(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(div0, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value.length;
+    			}
+
+    			if (dirty & /*enabledCategories*/ 1) show_if = !Object.values(/*enabledCategories*/ ctx[0]).some(func$1);
+
+    			if (show_if) {
+    				if (if_block) ; else {
+    					if_block = create_if_block_1$1(ctx);
+    					if_block.c();
+    					if_block.m(div1, t3);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h3);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(div1);
+    			destroy_each(each_blocks, detaching);
+    			if (if_block) if_block.d();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$4.name,
+    		type: "if",
+    		source: "(45:0) {#if categories.length > 0}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (49:6) {#each categories as category}
+    function create_each_block$1(ctx) {
+    	let label;
+    	let input;
+    	let input_checked_value;
+    	let t0;
+    	let span;
+    	let t1_value = /*category*/ ctx[7] + "";
+    	let t1;
+    	let t2;
+    	let mounted;
+    	let dispose;
+
+    	function change_handler(...args) {
+    		return /*change_handler*/ ctx[4](/*category*/ ctx[7], ...args);
+    	}
+
+    	const block = {
+    		c: function create() {
+    			label = element("label");
+    			input = element("input");
+    			t0 = space();
+    			span = element("span");
+    			t1 = text(t1_value);
+    			t2 = space();
+    			attr_dev(input, "type", "checkbox");
+    			attr_dev(input, "class", "category-checkbox");
+    			input.checked = input_checked_value = /*enabledCategories*/ ctx[0][/*category*/ ctx[7]] || false;
+    			add_location(input, file$4, 50, 10, 1720);
+    			attr_dev(span, "class", "category-label");
+    			add_location(span, file$4, 56, 10, 1957);
+    			attr_dev(label, "class", "category-item");
+    			add_location(label, file$4, 49, 8, 1680);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, label, anchor);
+    			append_dev(label, input);
+    			append_dev(label, t0);
+    			append_dev(label, span);
+    			append_dev(span, t1);
+    			append_dev(label, t2);
+
+    			if (!mounted) {
+    				dispose = listen_dev(input, "change", change_handler, false, false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
+
+    			if (dirty & /*enabledCategories, categories*/ 3 && input_checked_value !== (input_checked_value = /*enabledCategories*/ ctx[0][/*category*/ ctx[7]] || false)) {
+    				prop_dev(input, "checked", input_checked_value);
+    			}
+
+    			if (dirty & /*categories*/ 2 && t1_value !== (t1_value = /*category*/ ctx[7] + "")) set_data_dev(t1, t1_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(label);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block$1.name,
+    		type: "each",
+    		source: "(49:6) {#each categories as category}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (63:4) {#if !Object.values(enabledCategories).some(enabled => enabled)}
+    function create_if_block_1$1(ctx) {
+    	let div;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			div.textContent = "At least one category must be enabled to start learning!";
+    			attr_dev(div, "class", "error-text");
+    			add_location(div, file$4, 63, 6, 2158);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1$1.name,
+    		type: "if",
+    		source: "(63:4) {#if !Object.values(enabledCategories).some(enabled => enabled)}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$4(ctx) {
+    	let if_block_anchor;
+    	let if_block = /*categories*/ ctx[1].length > 0 && create_if_block$4(ctx);
+
+    	const block = {
+    		c: function create() {
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty();
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (/*categories*/ ctx[1].length > 0) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block$4(ctx);
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$4.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    const func$1 = enabled => enabled;
+
+    function instance$4($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('CategoryManager', slots, []);
+    	let { categories } = $$props;
+    	let { enabledCategories } = $$props;
+    	let { loggingVerbosity = 5 } = $$props;
+    	const dispatch = createEventDispatcher();
+
+    	function log(level, ...args) {
+    		if (loggingVerbosity >= level) {
+    			console.log(...args);
+    		}
+    	}
+
+    	function handleCategoryToggle(category, enabled) {
+    		log(6, `🔘 Category toggle: ${category} → ${enabled}`);
+
+    		// Update the bound enabledCategories object directly
+    		$$invalidate(0, enabledCategories[category] = enabled, enabledCategories);
+
+    		// Force reactivity by creating new object reference
+    		$$invalidate(0, enabledCategories = { ...enabledCategories });
+
+    		// Save to localStorage (matching the autoSave pattern)
+    		if (typeof localStorage !== 'undefined') {
+    			try {
+    				const saved = localStorage.getItem('languageTutorSettings');
+    				const settings = saved ? JSON.parse(saved) : {};
+    				if (!settings.enabledCategories) settings.enabledCategories = {};
+    				settings.enabledCategories[category] = enabled;
+    				localStorage.setItem('languageTutorSettings', JSON.stringify(settings));
+    				console.log(`💾 Saved category ${category}:`, enabled);
+    			} catch(error) {
+    				console.error(`Failed to save category ${category}:`, error);
+    			}
+    		}
+
+    		// Dispatch change for LearningQueue updates only
+    		dispatch('categoryChange', { category, enabled });
+    	}
+
+    	$$self.$$.on_mount.push(function () {
+    		if (categories === undefined && !('categories' in $$props || $$self.$$.bound[$$self.$$.props['categories']])) {
+    			console_1$1.warn("<CategoryManager> was created without expected prop 'categories'");
+    		}
+
+    		if (enabledCategories === undefined && !('enabledCategories' in $$props || $$self.$$.bound[$$self.$$.props['enabledCategories']])) {
+    			console_1$1.warn("<CategoryManager> was created without expected prop 'enabledCategories'");
+    		}
+    	});
+
+    	const writable_props = ['categories', 'enabledCategories', 'loggingVerbosity'];
+
+    	Object_1$1.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<CategoryManager> was created with unknown prop '${key}'`);
+    	});
+
+    	const change_handler = (category, e) => handleCategoryToggle(category, e.target.checked);
+
+    	$$self.$$set = $$props => {
+    		if ('categories' in $$props) $$invalidate(1, categories = $$props.categories);
+    		if ('enabledCategories' in $$props) $$invalidate(0, enabledCategories = $$props.enabledCategories);
+    		if ('loggingVerbosity' in $$props) $$invalidate(3, loggingVerbosity = $$props.loggingVerbosity);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		createEventDispatcher,
+    		settings,
+    		categories,
+    		enabledCategories,
+    		loggingVerbosity,
+    		dispatch,
+    		log,
+    		handleCategoryToggle
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('categories' in $$props) $$invalidate(1, categories = $$props.categories);
+    		if ('enabledCategories' in $$props) $$invalidate(0, enabledCategories = $$props.enabledCategories);
+    		if ('loggingVerbosity' in $$props) $$invalidate(3, loggingVerbosity = $$props.loggingVerbosity);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [
+    		enabledCategories,
+    		categories,
+    		handleCategoryToggle,
+    		loggingVerbosity,
+    		change_handler
+    	];
+    }
+
+    class CategoryManager extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+
+    		init(this, options, instance$4, create_fragment$4, safe_not_equal, {
+    			categories: 1,
+    			enabledCategories: 0,
+    			loggingVerbosity: 3
+    		});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "CategoryManager",
+    			options,
+    			id: create_fragment$4.name
+    		});
+    	}
+
+    	get categories() {
+    		throw new Error("<CategoryManager>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set categories(value) {
+    		throw new Error("<CategoryManager>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get enabledCategories() {
+    		throw new Error("<CategoryManager>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set enabledCategories(value) {
+    		throw new Error("<CategoryManager>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get loggingVerbosity() {
+    		throw new Error("<CategoryManager>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set loggingVerbosity(value) {
+    		throw new Error("<CategoryManager>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/DeveloperSettings.svelte generated by Svelte v3.59.2 */
+    const file$3 = "src/DeveloperSettings.svelte";
+
+    // (10:0) {#if showDeveloperSettings}
+    function create_if_block$3(ctx) {
+    	let div3;
+    	let h3;
+    	let t1;
+    	let div2;
+    	let label;
+    	let t2;
+    	let t3;
+    	let t4;
+    	let span0;
+
+    	let t5_value = (/*loggingVerbosity*/ ctx[0] === 0
+    	? 'Silent - no console output'
+    	: /*loggingVerbosity*/ ctx[0] <= 3
+    		? 'Quiet - errors and warnings only'
+    		: /*loggingVerbosity*/ ctx[0] <= 6
+    			? 'Normal - important events'
+    			: 'Verbose - detailed debugging info') + "";
+
+    	let t5;
+    	let t6;
+    	let input;
+    	let t7;
+    	let div0;
+    	let span1;
+    	let t9;
+    	let span2;
+    	let t11;
+    	let span3;
+    	let t13;
+    	let div1;
+    	let button0;
+    	let t15;
+    	let button1;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			div3 = element("div");
+    			h3 = element("h3");
+    			h3.textContent = "🛠️ Developer Settings";
+    			t1 = space();
+    			div2 = element("div");
+    			label = element("label");
+    			t2 = text("Console Logging Verbosity: ");
+    			t3 = text(/*loggingVerbosity*/ ctx[0]);
+    			t4 = space();
+    			span0 = element("span");
+    			t5 = text(t5_value);
+    			t6 = space();
+    			input = element("input");
+    			t7 = space();
+    			div0 = element("div");
+    			span1 = element("span");
+    			span1.textContent = "Silent (0)";
+    			t9 = space();
+    			span2 = element("span");
+    			span2.textContent = "Default (5)";
+    			t11 = space();
+    			span3 = element("span");
+    			span3.textContent = "Verbose (10)";
+    			t13 = space();
+    			div1 = element("div");
+    			button0 = element("button");
+    			button0.textContent = "✅ Pass Next Test";
+    			t15 = space();
+    			button1 = element("button");
+    			button1.textContent = "❌ Fail Next Test";
+    			attr_dev(h3, "class", "section-header");
+    			add_location(h3, file$3, 11, 4, 285);
+    			attr_dev(span0, "class", "threshold-description");
+    			add_location(span0, file$3, 15, 8, 489);
+    			attr_dev(label, "class", "form-label");
+    			add_location(label, file$3, 13, 6, 400);
+    			attr_dev(input, "type", "range");
+    			attr_dev(input, "min", "0");
+    			attr_dev(input, "max", "10");
+    			attr_dev(input, "step", "1");
+    			attr_dev(input, "class", "threshold-slider");
+    			add_location(input, file$3, 22, 6, 815);
+    			add_location(span1, file$3, 31, 8, 1022);
+    			add_location(span2, file$3, 32, 8, 1054);
+    			add_location(span3, file$3, 33, 8, 1087);
+    			attr_dev(div0, "class", "threshold-labels");
+    			add_location(div0, file$3, 30, 6, 983);
+    			attr_dev(button0, "class", "debug-btn pass-btn svelte-w1gebj");
+    			add_location(button0, file$3, 38, 8, 1212);
+    			attr_dev(button1, "class", "debug-btn fail-btn svelte-w1gebj");
+    			add_location(button1, file$3, 44, 8, 1390);
+    			attr_dev(div1, "class", "debug-buttons svelte-w1gebj");
+    			add_location(div1, file$3, 37, 6, 1176);
+    			attr_dev(div2, "class", "threshold-setting developer-setting svelte-w1gebj");
+    			add_location(div2, file$3, 12, 4, 344);
+    			attr_dev(div3, "class", "developer-settings svelte-w1gebj");
+    			add_location(div3, file$3, 10, 2, 248);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div3, anchor);
+    			append_dev(div3, h3);
+    			append_dev(div3, t1);
+    			append_dev(div3, div2);
+    			append_dev(div2, label);
+    			append_dev(label, t2);
+    			append_dev(label, t3);
+    			append_dev(label, t4);
+    			append_dev(label, span0);
+    			append_dev(span0, t5);
+    			append_dev(div2, t6);
+    			append_dev(div2, input);
+    			set_input_value(input, /*loggingVerbosity*/ ctx[0]);
+    			append_dev(div2, t7);
+    			append_dev(div2, div0);
+    			append_dev(div0, span1);
+    			append_dev(div0, t9);
+    			append_dev(div0, span2);
+    			append_dev(div0, t11);
+    			append_dev(div0, span3);
+    			append_dev(div2, t13);
+    			append_dev(div2, div1);
+    			append_dev(div1, button0);
+    			append_dev(div1, t15);
+    			append_dev(div1, button1);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[3]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[3]),
+    					listen_dev(button0, "click", /*click_handler*/ ctx[4], false, false, false, false),
+    					listen_dev(button1, "click", /*click_handler_1*/ ctx[5], false, false, false, false)
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*loggingVerbosity*/ 1) set_data_dev(t3, /*loggingVerbosity*/ ctx[0]);
+
+    			if (dirty & /*loggingVerbosity*/ 1 && t5_value !== (t5_value = (/*loggingVerbosity*/ ctx[0] === 0
+    			? 'Silent - no console output'
+    			: /*loggingVerbosity*/ ctx[0] <= 3
+    				? 'Quiet - errors and warnings only'
+    				: /*loggingVerbosity*/ ctx[0] <= 6
+    					? 'Normal - important events'
+    					: 'Verbose - detailed debugging info') + "")) set_data_dev(t5, t5_value);
+
+    			if (dirty & /*loggingVerbosity*/ 1) {
+    				set_input_value(input, /*loggingVerbosity*/ ctx[0]);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div3);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$3.name,
+    		type: "if",
+    		source: "(10:0) {#if showDeveloperSettings}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$3(ctx) {
+    	let if_block_anchor;
+    	let if_block = /*showDeveloperSettings*/ ctx[1] && create_if_block$3(ctx);
+
+    	const block = {
+    		c: function create() {
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty();
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (/*showDeveloperSettings*/ ctx[1]) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block$3(ctx);
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$3.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$3($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('DeveloperSettings', slots, []);
+    	let { showDeveloperSettings } = $$props;
+    	let { loggingVerbosity } = $$props;
+    	const dispatch = createEventDispatcher();
+
+    	$$self.$$.on_mount.push(function () {
+    		if (showDeveloperSettings === undefined && !('showDeveloperSettings' in $$props || $$self.$$.bound[$$self.$$.props['showDeveloperSettings']])) {
+    			console.warn("<DeveloperSettings> was created without expected prop 'showDeveloperSettings'");
+    		}
+
+    		if (loggingVerbosity === undefined && !('loggingVerbosity' in $$props || $$self.$$.bound[$$self.$$.props['loggingVerbosity']])) {
+    			console.warn("<DeveloperSettings> was created without expected prop 'loggingVerbosity'");
+    		}
+    	});
+
+    	const writable_props = ['showDeveloperSettings', 'loggingVerbosity'];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<DeveloperSettings> was created with unknown prop '${key}'`);
+    	});
+
+    	function input_change_input_handler() {
+    		loggingVerbosity = to_number(this.value);
+    		$$invalidate(0, loggingVerbosity);
+    	}
+
+    	const click_handler = () => dispatch('debugTest', { action: 'pass' });
+    	const click_handler_1 = () => dispatch('debugTest', { action: 'fail' });
+
+    	$$self.$$set = $$props => {
+    		if ('showDeveloperSettings' in $$props) $$invalidate(1, showDeveloperSettings = $$props.showDeveloperSettings);
+    		if ('loggingVerbosity' in $$props) $$invalidate(0, loggingVerbosity = $$props.loggingVerbosity);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		showDeveloperSettings,
+    		loggingVerbosity,
+    		createEventDispatcher,
+    		dispatch
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('showDeveloperSettings' in $$props) $$invalidate(1, showDeveloperSettings = $$props.showDeveloperSettings);
+    		if ('loggingVerbosity' in $$props) $$invalidate(0, loggingVerbosity = $$props.loggingVerbosity);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [
+    		loggingVerbosity,
+    		showDeveloperSettings,
+    		dispatch,
+    		input_change_input_handler,
+    		click_handler,
+    		click_handler_1
+    	];
+    }
+
+    class DeveloperSettings extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+
+    		init(this, options, instance$3, create_fragment$3, safe_not_equal, {
+    			showDeveloperSettings: 1,
+    			loggingVerbosity: 0
+    		});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "DeveloperSettings",
+    			options,
+    			id: create_fragment$3.name
+    		});
+    	}
+
+    	get showDeveloperSettings() {
+    		throw new Error("<DeveloperSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showDeveloperSettings(value) {
+    		throw new Error("<DeveloperSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get loggingVerbosity() {
+    		throw new Error("<DeveloperSettings>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set loggingVerbosity(value) {
+    		throw new Error("<DeveloperSettings>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/LearningSession.svelte generated by Svelte v3.59.2 */
+    const file$2 = "src/LearningSession.svelte";
+
+    // (60:2) {:else}
+    function create_else_block_1(ctx) {
+    	let p;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			p.textContent = "Ready to start learning";
+    			attr_dev(p, "class", "placeholder-text");
+    			add_location(p, file$2, 60, 4, 1951);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    		},
+    		p: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block_1.name,
+    		type: "else",
+    		source: "(60:2) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (49:2) {#if currentPhrase}
+    function create_if_block_3(ctx) {
+    	let div;
+    	let t0;
+    	let p0;
+    	let t2;
+    	let p1;
+    	let t3_value = /*currentPhrase*/ ctx[0].source + "";
+    	let t3;
+    	let t4;
+    	let show_if = /*shouldShowExpectedOutput*/ ctx[6](/*currentPhrase*/ ctx[0]);
+    	let if_block0 = /*showCategory*/ ctx[4] && create_if_block_5(ctx);
+    	let if_block1 = show_if && create_if_block_4(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			if (if_block0) if_block0.c();
+    			t0 = space();
+    			p0 = element("p");
+    			p0.textContent = "Translate this:";
+    			t2 = space();
+    			p1 = element("p");
+    			t3 = text(t3_value);
+    			t4 = space();
+    			if (if_block1) if_block1.c();
+    			attr_dev(p0, "class", "phrase-label");
+    			add_location(p0, file$2, 53, 6, 1692);
+    			attr_dev(p1, "class", "phrase-text");
+    			add_location(p1, file$2, 54, 6, 1742);
+    			attr_dev(div, "class", "phrase-content");
+    			add_location(div, file$2, 49, 4, 1546);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			if (if_block0) if_block0.m(div, null);
+    			append_dev(div, t0);
+    			append_dev(div, p0);
+    			append_dev(div, t2);
+    			append_dev(div, p1);
+    			append_dev(p1, t3);
+    			append_dev(div, t4);
+    			if (if_block1) if_block1.m(div, null);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (/*showCategory*/ ctx[4]) {
+    				if (if_block0) {
+    					if_block0.p(ctx, dirty);
+    				} else {
+    					if_block0 = create_if_block_5(ctx);
+    					if_block0.c();
+    					if_block0.m(div, t0);
+    				}
+    			} else if (if_block0) {
+    				if_block0.d(1);
+    				if_block0 = null;
+    			}
+
+    			if (dirty & /*currentPhrase*/ 1 && t3_value !== (t3_value = /*currentPhrase*/ ctx[0].source + "")) set_data_dev(t3, t3_value);
+    			if (dirty & /*currentPhrase*/ 1) show_if = /*shouldShowExpectedOutput*/ ctx[6](/*currentPhrase*/ ctx[0]);
+
+    			if (show_if) {
+    				if (if_block1) {
+    					if_block1.p(ctx, dirty);
+    				} else {
+    					if_block1 = create_if_block_4(ctx);
+    					if_block1.c();
+    					if_block1.m(div, null);
+    				}
+    			} else if (if_block1) {
+    				if_block1.d(1);
+    				if_block1 = null;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if (if_block0) if_block0.d();
+    			if (if_block1) if_block1.d();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_3.name,
+    		type: "if",
+    		source: "(49:2) {#if currentPhrase}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (51:6) {#if showCategory}
+    function create_if_block_5(ctx) {
+    	let p;
+    	let t0;
+    	let t1_value = /*currentPhrase*/ ctx[0].category + "";
+    	let t1;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			t0 = text("Category: ");
+    			t1 = text(t1_value);
+    			attr_dev(p, "class", "phrase-category");
+    			add_location(p, file$2, 51, 8, 1608);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t0);
+    			append_dev(p, t1);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*currentPhrase*/ 1 && t1_value !== (t1_value = /*currentPhrase*/ ctx[0].category + "")) set_data_dev(t1, t1_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_5.name,
+    		type: "if",
+    		source: "(51:6) {#if showCategory}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (56:6) {#if shouldShowExpectedOutput(currentPhrase)}
+    function create_if_block_4(ctx) {
+    	let p;
+    	let t0;
+    	let t1_value = /*currentPhrase*/ ctx[0].target + "";
+    	let t1;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			t0 = text("Expected: ");
+    			t1 = text(t1_value);
+    			attr_dev(p, "class", "expected-text");
+    			add_location(p, file$2, 56, 8, 1852);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t0);
+    			append_dev(p, t1);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*currentPhrase*/ 1 && t1_value !== (t1_value = /*currentPhrase*/ ctx[0].target + "")) set_data_dev(t1, t1_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_4.name,
+    		type: "if",
+    		source: "(56:6) {#if shouldShowExpectedOutput(currentPhrase)}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (73:2) {:else}
+    function create_else_block(ctx) {
+    	let p;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			p.textContent = "Ready to start learning!";
+    			attr_dev(p, "class", "status-text");
+    			add_location(p, file$2, 73, 4, 2335);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    		},
+    		p: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block.name,
+    		type: "else",
+    		source: "(73:2) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (71:23) 
+    function create_if_block_2(ctx) {
+    	let p;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			p.textContent = "Listening...";
+    			attr_dev(p, "class", "status-text");
+    			add_location(p, file$2, 71, 4, 2281);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    		},
+    		p: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2.name,
+    		type: "if",
+    		source: "(71:23) ",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (69:64) 
+    function create_if_block_1(ctx) {
+    	let p;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			p.textContent = "🎯 Here is a hint for you";
+    			attr_dev(p, "class", "status-text");
+    			add_location(p, file$2, 69, 4, 2200);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    		},
+    		p: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1.name,
+    		type: "if",
+    		source: "(69:64) ",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (67:2) {#if showFeedback}
+    function create_if_block$2(ctx) {
+    	let p;
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			t = text(/*status*/ ctx[1]);
+    			attr_dev(p, "class", "status-text");
+    			add_location(p, file$2, 67, 4, 2095);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*status*/ 2) set_data_dev(t, /*status*/ ctx[1]);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$2.name,
+    		type: "if",
+    		source: "(67:2) {#if showFeedback}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$2(ctx) {
+    	let div0;
+    	let t0;
+    	let div1;
+    	let show_if;
+    	let t1;
+    	let div2;
+    	let button;
+    	let span;
+    	let t2_value = (/*isLearning*/ ctx[2] ? '⏹️' : '▶️') + "";
+    	let t2;
+    	let t3;
+
+    	let t4_value = (/*isLearning*/ ctx[2]
+    	? 'Stop Learning'
+    	: 'Start Learning') + "";
+
+    	let t4;
+    	let button_class_value;
+    	let button_disabled_value;
+    	let mounted;
+    	let dispose;
+
+    	function select_block_type(ctx, dirty) {
+    		if (/*currentPhrase*/ ctx[0]) return create_if_block_3;
+    		return create_else_block_1;
+    	}
+
+    	let current_block_type = select_block_type(ctx);
+    	let if_block0 = current_block_type(ctx);
+
+    	function select_block_type_1(ctx, dirty) {
+    		if (dirty & /*currentPhrase*/ 1) show_if = null;
+    		if (/*showFeedback*/ ctx[5]) return create_if_block$2;
+    		if (show_if == null) show_if = !!(/*currentPhrase*/ ctx[0] && /*shouldShowAudioHint*/ ctx[7](/*currentPhrase*/ ctx[0]));
+    		if (show_if) return create_if_block_1;
+    		if (/*isLearning*/ ctx[2]) return create_if_block_2;
+    		return create_else_block;
+    	}
+
+    	let current_block_type_1 = select_block_type_1(ctx, -1);
+    	let if_block1 = current_block_type_1(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div0 = element("div");
+    			if_block0.c();
+    			t0 = space();
+    			div1 = element("div");
+    			if_block1.c();
+    			t1 = space();
+    			div2 = element("div");
+    			button = element("button");
+    			span = element("span");
+    			t2 = text(t2_value);
+    			t3 = space();
+    			t4 = text(t4_value);
+    			attr_dev(div0, "class", "phrase-display");
+    			add_location(div0, file$2, 47, 0, 1491);
+    			attr_dev(div1, "class", "status-area");
+    			add_location(div1, file$2, 65, 0, 2044);
+    			attr_dev(span, "class", "btn-icon");
+    			add_location(span, file$2, 84, 4, 2618);
+    			attr_dev(button, "class", button_class_value = "start-stop-btn " + (/*isLearning*/ ctx[2] ? 'stop-btn' : 'start-btn'));
+    			button.disabled = button_disabled_value = !/*canStart*/ ctx[3] && !/*isLearning*/ ctx[2];
+    			add_location(button, file$2, 79, 2, 2463);
+    			attr_dev(div2, "class", "button-container");
+    			add_location(div2, file$2, 78, 0, 2430);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div0, anchor);
+    			if_block0.m(div0, null);
+    			insert_dev(target, t0, anchor);
+    			insert_dev(target, div1, anchor);
+    			if_block1.m(div1, null);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, div2, anchor);
+    			append_dev(div2, button);
+    			append_dev(button, span);
+    			append_dev(span, t2);
+    			append_dev(button, t3);
+    			append_dev(button, t4);
+
+    			if (!mounted) {
+    				dispose = listen_dev(button, "click", /*handleStartStop*/ ctx[8], false, false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
+    				if_block0.p(ctx, dirty);
+    			} else {
+    				if_block0.d(1);
+    				if_block0 = current_block_type(ctx);
+
+    				if (if_block0) {
+    					if_block0.c();
+    					if_block0.m(div0, null);
+    				}
+    			}
+
+    			if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx, dirty)) && if_block1) {
+    				if_block1.p(ctx, dirty);
+    			} else {
+    				if_block1.d(1);
+    				if_block1 = current_block_type_1(ctx);
+
+    				if (if_block1) {
+    					if_block1.c();
+    					if_block1.m(div1, null);
+    				}
+    			}
+
+    			if (dirty & /*isLearning*/ 4 && t2_value !== (t2_value = (/*isLearning*/ ctx[2] ? '⏹️' : '▶️') + "")) set_data_dev(t2, t2_value);
+
+    			if (dirty & /*isLearning*/ 4 && t4_value !== (t4_value = (/*isLearning*/ ctx[2]
+    			? 'Stop Learning'
+    			: 'Start Learning') + "")) set_data_dev(t4, t4_value);
+
+    			if (dirty & /*isLearning*/ 4 && button_class_value !== (button_class_value = "start-stop-btn " + (/*isLearning*/ ctx[2] ? 'stop-btn' : 'start-btn'))) {
+    				attr_dev(button, "class", button_class_value);
+    			}
+
+    			if (dirty & /*canStart, isLearning*/ 12 && button_disabled_value !== (button_disabled_value = !/*canStart*/ ctx[3] && !/*isLearning*/ ctx[2])) {
+    				prop_dev(button, "disabled", button_disabled_value);
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div0);
+    			if_block0.d();
+    			if (detaching) detach_dev(t0);
+    			if (detaching) detach_dev(div1);
+    			if_block1.d();
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(div2);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$2.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$2($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('LearningSession', slots, []);
+    	let { currentPhrase } = $$props;
+    	let { status } = $$props;
+    	let { isLearning } = $$props;
+    	let { canStart } = $$props;
+    	let { showCategory } = $$props;
+    	let { showFeedback } = $$props;
+    	let { showExpectedOutput } = $$props;
+    	let { enableAudioHints } = $$props;
+    	const dispatch = createEventDispatcher();
+
+    	function shouldShowExpectedOutput(phrase) {
+    		if (showExpectedOutput === 'always') return true;
+    		if (showExpectedOutput === 'never') return false;
+
+    		if (showExpectedOutput === 'struggling') {
+    			if (!phrase.recentResults || phrase.recentResults.length === 0) {
+    				return true; // Show for new phrases with no history
+    			}
+
+    			const successCount = phrase.recentResults.filter(r => r === 1).length;
+    			const successRate = successCount / phrase.recentResults.length;
+    			return successRate < 0.25;
+    		}
+
+    		return true; // Default fallback
+    	}
+
+    	function shouldShowAudioHint(phrase) {
+    		if (!enableAudioHints || !phrase.recentResults || phrase.recentResults.length === 0) {
+    			return false;
+    		}
+
+    		const successCount = phrase.recentResults.filter(r => r === 1).length;
+    		const successRate = successCount / phrase.recentResults.length;
+
+    		// Show hint if: has some correct attempts (> 0) but success rate is less than 50%
+    		return successCount > 0 && successRate < 0.5;
+    	}
+
+    	function handleStartStop() {
+    		dispatch('startStop');
+    	}
+
+    	$$self.$$.on_mount.push(function () {
+    		if (currentPhrase === undefined && !('currentPhrase' in $$props || $$self.$$.bound[$$self.$$.props['currentPhrase']])) {
+    			console.warn("<LearningSession> was created without expected prop 'currentPhrase'");
+    		}
+
+    		if (status === undefined && !('status' in $$props || $$self.$$.bound[$$self.$$.props['status']])) {
+    			console.warn("<LearningSession> was created without expected prop 'status'");
+    		}
+
+    		if (isLearning === undefined && !('isLearning' in $$props || $$self.$$.bound[$$self.$$.props['isLearning']])) {
+    			console.warn("<LearningSession> was created without expected prop 'isLearning'");
+    		}
+
+    		if (canStart === undefined && !('canStart' in $$props || $$self.$$.bound[$$self.$$.props['canStart']])) {
+    			console.warn("<LearningSession> was created without expected prop 'canStart'");
+    		}
+
+    		if (showCategory === undefined && !('showCategory' in $$props || $$self.$$.bound[$$self.$$.props['showCategory']])) {
+    			console.warn("<LearningSession> was created without expected prop 'showCategory'");
+    		}
+
+    		if (showFeedback === undefined && !('showFeedback' in $$props || $$self.$$.bound[$$self.$$.props['showFeedback']])) {
+    			console.warn("<LearningSession> was created without expected prop 'showFeedback'");
+    		}
+
+    		if (showExpectedOutput === undefined && !('showExpectedOutput' in $$props || $$self.$$.bound[$$self.$$.props['showExpectedOutput']])) {
+    			console.warn("<LearningSession> was created without expected prop 'showExpectedOutput'");
+    		}
+
+    		if (enableAudioHints === undefined && !('enableAudioHints' in $$props || $$self.$$.bound[$$self.$$.props['enableAudioHints']])) {
+    			console.warn("<LearningSession> was created without expected prop 'enableAudioHints'");
+    		}
+    	});
+
+    	const writable_props = [
+    		'currentPhrase',
+    		'status',
+    		'isLearning',
+    		'canStart',
+    		'showCategory',
+    		'showFeedback',
+    		'showExpectedOutput',
+    		'enableAudioHints'
+    	];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<LearningSession> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$$set = $$props => {
+    		if ('currentPhrase' in $$props) $$invalidate(0, currentPhrase = $$props.currentPhrase);
+    		if ('status' in $$props) $$invalidate(1, status = $$props.status);
+    		if ('isLearning' in $$props) $$invalidate(2, isLearning = $$props.isLearning);
+    		if ('canStart' in $$props) $$invalidate(3, canStart = $$props.canStart);
+    		if ('showCategory' in $$props) $$invalidate(4, showCategory = $$props.showCategory);
+    		if ('showFeedback' in $$props) $$invalidate(5, showFeedback = $$props.showFeedback);
+    		if ('showExpectedOutput' in $$props) $$invalidate(9, showExpectedOutput = $$props.showExpectedOutput);
+    		if ('enableAudioHints' in $$props) $$invalidate(10, enableAudioHints = $$props.enableAudioHints);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		createEventDispatcher,
+    		currentPhrase,
+    		status,
+    		isLearning,
+    		canStart,
+    		showCategory,
+    		showFeedback,
+    		showExpectedOutput,
+    		enableAudioHints,
+    		dispatch,
+    		shouldShowExpectedOutput,
+    		shouldShowAudioHint,
+    		handleStartStop
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('currentPhrase' in $$props) $$invalidate(0, currentPhrase = $$props.currentPhrase);
+    		if ('status' in $$props) $$invalidate(1, status = $$props.status);
+    		if ('isLearning' in $$props) $$invalidate(2, isLearning = $$props.isLearning);
+    		if ('canStart' in $$props) $$invalidate(3, canStart = $$props.canStart);
+    		if ('showCategory' in $$props) $$invalidate(4, showCategory = $$props.showCategory);
+    		if ('showFeedback' in $$props) $$invalidate(5, showFeedback = $$props.showFeedback);
+    		if ('showExpectedOutput' in $$props) $$invalidate(9, showExpectedOutput = $$props.showExpectedOutput);
+    		if ('enableAudioHints' in $$props) $$invalidate(10, enableAudioHints = $$props.enableAudioHints);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [
+    		currentPhrase,
+    		status,
+    		isLearning,
+    		canStart,
+    		showCategory,
+    		showFeedback,
+    		shouldShowExpectedOutput,
+    		shouldShowAudioHint,
+    		handleStartStop,
+    		showExpectedOutput,
+    		enableAudioHints
+    	];
+    }
+
+    class LearningSession extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+
+    		init(this, options, instance$2, create_fragment$2, safe_not_equal, {
+    			currentPhrase: 0,
+    			status: 1,
+    			isLearning: 2,
+    			canStart: 3,
+    			showCategory: 4,
+    			showFeedback: 5,
+    			showExpectedOutput: 9,
+    			enableAudioHints: 10
+    		});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "LearningSession",
+    			options,
+    			id: create_fragment$2.name
+    		});
+    	}
+
+    	get currentPhrase() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set currentPhrase(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get status() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set status(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get isLearning() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set isLearning(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get canStart() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set canStart(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get showCategory() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showCategory(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get showFeedback() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showFeedback(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get showExpectedOutput() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showExpectedOutput(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get enableAudioHints() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set enableAudioHints(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/QueueDisplay.svelte generated by Svelte v3.59.2 */
+
+    const file$1 = "src/QueueDisplay.svelte";
+
+    function get_each_context(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[2] = list[i];
+    	return child_ctx;
+    }
+
+    // (7:0) {#if showUpcomingQueue && upcomingQueue.length > 0}
+    function create_if_block$1(ctx) {
+    	let div1;
+    	let h3;
+    	let t0;
+    	let t1_value = /*upcomingQueue*/ ctx[1].length + "";
+    	let t1;
+    	let t2;
+    	let t3;
+    	let div0;
+    	let each_value = /*upcomingQueue*/ ctx[1];
+    	validate_each_argument(each_value);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			div1 = element("div");
+    			h3 = element("h3");
+    			t0 = text("Complete Learning Queue (");
+    			t1 = text(t1_value);
+    			t2 = text(" items)");
+    			t3 = space();
+    			div0 = element("div");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			attr_dev(h3, "class", "queue-title");
+    			add_location(h3, file$1, 8, 4, 195);
+    			attr_dev(div0, "class", "queue-list");
+    			add_location(div0, file$1, 9, 4, 283);
+    			attr_dev(div1, "class", "queue-section");
+    			add_location(div1, file$1, 7, 2, 163);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, h3);
+    			append_dev(h3, t0);
+    			append_dev(h3, t1);
+    			append_dev(h3, t2);
+    			append_dev(div1, t3);
+    			append_dev(div1, div0);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				if (each_blocks[i]) {
+    					each_blocks[i].m(div0, null);
+    				}
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*upcomingQueue*/ 2 && t1_value !== (t1_value = /*upcomingQueue*/ ctx[1].length + "")) set_data_dev(t1, t1_value);
+
+    			if (dirty & /*upcomingQueue*/ 2) {
+    				each_value = /*upcomingQueue*/ ctx[1];
+    				validate_each_argument(each_value);
+    				let i;
+
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(div0, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value.length;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div1);
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$1.name,
+    		type: "if",
+    		source: "(7:0) {#if showUpcomingQueue && upcomingQueue.length > 0}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (11:6) {#each upcomingQueue as item}
+    function create_each_block(ctx) {
+    	let div;
+    	let span0;
+    	let t0;
+    	let t1_value = /*item*/ ctx[2].position + "";
+    	let t1;
+    	let t2;
+    	let span1;
+    	let t3_value = /*item*/ ctx[2].source + "";
+    	let t3;
+    	let t4;
+    	let span2;
+    	let t5_value = /*item*/ ctx[2].category + "";
+    	let t5;
+    	let t6;
+    	let span3;
+
+    	let t7_value = (/*item*/ ctx[2].recentResults.length === 0
+    	? 'New'
+    	: `${(/*item*/ ctx[2].successRate * 100).toFixed(0)}%`) + "";
+
+    	let t7;
+    	let t8;
+    	let span4;
+    	let t9_value = /*item*/ ctx[2].recentResults.filter(func).length + "";
+    	let t9;
+    	let t10;
+    	let t11_value = /*item*/ ctx[2].recentResults.length + "";
+    	let t11;
+    	let t12;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			span0 = element("span");
+    			t0 = text("#");
+    			t1 = text(t1_value);
+    			t2 = space();
+    			span1 = element("span");
+    			t3 = text(t3_value);
+    			t4 = space();
+    			span2 = element("span");
+    			t5 = text(t5_value);
+    			t6 = space();
+    			span3 = element("span");
+    			t7 = text(t7_value);
+    			t8 = space();
+    			span4 = element("span");
+    			t9 = text(t9_value);
+    			t10 = text("/");
+    			t11 = text(t11_value);
+    			t12 = space();
+    			attr_dev(span0, "class", "queue-position");
+    			add_location(span0, file$1, 12, 10, 423);
+    			attr_dev(span1, "class", "queue-text");
+    			add_location(span1, file$1, 13, 10, 486);
+    			attr_dev(span2, "class", "queue-category");
+    			add_location(span2, file$1, 14, 10, 542);
+    			attr_dev(span3, "class", "queue-success-rate");
+    			toggle_class(span3, "struggling", /*item*/ ctx[2].successRate < 0.3);
+    			toggle_class(span3, "mastered", /*item*/ ctx[2].successRate > 0.7);
+    			add_location(span3, file$1, 15, 10, 604);
+    			attr_dev(span4, "class", "queue-success-count");
+    			add_location(span4, file$1, 18, 10, 846);
+    			attr_dev(div, "class", "queue-item");
+    			toggle_class(div, "current", /*item*/ ctx[2].position === 1);
+    			add_location(div, file$1, 11, 8, 352);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, span0);
+    			append_dev(span0, t0);
+    			append_dev(span0, t1);
+    			append_dev(div, t2);
+    			append_dev(div, span1);
+    			append_dev(span1, t3);
+    			append_dev(div, t4);
+    			append_dev(div, span2);
+    			append_dev(span2, t5);
+    			append_dev(div, t6);
+    			append_dev(div, span3);
+    			append_dev(span3, t7);
+    			append_dev(div, t8);
+    			append_dev(div, span4);
+    			append_dev(span4, t9);
+    			append_dev(span4, t10);
+    			append_dev(span4, t11);
+    			append_dev(div, t12);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*upcomingQueue*/ 2 && t1_value !== (t1_value = /*item*/ ctx[2].position + "")) set_data_dev(t1, t1_value);
+    			if (dirty & /*upcomingQueue*/ 2 && t3_value !== (t3_value = /*item*/ ctx[2].source + "")) set_data_dev(t3, t3_value);
+    			if (dirty & /*upcomingQueue*/ 2 && t5_value !== (t5_value = /*item*/ ctx[2].category + "")) set_data_dev(t5, t5_value);
+
+    			if (dirty & /*upcomingQueue*/ 2 && t7_value !== (t7_value = (/*item*/ ctx[2].recentResults.length === 0
+    			? 'New'
+    			: `${(/*item*/ ctx[2].successRate * 100).toFixed(0)}%`) + "")) set_data_dev(t7, t7_value);
+
+    			if (dirty & /*upcomingQueue*/ 2) {
+    				toggle_class(span3, "struggling", /*item*/ ctx[2].successRate < 0.3);
+    			}
+
+    			if (dirty & /*upcomingQueue*/ 2) {
+    				toggle_class(span3, "mastered", /*item*/ ctx[2].successRate > 0.7);
+    			}
+
+    			if (dirty & /*upcomingQueue*/ 2 && t9_value !== (t9_value = /*item*/ ctx[2].recentResults.filter(func).length + "")) set_data_dev(t9, t9_value);
+    			if (dirty & /*upcomingQueue*/ 2 && t11_value !== (t11_value = /*item*/ ctx[2].recentResults.length + "")) set_data_dev(t11, t11_value);
+
+    			if (dirty & /*upcomingQueue*/ 2) {
+    				toggle_class(div, "current", /*item*/ ctx[2].position === 1);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block.name,
+    		type: "each",
+    		source: "(11:6) {#each upcomingQueue as item}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$1(ctx) {
+    	let if_block_anchor;
+    	let if_block = /*showUpcomingQueue*/ ctx[0] && /*upcomingQueue*/ ctx[1].length > 0 && create_if_block$1(ctx);
+
+    	const block = {
+    		c: function create() {
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty();
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (/*showUpcomingQueue*/ ctx[0] && /*upcomingQueue*/ ctx[1].length > 0) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block$1(ctx);
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$1.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    const func = r => r;
+
+    function instance$1($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('QueueDisplay', slots, []);
+    	let { showUpcomingQueue } = $$props;
+    	let { upcomingQueue } = $$props;
+
+    	$$self.$$.on_mount.push(function () {
+    		if (showUpcomingQueue === undefined && !('showUpcomingQueue' in $$props || $$self.$$.bound[$$self.$$.props['showUpcomingQueue']])) {
+    			console.warn("<QueueDisplay> was created without expected prop 'showUpcomingQueue'");
+    		}
+
+    		if (upcomingQueue === undefined && !('upcomingQueue' in $$props || $$self.$$.bound[$$self.$$.props['upcomingQueue']])) {
+    			console.warn("<QueueDisplay> was created without expected prop 'upcomingQueue'");
+    		}
+    	});
+
+    	const writable_props = ['showUpcomingQueue', 'upcomingQueue'];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<QueueDisplay> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$$set = $$props => {
+    		if ('showUpcomingQueue' in $$props) $$invalidate(0, showUpcomingQueue = $$props.showUpcomingQueue);
+    		if ('upcomingQueue' in $$props) $$invalidate(1, upcomingQueue = $$props.upcomingQueue);
+    	};
+
+    	$$self.$capture_state = () => ({ showUpcomingQueue, upcomingQueue });
+
+    	$$self.$inject_state = $$props => {
+    		if ('showUpcomingQueue' in $$props) $$invalidate(0, showUpcomingQueue = $$props.showUpcomingQueue);
+    		if ('upcomingQueue' in $$props) $$invalidate(1, upcomingQueue = $$props.upcomingQueue);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [showUpcomingQueue, upcomingQueue];
+    }
+
+    class QueueDisplay extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { showUpcomingQueue: 0, upcomingQueue: 1 });
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "QueueDisplay",
+    			options,
+    			id: create_fragment$1.name
+    		});
+    	}
+
+    	get showUpcomingQueue() {
+    		throw new Error("<QueueDisplay>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set showUpcomingQueue(value) {
+    		throw new Error("<QueueDisplay>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get upcomingQueue() {
+    		throw new Error("<QueueDisplay>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set upcomingQueue(value) {
+    		throw new Error("<QueueDisplay>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/App.svelte generated by Svelte v3.59.2 */
+
+    const { Object: Object_1, console: console_1 } = globals;
+    const file = "src/App.svelte";
+
+    // (449:4) {#if showSettings}
+    function create_if_block(ctx) {
+    	let div2;
+    	let languagesettings;
+    	let t0;
+    	let displaysettings;
+    	let updating_showExpectedOutput;
+    	let updating_showCategory;
+    	let updating_showFeedback;
+    	let updating_showUpcomingQueue;
+    	let updating_enableAudioHints;
+    	let updating_translationThreshold;
+    	let updating_pauseBetweenTests;
+    	let updating_pauseWhenStruggling;
+    	let t1;
+    	let algorithmsettings;
+    	let updating_passThreshold;
+    	let updating_repetitivenessFactor;
+    	let t2;
+    	let categorymanager;
+    	let updating_enabledCategories;
+    	let t3;
+    	let div1;
+    	let h3;
+    	let t5;
+    	let div0;
+    	let button;
+    	let t6;
+    	let button_disabled_value;
+    	let t7;
+    	let developersettings;
+    	let updating_loggingVerbosity;
+    	let current;
+    	let mounted;
+    	let dispose;
+
+    	languagesettings = new LanguageSettings({
+    			props: {
+    				nativeLanguage: /*currentSettings*/ ctx[2].nativeLanguage,
+    				learningLanguage: /*currentSettings*/ ctx[2].learningLanguage,
+    				nativeLanguages: /*nativeLanguages*/ ctx[10],
+    				learningLanguages: /*learningLanguages*/ ctx[9],
+    				loggingVerbosity: /*currentSettings*/ ctx[2].loggingVerbosity
+    			},
+    			$$inline: true
+    		});
+
+    	function displaysettings_showExpectedOutput_binding(value) {
+    		/*displaysettings_showExpectedOutput_binding*/ ctx[21](value);
+    	}
+
+    	function displaysettings_showCategory_binding(value) {
+    		/*displaysettings_showCategory_binding*/ ctx[22](value);
+    	}
+
+    	function displaysettings_showFeedback_binding(value) {
+    		/*displaysettings_showFeedback_binding*/ ctx[23](value);
+    	}
+
+    	function displaysettings_showUpcomingQueue_binding(value) {
+    		/*displaysettings_showUpcomingQueue_binding*/ ctx[24](value);
+    	}
+
+    	function displaysettings_enableAudioHints_binding(value) {
+    		/*displaysettings_enableAudioHints_binding*/ ctx[25](value);
+    	}
+
+    	function displaysettings_translationThreshold_binding(value) {
+    		/*displaysettings_translationThreshold_binding*/ ctx[26](value);
+    	}
+
+    	function displaysettings_pauseBetweenTests_binding(value) {
+    		/*displaysettings_pauseBetweenTests_binding*/ ctx[27](value);
+    	}
+
+    	function displaysettings_pauseWhenStruggling_binding(value) {
+    		/*displaysettings_pauseWhenStruggling_binding*/ ctx[28](value);
+    	}
+
+    	let displaysettings_props = {};
+
+    	if (/*currentSettings*/ ctx[2].showExpectedOutput !== void 0) {
+    		displaysettings_props.showExpectedOutput = /*currentSettings*/ ctx[2].showExpectedOutput;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].showCategory !== void 0) {
+    		displaysettings_props.showCategory = /*currentSettings*/ ctx[2].showCategory;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].showFeedback !== void 0) {
+    		displaysettings_props.showFeedback = /*currentSettings*/ ctx[2].showFeedback;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].showUpcomingQueue !== void 0) {
+    		displaysettings_props.showUpcomingQueue = /*currentSettings*/ ctx[2].showUpcomingQueue;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].enableAudioHints !== void 0) {
+    		displaysettings_props.enableAudioHints = /*currentSettings*/ ctx[2].enableAudioHints;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].translationThreshold !== void 0) {
+    		displaysettings_props.translationThreshold = /*currentSettings*/ ctx[2].translationThreshold;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].pauseBetweenTests !== void 0) {
+    		displaysettings_props.pauseBetweenTests = /*currentSettings*/ ctx[2].pauseBetweenTests;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].pauseWhenStruggling !== void 0) {
+    		displaysettings_props.pauseWhenStruggling = /*currentSettings*/ ctx[2].pauseWhenStruggling;
+    	}
+
+    	displaysettings = new DisplaySettings({
+    			props: displaysettings_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind(displaysettings, 'showExpectedOutput', displaysettings_showExpectedOutput_binding));
+    	binding_callbacks.push(() => bind(displaysettings, 'showCategory', displaysettings_showCategory_binding));
+    	binding_callbacks.push(() => bind(displaysettings, 'showFeedback', displaysettings_showFeedback_binding));
+    	binding_callbacks.push(() => bind(displaysettings, 'showUpcomingQueue', displaysettings_showUpcomingQueue_binding));
+    	binding_callbacks.push(() => bind(displaysettings, 'enableAudioHints', displaysettings_enableAudioHints_binding));
+    	binding_callbacks.push(() => bind(displaysettings, 'translationThreshold', displaysettings_translationThreshold_binding));
+    	binding_callbacks.push(() => bind(displaysettings, 'pauseBetweenTests', displaysettings_pauseBetweenTests_binding));
+    	binding_callbacks.push(() => bind(displaysettings, 'pauseWhenStruggling', displaysettings_pauseWhenStruggling_binding));
+    	displaysettings.$on("updateQueue", /*updateUpcomingQueue*/ ctx[13]);
+
+    	function algorithmsettings_passThreshold_binding(value) {
+    		/*algorithmsettings_passThreshold_binding*/ ctx[29](value);
+    	}
+
+    	function algorithmsettings_repetitivenessFactor_binding(value) {
+    		/*algorithmsettings_repetitivenessFactor_binding*/ ctx[30](value);
+    	}
+
+    	let algorithmsettings_props = {};
+
+    	if (/*currentSettings*/ ctx[2].passThreshold !== void 0) {
+    		algorithmsettings_props.passThreshold = /*currentSettings*/ ctx[2].passThreshold;
+    	}
+
+    	if (/*currentSettings*/ ctx[2].repetitivenessFactor !== void 0) {
+    		algorithmsettings_props.repetitivenessFactor = /*currentSettings*/ ctx[2].repetitivenessFactor;
+    	}
+
+    	algorithmsettings = new AlgorithmSettings({
+    			props: algorithmsettings_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind(algorithmsettings, 'passThreshold', algorithmsettings_passThreshold_binding));
+    	binding_callbacks.push(() => bind(algorithmsettings, 'repetitivenessFactor', algorithmsettings_repetitivenessFactor_binding));
+
+    	function categorymanager_enabledCategories_binding(value) {
+    		/*categorymanager_enabledCategories_binding*/ ctx[31](value);
+    	}
+
+    	let categorymanager_props = {
+    		categories: /*categories*/ ctx[1],
+    		loggingVerbosity: /*currentSettings*/ ctx[2].loggingVerbosity
+    	};
+
+    	if (/*currentSettings*/ ctx[2].enabledCategories !== void 0) {
+    		categorymanager_props.enabledCategories = /*currentSettings*/ ctx[2].enabledCategories;
+    	}
+
+    	categorymanager = new CategoryManager({
+    			props: categorymanager_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind(categorymanager, 'enabledCategories', categorymanager_enabledCategories_binding));
+    	categorymanager.$on("categoryChange", /*handleCategoryChange*/ ctx[11]);
+
+    	function developersettings_loggingVerbosity_binding(value) {
+    		/*developersettings_loggingVerbosity_binding*/ ctx[32](value);
+    	}
+
+    	let developersettings_props = {
+    		showDeveloperSettings: /*currentSettings*/ ctx[2].showDeveloperSettings
+    	};
+
+    	if (/*currentSettings*/ ctx[2].loggingVerbosity !== void 0) {
+    		developersettings_props.loggingVerbosity = /*currentSettings*/ ctx[2].loggingVerbosity;
+    	}
+
+    	developersettings = new DeveloperSettings({
+    			props: developersettings_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind(developersettings, 'loggingVerbosity', developersettings_loggingVerbosity_binding));
+    	developersettings.$on("debugTest", /*handleDebugTest*/ ctx[12]);
+
+    	const block = {
+    		c: function create() {
+    			div2 = element("div");
+    			create_component(languagesettings.$$.fragment);
+    			t0 = space();
+    			create_component(displaysettings.$$.fragment);
+    			t1 = space();
+    			create_component(algorithmsettings.$$.fragment);
+    			t2 = space();
+    			create_component(categorymanager.$$.fragment);
+    			t3 = space();
+    			div1 = element("div");
+    			h3 = element("h3");
+    			h3.textContent = "Management";
+    			t5 = space();
+    			div0 = element("div");
+    			button = element("button");
+    			t6 = text("🔄 Reset Learning Queue");
+    			t7 = space();
+    			create_component(developersettings.$$.fragment);
+    			attr_dev(h3, "class", "section-header");
+    			add_location(h3, file, 488, 10, 16217);
+    			attr_dev(button, "class", "management-btn reset-btn");
+    			button.disabled = button_disabled_value = !/*learningQueue*/ ctx[0];
+    			add_location(button, file, 490, 0, 16303);
+    			attr_dev(div0, "class", "management-buttons");
+    			add_location(div0, file, 489, 10, 16270);
+    			attr_dev(div1, "class", "management-section");
+    			add_location(div1, file, 487, 8, 16174);
+    			attr_dev(div2, "class", "settings-panel");
+    			add_location(div2, file, 449, 6, 14639);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div2, anchor);
+    			mount_component(languagesettings, div2, null);
+    			append_dev(div2, t0);
+    			mount_component(displaysettings, div2, null);
+    			append_dev(div2, t1);
+    			mount_component(algorithmsettings, div2, null);
+    			append_dev(div2, t2);
+    			mount_component(categorymanager, div2, null);
+    			append_dev(div2, t3);
+    			append_dev(div2, div1);
+    			append_dev(div1, h3);
+    			append_dev(div1, t5);
+    			append_dev(div1, div0);
+    			append_dev(div0, button);
+    			append_dev(button, t6);
+    			append_dev(div2, t7);
+    			mount_component(developersettings, div2, null);
+    			current = true;
+
+    			if (!mounted) {
+    				dispose = listen_dev(button, "click", /*resetLearningQueue*/ ctx[19], false, false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			const languagesettings_changes = {};
+    			if (dirty[0] & /*currentSettings*/ 4) languagesettings_changes.nativeLanguage = /*currentSettings*/ ctx[2].nativeLanguage;
+    			if (dirty[0] & /*currentSettings*/ 4) languagesettings_changes.learningLanguage = /*currentSettings*/ ctx[2].learningLanguage;
+    			if (dirty[0] & /*learningLanguages*/ 512) languagesettings_changes.learningLanguages = /*learningLanguages*/ ctx[9];
+    			if (dirty[0] & /*currentSettings*/ 4) languagesettings_changes.loggingVerbosity = /*currentSettings*/ ctx[2].loggingVerbosity;
+    			languagesettings.$set(languagesettings_changes);
+    			const displaysettings_changes = {};
+
+    			if (!updating_showExpectedOutput && dirty[0] & /*currentSettings*/ 4) {
+    				updating_showExpectedOutput = true;
+    				displaysettings_changes.showExpectedOutput = /*currentSettings*/ ctx[2].showExpectedOutput;
+    				add_flush_callback(() => updating_showExpectedOutput = false);
+    			}
+
+    			if (!updating_showCategory && dirty[0] & /*currentSettings*/ 4) {
+    				updating_showCategory = true;
+    				displaysettings_changes.showCategory = /*currentSettings*/ ctx[2].showCategory;
+    				add_flush_callback(() => updating_showCategory = false);
+    			}
+
+    			if (!updating_showFeedback && dirty[0] & /*currentSettings*/ 4) {
+    				updating_showFeedback = true;
+    				displaysettings_changes.showFeedback = /*currentSettings*/ ctx[2].showFeedback;
+    				add_flush_callback(() => updating_showFeedback = false);
+    			}
+
+    			if (!updating_showUpcomingQueue && dirty[0] & /*currentSettings*/ 4) {
+    				updating_showUpcomingQueue = true;
+    				displaysettings_changes.showUpcomingQueue = /*currentSettings*/ ctx[2].showUpcomingQueue;
+    				add_flush_callback(() => updating_showUpcomingQueue = false);
+    			}
+
+    			if (!updating_enableAudioHints && dirty[0] & /*currentSettings*/ 4) {
+    				updating_enableAudioHints = true;
+    				displaysettings_changes.enableAudioHints = /*currentSettings*/ ctx[2].enableAudioHints;
+    				add_flush_callback(() => updating_enableAudioHints = false);
+    			}
+
+    			if (!updating_translationThreshold && dirty[0] & /*currentSettings*/ 4) {
+    				updating_translationThreshold = true;
+    				displaysettings_changes.translationThreshold = /*currentSettings*/ ctx[2].translationThreshold;
+    				add_flush_callback(() => updating_translationThreshold = false);
+    			}
+
+    			if (!updating_pauseBetweenTests && dirty[0] & /*currentSettings*/ 4) {
+    				updating_pauseBetweenTests = true;
+    				displaysettings_changes.pauseBetweenTests = /*currentSettings*/ ctx[2].pauseBetweenTests;
+    				add_flush_callback(() => updating_pauseBetweenTests = false);
+    			}
+
+    			if (!updating_pauseWhenStruggling && dirty[0] & /*currentSettings*/ 4) {
+    				updating_pauseWhenStruggling = true;
+    				displaysettings_changes.pauseWhenStruggling = /*currentSettings*/ ctx[2].pauseWhenStruggling;
+    				add_flush_callback(() => updating_pauseWhenStruggling = false);
+    			}
+
+    			displaysettings.$set(displaysettings_changes);
+    			const algorithmsettings_changes = {};
+
+    			if (!updating_passThreshold && dirty[0] & /*currentSettings*/ 4) {
+    				updating_passThreshold = true;
+    				algorithmsettings_changes.passThreshold = /*currentSettings*/ ctx[2].passThreshold;
+    				add_flush_callback(() => updating_passThreshold = false);
+    			}
+
+    			if (!updating_repetitivenessFactor && dirty[0] & /*currentSettings*/ 4) {
+    				updating_repetitivenessFactor = true;
+    				algorithmsettings_changes.repetitivenessFactor = /*currentSettings*/ ctx[2].repetitivenessFactor;
+    				add_flush_callback(() => updating_repetitivenessFactor = false);
+    			}
+
+    			algorithmsettings.$set(algorithmsettings_changes);
+    			const categorymanager_changes = {};
+    			if (dirty[0] & /*categories*/ 2) categorymanager_changes.categories = /*categories*/ ctx[1];
+    			if (dirty[0] & /*currentSettings*/ 4) categorymanager_changes.loggingVerbosity = /*currentSettings*/ ctx[2].loggingVerbosity;
+
+    			if (!updating_enabledCategories && dirty[0] & /*currentSettings*/ 4) {
+    				updating_enabledCategories = true;
+    				categorymanager_changes.enabledCategories = /*currentSettings*/ ctx[2].enabledCategories;
+    				add_flush_callback(() => updating_enabledCategories = false);
+    			}
+
+    			categorymanager.$set(categorymanager_changes);
+
+    			if (!current || dirty[0] & /*learningQueue*/ 1 && button_disabled_value !== (button_disabled_value = !/*learningQueue*/ ctx[0])) {
+    				prop_dev(button, "disabled", button_disabled_value);
+    			}
+
+    			const developersettings_changes = {};
+    			if (dirty[0] & /*currentSettings*/ 4) developersettings_changes.showDeveloperSettings = /*currentSettings*/ ctx[2].showDeveloperSettings;
+
+    			if (!updating_loggingVerbosity && dirty[0] & /*currentSettings*/ 4) {
+    				updating_loggingVerbosity = true;
+    				developersettings_changes.loggingVerbosity = /*currentSettings*/ ctx[2].loggingVerbosity;
+    				add_flush_callback(() => updating_loggingVerbosity = false);
+    			}
+
+    			developersettings.$set(developersettings_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(languagesettings.$$.fragment, local);
+    			transition_in(displaysettings.$$.fragment, local);
+    			transition_in(algorithmsettings.$$.fragment, local);
+    			transition_in(categorymanager.$$.fragment, local);
+    			transition_in(developersettings.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(languagesettings.$$.fragment, local);
+    			transition_out(displaysettings.$$.fragment, local);
+    			transition_out(algorithmsettings.$$.fragment, local);
+    			transition_out(categorymanager.$$.fragment, local);
+    			transition_out(developersettings.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div2);
+    			destroy_component(languagesettings);
+    			destroy_component(displaysettings);
+    			destroy_component(algorithmsettings);
+    			destroy_component(categorymanager);
+    			destroy_component(developersettings);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block.name,
+    		type: "if",
+    		source: "(449:4) {#if showSettings}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment(ctx) {
+    	let main;
+    	let div0;
+    	let h1;
+    	let t1;
+    	let p;
+    	let t3;
+    	let learningsession;
+    	let t4;
+    	let div1;
+    	let button;
+    	let span0;
+    	let t6;
+    	let span1;
+    	let t7_value = (/*showSettings*/ ctx[3] ? '⬆️' : '⬇️') + "";
+    	let t7;
+    	let button_title_value;
+    	let t8;
+    	let t9;
+    	let queuedisplay;
+    	let current;
+    	let mounted;
+    	let dispose;
+
+    	learningsession = new LearningSession({
+    			props: {
+    				currentPhrase: /*currentPhrase*/ ctx[5],
+    				status: /*status*/ ctx[6],
+    				isLearning: /*isLearning*/ ctx[4],
+    				canStart: /*canStart*/ ctx[8],
+    				showCategory: /*currentSettings*/ ctx[2].showCategory,
+    				showFeedback: /*currentSettings*/ ctx[2].showFeedback,
+    				showExpectedOutput: /*currentSettings*/ ctx[2].showExpectedOutput,
+    				enableAudioHints: /*currentSettings*/ ctx[2].enableAudioHints
+    			},
+    			$$inline: true
+    		});
+
+    	learningsession.$on("startStop", /*handleStartStop*/ ctx[14]);
+    	let if_block = /*showSettings*/ ctx[3] && create_if_block(ctx);
+
+    	queuedisplay = new QueueDisplay({
+    			props: {
+    				showUpcomingQueue: /*currentSettings*/ ctx[2].showUpcomingQueue,
+    				upcomingQueue: /*upcomingQueue*/ ctx[7]
+    			},
+    			$$inline: true
+    		});
+
+    	const block = {
+    		c: function create() {
+    			main = element("main");
+    			div0 = element("div");
+    			h1 = element("h1");
+    			h1.textContent = "Language Tutor";
+    			t1 = space();
+    			p = element("p");
+    			p.textContent = "Your personal AI language learning companion";
+    			t3 = space();
+    			create_component(learningsession.$$.fragment);
+    			t4 = space();
+    			div1 = element("div");
+    			button = element("button");
+    			span0 = element("span");
+    			span0.textContent = "⚙️";
+    			t6 = text("\n      Settings\n      ");
+    			span1 = element("span");
+    			t7 = text(t7_value);
+    			t8 = space();
+    			if (if_block) if_block.c();
+    			t9 = space();
+    			create_component(queuedisplay.$$.fragment);
+    			add_location(h1, file, 414, 4, 13431);
+    			add_location(p, file, 415, 4, 13459);
+    			attr_dev(div0, "class", "title");
+    			add_location(div0, file, 413, 2, 13407);
+    			attr_dev(span0, "class", "settings-icon svelte-15o4qf2");
+    			toggle_class(span0, "developer-mode", /*currentSettings*/ ctx[2].showDeveloperSettings);
+    			add_location(span0, file, 443, 6, 14412);
+    			attr_dev(span1, "class", "chevron-icon");
+    			add_location(span1, file, 445, 6, 14532);
+    			attr_dev(button, "class", "settings-toggle");
+
+    			attr_dev(button, "title", button_title_value = /*currentSettings*/ ctx[2].showDeveloperSettings
+    			? "Developer mode active! Long press again to disable."
+    			: "Long press for developer settings");
+
+    			add_location(button, file, 433, 4, 13961);
+    			attr_dev(div1, "class", "settings-section");
+    			add_location(div1, file, 432, 2, 13926);
+    			attr_dev(main, "class", "app-container");
+    			add_location(main, file, 411, 0, 13359);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, main, anchor);
+    			append_dev(main, div0);
+    			append_dev(div0, h1);
+    			append_dev(div0, t1);
+    			append_dev(div0, p);
+    			append_dev(main, t3);
+    			mount_component(learningsession, main, null);
+    			append_dev(main, t4);
+    			append_dev(main, div1);
+    			append_dev(div1, button);
+    			append_dev(button, span0);
+    			append_dev(button, t6);
+    			append_dev(button, span1);
+    			append_dev(span1, t7);
+    			append_dev(div1, t8);
+    			if (if_block) if_block.m(div1, null);
+    			append_dev(main, t9);
+    			mount_component(queuedisplay, main, null);
+    			current = true;
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(button, "click", /*toggleSettings*/ ctx[15], false, false, false, false),
+    					listen_dev(button, "mousedown", /*handleSettingsMouseDown*/ ctx[16], false, false, false, false),
+    					listen_dev(button, "mouseup", /*handleSettingsMouseUp*/ ctx[17], false, false, false, false),
+    					listen_dev(button, "mouseleave", /*handleSettingsMouseLeave*/ ctx[18], false, false, false, false),
+    					listen_dev(button, "touchstart", /*handleSettingsMouseDown*/ ctx[16], { passive: true }, false, false, false),
+    					listen_dev(button, "touchend", /*handleSettingsMouseUp*/ ctx[17], { passive: true }, false, false, false)
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			const learningsession_changes = {};
+    			if (dirty[0] & /*currentPhrase*/ 32) learningsession_changes.currentPhrase = /*currentPhrase*/ ctx[5];
+    			if (dirty[0] & /*status*/ 64) learningsession_changes.status = /*status*/ ctx[6];
+    			if (dirty[0] & /*isLearning*/ 16) learningsession_changes.isLearning = /*isLearning*/ ctx[4];
+    			if (dirty[0] & /*canStart*/ 256) learningsession_changes.canStart = /*canStart*/ ctx[8];
+    			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.showCategory = /*currentSettings*/ ctx[2].showCategory;
+    			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.showFeedback = /*currentSettings*/ ctx[2].showFeedback;
+    			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.showExpectedOutput = /*currentSettings*/ ctx[2].showExpectedOutput;
+    			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.enableAudioHints = /*currentSettings*/ ctx[2].enableAudioHints;
+    			learningsession.$set(learningsession_changes);
+
+    			if (!current || dirty[0] & /*currentSettings*/ 4) {
+    				toggle_class(span0, "developer-mode", /*currentSettings*/ ctx[2].showDeveloperSettings);
+    			}
+
+    			if ((!current || dirty[0] & /*showSettings*/ 8) && t7_value !== (t7_value = (/*showSettings*/ ctx[3] ? '⬆️' : '⬇️') + "")) set_data_dev(t7, t7_value);
+
+    			if (!current || dirty[0] & /*currentSettings*/ 4 && button_title_value !== (button_title_value = /*currentSettings*/ ctx[2].showDeveloperSettings
+    			? "Developer mode active! Long press again to disable."
+    			: "Long press for developer settings")) {
+    				attr_dev(button, "title", button_title_value);
+    			}
+
+    			if (/*showSettings*/ ctx[3]) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+
+    					if (dirty[0] & /*showSettings*/ 8) {
+    						transition_in(if_block, 1);
+    					}
+    				} else {
+    					if_block = create_if_block(ctx);
+    					if_block.c();
+    					transition_in(if_block, 1);
+    					if_block.m(div1, null);
+    				}
+    			} else if (if_block) {
+    				group_outros();
+
+    				transition_out(if_block, 1, 1, () => {
+    					if_block = null;
+    				});
+
+    				check_outros();
+    			}
+
+    			const queuedisplay_changes = {};
+    			if (dirty[0] & /*currentSettings*/ 4) queuedisplay_changes.showUpcomingQueue = /*currentSettings*/ ctx[2].showUpcomingQueue;
+    			if (dirty[0] & /*upcomingQueue*/ 128) queuedisplay_changes.upcomingQueue = /*upcomingQueue*/ ctx[7];
+    			queuedisplay.$set(queuedisplay_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(learningsession.$$.fragment, local);
+    			transition_in(if_block);
+    			transition_in(queuedisplay.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(learningsession.$$.fragment, local);
+    			transition_out(if_block);
+    			transition_out(queuedisplay.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(main);
+    			destroy_component(learningsession);
+    			if (if_block) if_block.d();
+    			destroy_component(queuedisplay);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance($$self, $$props, $$invalidate) {
+    	let learningLanguages;
+    	let canStart;
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('App', slots, []);
+    	let showSettings = false;
+    	let isLearning = false;
+    	let currentPhrase = null;
+    	let status = "Ready to start learning!";
+    	let learningQueue = null;
+    	let tutor = null;
+    	let categories = [];
+    	let upcomingQueue = [];
+    	let isInitialized = false;
+
+    	// Settings from store
+    	let currentSettings = {};
+
+    	// Subscribe to settings store
+    	let previousNativeLanguage = '';
+
+    	let previousLearningLanguage = '';
+
+    	settings.subscribe(value => {
+    		const oldSettings = currentSettings;
+    		$$invalidate(2, currentSettings = value);
+
+    		// Update systems only when language settings change (not other settings)
+    		if (isInitialized && (oldSettings.nativeLanguage !== value.nativeLanguage || oldSettings.learningLanguage !== value.learningLanguage)) {
+    			updateSystems();
+    		}
+    	});
+
+    	const languageOptions = { 'English': ['Italian', 'Spanish'] }; // Future: 'Spanish': ['English'], 'French': ['English', 'German'], etc.
+
+    	// Derive arrays from the hash
+    	const nativeLanguages = Object.keys(languageOptions);
+
+    	// ========== LOGGING SYSTEM ==========
+    	function log(level, ...args) {
+    		if (currentSettings.loggingVerbosity >= level) {
+    			console.log(...args);
+    		}
+    	}
+
+    	function logError(level, ...args) {
+    		if (currentSettings.loggingVerbosity >= level) {
+    			console.error(...args);
+    		}
+    	}
+
+    	function logWarn(level, ...args) {
+    		if (currentSettings.loggingVerbosity >= level) {
+    			console.warn(...args);
+    		}
+    	}
+
+    	// ========== LIFECYCLE ==========
+    	onMount(async () => {
+    		log(4, '🚀 App mounted, loading settings...');
+
+    		// Load settings from localStorage
+    		settings.load();
+
+    		// Wait a tick for settings to propagate
+    		await new Promise(resolve => setTimeout(resolve, 0));
+
+    		// Initialize systems
+    		await initializeSystems();
+
+    		isInitialized = true;
+    		log(4, '🎉 App initialization complete');
+    	});
+
+    	// Clean up when component is destroyed
+    	onDestroy(() => {
+    		log(4, '🧹 App being destroyed, cleaning up...');
+
+    		// Stop any active learning session to release microphone
+    		if (isLearning) {
+    			stopLearningSession();
+    		}
+
+    		// Clean up tutor and queue instances
+    		if (tutor) {
+    			tutor.destroy();
+    		}
+    	});
+
+    	// ========== SYSTEM INITIALIZATION ==========
+    	async function initializeSystems() {
+    		await initializeLearningQueue();
+    		initializeTutor();
+    	}
+
+    	async function updateSystems() {
+    		// Reinitialize when core settings change
+    		if (learningQueue || tutor) {
+    			await initializeLearningQueue();
+    			initializeTutor();
+    		}
+    	}
+
+    	async function initializeLearningQueue() {
+    		log(5, '🏗️ Initializing LearningQueue for:', currentSettings.nativeLanguage, '→', currentSettings.learningLanguage);
+    		$$invalidate(1, categories = []);
+
+    		$$invalidate(0, learningQueue = new LearningQueue(currentSettings.nativeLanguage,
+    		currentSettings.learningLanguage,
+    		'basic',
+    		'learning/',
+    		{
+    				passThreshold: currentSettings.passThreshold,
+    				memoryLength: 20,
+    				repetitivenessFactor: currentSettings.repetitivenessFactor
+    			}));
+
+    		await learningQueue.init();
+    		const availableCategories = learningQueue.getCategories();
+    		$$invalidate(1, categories = availableCategories);
+
+    		// Restore or initialize category preferences
+    		const newEnabledCategories = {};
+
+    		availableCategories.forEach(category => {
+    			newEnabledCategories[category] = currentSettings.enabledCategories[category] ?? true;
+    			learningQueue.setCategory(category, newEnabledCategories[category]);
+    		});
+
+    		settings.updateSetting('enabledCategories', newEnabledCategories);
+    		updateUpcomingQueue();
+    		log(5, '✅ LearningQueue initialization complete');
+    	}
+
+    	function initializeTutor() {
+    		$$invalidate(20, tutor = new LanguageTutor(null,
+    		currentSettings.nativeLanguage,
+    		currentSettings.learningLanguage,
+    		{
+    				apiKeyEndpoint: 'openai.php',
+    				feedbackThreshold: currentSettings.translationThreshold,
+    				loggingVerbosity: currentSettings.loggingVerbosity,
+    				audioPath: 'audio/',
+    				enableAudioHints: currentSettings.enableAudioHints,
+    				statusCallback: message => {
+    					if (!currentSettings.showFeedback && isLearning) {
+    						if (message.includes('Listen to this')) {
+    							$$invalidate(6, status = `Listen to the ${currentSettings.nativeLanguage} phrase...`);
+    						} else if (message.includes('Now say it in')) {
+    							$$invalidate(6, status = `Now say it in ${currentSettings.learningLanguage}...`);
+    						}
+    					} else {
+    						$$invalidate(6, status = message);
+    					}
+    				}
+    			}));
+    	}
+
+    	// ========== EVENT HANDLERS ==========
+    	function handleCategoryChange(event) {
+    		const { category, enabled } = event.detail;
+
+    		// No need to update settings here - binding handles that automatically
+    		// Just update the LearningQueue
+    		if (learningQueue) {
+    			learningQueue.setCategory(category, enabled);
+    			updateUpcomingQueue();
+    		}
+    	}
+
+    	function handleDebugTest(event) {
+    		const { action } = event.detail;
+
+    		if (!learningQueue) {
+    			log(3, '❌ Debug test failed: no learning queue');
+    			return;
+    		}
+
+    		const phrase = learningQueue.getNextTest();
+
+    		if (!phrase) {
+    			log(3, '❌ Debug test failed: no phrases available');
+    			return;
+    		}
+
+    		// Simulate pass (score 10) or fail (score 0)
+    		const score = action === 'pass' ? 10 : 0;
+
+    		log(5, `🐛 Debug ${action}: "${phrase.source}" → "${phrase.target}" (score: ${score})`);
+
+    		// Score the test directly through the learning queue
+    		learningQueue.scoreCurrentTest(score);
+
+    		updateUpcomingQueue();
+    		$$invalidate(6, status = `Debug ${action}: "${phrase.source}" scored ${score}/10`);
+    	}
+
+    	function updateUpcomingQueue() {
+    		if (learningQueue && currentSettings.showUpcomingQueue) {
+    			$$invalidate(7, upcomingQueue = learningQueue.getTopQueueItems());
+    			log(7, '📋 Updated upcoming queue:', upcomingQueue.length, 'items');
+    		}
+    	}
+
+    	// ========== LEARNING SESSION ==========
+    	async function startLearningSession() {
+    		if (!learningQueue || !tutor) {
+    			$$invalidate(6, status = "Blimey! Something's gone wrong with the initialisation.");
+    			return;
+    		}
+
+    		try {
+    			// Start persistent microphone session to avoid repeated connections
+    			log(5, '🎓 Starting persistent microphone session for learning');
+
+    			await tutor.startLearningSession();
+    			$$invalidate(4, isLearning = true);
+    			$$invalidate(6, status = "Right then, let's get cracking!");
+    			await runLearningLoop();
+    		} catch(error) {
+    			log(2, '❌ Failed to start learning session:', error);
+    			$$invalidate(6, status = "Couldn't access your microphone. Please check your permissions and try again.");
+    			$$invalidate(4, isLearning = false);
+    		}
+    	}
+
+    	async function runLearningLoop() {
+    		while (isLearning) {
+    			const phrase = learningQueue.getNextTest();
+
+    			if (!phrase) {
+    				$$invalidate(6, status = "No more phrases available! Check your category settings.");
+    				stopLearningSession();
+    				break;
+    			}
+
+    			log(8, '📋 Got phrase from queue:', phrase);
+    			log(8, '📊 Phrase recentResults:', phrase.recentResults, 'length:', phrase.recentResults?.length);
+    			$$invalidate(5, currentPhrase = phrase);
+    			$$invalidate(6, status = `Ready to listen to ${currentSettings.nativeLanguage} phrase...`);
+    			if (!isLearning) break;
+
+    			try {
+    				const result = await tutor.test(phrase.source, phrase.target, phrase.recentResults || []);
+
+    				if (result.stop || !isLearning) {
+    					stopLearningSession();
+    					break;
+    				} else if (result.score === 0) {
+    					$$invalidate(6, status = `No response detected - ${result.commentary}`);
+    					log(6, `⏳ Pausing ${currentSettings.pauseBetweenTests} seconds before repeating phrase`);
+    					await new Promise(resolve => setTimeout(resolve, currentSettings.pauseBetweenTests * 1000));
+    				} else {
+    					learningQueue.scoreCurrentTest(result.score);
+    					updateUpcomingQueue();
+    					$$invalidate(6, status = `Score: ${result.score}/10 - ${result.commentary}`);
+
+    					// Use dynamic pause duration based on performance
+    					const pauseDuration = getPauseDuration(phrase, result.score);
+
+    					log(6, `⏳ Pausing ${pauseDuration} seconds before next phrase`);
+    					await new Promise(resolve => setTimeout(resolve, pauseDuration * 1000));
+    				}
+    			} catch(error) {
+    				$$invalidate(6, status = "Smeg! Something went wrong with the AI. Try again.");
+    				stopLearningSession();
+    				break;
+    			}
+    		}
+    	}
+
+    	function getPauseDuration(phrase, score) {
+    		if (!phrase || !phrase.recentResults || phrase.recentResults.length === 0) {
+    			return currentSettings.pauseBetweenTests;
+    		}
+
+    		const successCount = phrase.recentResults.filter(r => r === 1).length;
+    		const successRate = successCount / phrase.recentResults.length;
+    		const isStruggling = successRate < 0.25 || score < 4;
+
+    		return isStruggling
+    		? currentSettings.pauseWhenStruggling
+    		: currentSettings.pauseBetweenTests;
+    	}
+
+    	function stopLearningSession() {
+    		$$invalidate(4, isLearning = false);
+
+    		// Stop persistent microphone session
+    		if (tutor && tutor.isSessionActive()) {
+    			log(5, '🎓 Stopping persistent microphone session');
+    			tutor.stopLearningSession();
+    		}
+
+    		if (!status.includes('Score:') && !status.includes('commentary')) {
+    			$$invalidate(6, status = "Learning session stopped. Ready when you are!");
+    		}
+
+    		$$invalidate(5, currentPhrase = null);
+    	}
+
+    	function handleStartStop() {
+    		if (isLearning) {
+    			stopLearningSession();
+    		} else {
+    			startLearningSession();
+    		}
+    	}
+
+    	// ========== SETTINGS UI ==========
+    	function toggleSettings() {
+    		$$invalidate(3, showSettings = !showSettings);
+    	}
+
+    	// Easter egg: Long press on settings cog for developer settings
+    	let settingsLongPressTimer = null;
+
+    	function handleSettingsMouseDown() {
+    		settingsLongPressTimer = setTimeout(
+    			() => {
+    				settings.updateSetting('showDeveloperSettings', !currentSettings.showDeveloperSettings);
+
+    				log(3, '🥚 Developer settings easter egg triggered!', currentSettings.showDeveloperSettings
+    				? 'Enabled'
+    				: 'Disabled');
+
+    				const settingsButton = document.querySelector('.settings-toggle');
+
+    				if (settingsButton) {
+    					settingsButton.style.transform = 'scale(0.95)';
+    					setTimeout(() => settingsButton.style.transform = '', 150);
+    				}
+    			},
+    			2000
+    		);
+    	}
+
+    	function handleSettingsMouseUp() {
+    		if (settingsLongPressTimer) {
+    			clearTimeout(settingsLongPressTimer);
+    			settingsLongPressTimer = null;
+    		}
+    	}
+
+    	function handleSettingsMouseLeave() {
+    		if (settingsLongPressTimer) {
+    			clearTimeout(settingsLongPressTimer);
+    			settingsLongPressTimer = null;
+    		}
+    	}
+
+    	// ========== MANAGEMENT ACTIONS ==========
+    	function resetLearningQueue() {
+    		if (learningQueue && confirm('Are you sure you want to reset the learning queue? This will clear all progress and start fresh.')) {
+    			learningQueue.reset();
+    			const availableCategories = learningQueue.getCategories();
+    			$$invalidate(1, categories = availableCategories);
+    			const newEnabledCategories = {};
+
+    			availableCategories.forEach(category => {
+    				newEnabledCategories[category] = true;
+    				learningQueue.setCategory(category, true);
+    			});
+
+    			settings.updateSetting('enabledCategories', newEnabledCategories);
+    			updateUpcomingQueue();
+    			$$invalidate(6, status = 'Learning queue reset successfully!');
+
+    			setTimeout(
+    				() => {
+    					if (!isLearning) $$invalidate(6, status = "Ready to start learning!");
+    				},
+    				3000
+    			);
+    		}
+    	}
+
+    	const writable_props = [];
+
+    	Object_1.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<App> was created with unknown prop '${key}'`);
+    	});
+
+    	function displaysettings_showExpectedOutput_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.showExpectedOutput, value)) {
+    			currentSettings.showExpectedOutput = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function displaysettings_showCategory_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.showCategory, value)) {
+    			currentSettings.showCategory = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function displaysettings_showFeedback_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.showFeedback, value)) {
+    			currentSettings.showFeedback = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function displaysettings_showUpcomingQueue_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.showUpcomingQueue, value)) {
+    			currentSettings.showUpcomingQueue = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function displaysettings_enableAudioHints_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.enableAudioHints, value)) {
+    			currentSettings.enableAudioHints = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function displaysettings_translationThreshold_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.translationThreshold, value)) {
+    			currentSettings.translationThreshold = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function displaysettings_pauseBetweenTests_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.pauseBetweenTests, value)) {
+    			currentSettings.pauseBetweenTests = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function displaysettings_pauseWhenStruggling_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.pauseWhenStruggling, value)) {
+    			currentSettings.pauseWhenStruggling = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function algorithmsettings_passThreshold_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.passThreshold, value)) {
+    			currentSettings.passThreshold = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function algorithmsettings_repetitivenessFactor_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.repetitivenessFactor, value)) {
+    			currentSettings.repetitivenessFactor = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function categorymanager_enabledCategories_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.enabledCategories, value)) {
+    			currentSettings.enabledCategories = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	function developersettings_loggingVerbosity_binding(value) {
+    		if ($$self.$$.not_equal(currentSettings.loggingVerbosity, value)) {
+    			currentSettings.loggingVerbosity = value;
+    			$$invalidate(2, currentSettings);
+    		}
+    	}
+
+    	$$self.$capture_state = () => ({
+    		onMount,
+    		onDestroy,
+    		LearningQueue,
+    		LanguageTutor,
+    		settings,
+    		LanguageSettings,
+    		DisplaySettings,
+    		AlgorithmSettings,
+    		CategoryManager,
+    		DeveloperSettings,
+    		LearningSession,
+    		QueueDisplay,
+    		showSettings,
+    		isLearning,
+    		currentPhrase,
+    		status,
+    		learningQueue,
+    		tutor,
+    		categories,
+    		upcomingQueue,
+    		isInitialized,
+    		currentSettings,
+    		previousNativeLanguage,
+    		previousLearningLanguage,
+    		languageOptions,
+    		nativeLanguages,
+    		log,
+    		logError,
+    		logWarn,
+    		initializeSystems,
+    		updateSystems,
+    		initializeLearningQueue,
+    		initializeTutor,
+    		handleCategoryChange,
+    		handleDebugTest,
+    		updateUpcomingQueue,
+    		startLearningSession,
+    		runLearningLoop,
+    		getPauseDuration,
+    		stopLearningSession,
+    		handleStartStop,
+    		toggleSettings,
+    		settingsLongPressTimer,
+    		handleSettingsMouseDown,
+    		handleSettingsMouseUp,
+    		handleSettingsMouseLeave,
+    		resetLearningQueue,
+    		canStart,
+    		learningLanguages
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('showSettings' in $$props) $$invalidate(3, showSettings = $$props.showSettings);
+    		if ('isLearning' in $$props) $$invalidate(4, isLearning = $$props.isLearning);
+    		if ('currentPhrase' in $$props) $$invalidate(5, currentPhrase = $$props.currentPhrase);
+    		if ('status' in $$props) $$invalidate(6, status = $$props.status);
+    		if ('learningQueue' in $$props) $$invalidate(0, learningQueue = $$props.learningQueue);
+    		if ('tutor' in $$props) $$invalidate(20, tutor = $$props.tutor);
+    		if ('categories' in $$props) $$invalidate(1, categories = $$props.categories);
+    		if ('upcomingQueue' in $$props) $$invalidate(7, upcomingQueue = $$props.upcomingQueue);
+    		if ('isInitialized' in $$props) isInitialized = $$props.isInitialized;
+    		if ('currentSettings' in $$props) $$invalidate(2, currentSettings = $$props.currentSettings);
+    		if ('previousNativeLanguage' in $$props) previousNativeLanguage = $$props.previousNativeLanguage;
+    		if ('previousLearningLanguage' in $$props) previousLearningLanguage = $$props.previousLearningLanguage;
+    		if ('settingsLongPressTimer' in $$props) settingsLongPressTimer = $$props.settingsLongPressTimer;
+    		if ('canStart' in $$props) $$invalidate(8, canStart = $$props.canStart);
+    		if ('learningLanguages' in $$props) $$invalidate(9, learningLanguages = $$props.learningLanguages);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty[0] & /*currentSettings*/ 4) {
+    			$$invalidate(9, learningLanguages = languageOptions[currentSettings.nativeLanguage] || []);
+    		}
+
+    		if ($$self.$$.dirty[0] & /*currentSettings, categories*/ 6) {
+    			// Reactive computed values
+    			$$invalidate(8, canStart = Object.values(currentSettings.enabledCategories).some(enabled => enabled) && categories.length > 0);
+    		}
+
+    		if ($$self.$$.dirty[0] & /*tutor, currentSettings*/ 1048580) {
+    			// Reactive updates for tutor and queue options (but not during language changes)
+    			if (tutor && currentSettings.loggingVerbosity !== undefined && tutor.options) {
+    				tutor.updateOptions({
+    					loggingVerbosity: currentSettings.loggingVerbosity
+    				});
+    			}
+    		}
+
+    		if ($$self.$$.dirty[0] & /*learningQueue, currentSettings*/ 5) {
+    			if (learningQueue && currentSettings.loggingVerbosity !== undefined && learningQueue.options) {
+    				learningQueue.updateOptions({
+    					loggingVerbosity: currentSettings.loggingVerbosity
+    				});
+    			}
+    		}
+
+    		if ($$self.$$.dirty[0] & /*learningQueue, currentSettings*/ 5) {
+    			if (learningQueue && currentSettings.repetitivenessFactor !== undefined && learningQueue.options) {
+    				learningQueue.updateOptions({
+    					repetitivenessFactor: currentSettings.repetitivenessFactor
+    				});
+    			}
+    		}
+
+    		if ($$self.$$.dirty[0] & /*learningQueue, currentSettings*/ 5) {
+    			if (learningQueue && currentSettings.passThreshold !== undefined && learningQueue.options) {
+    				learningQueue.updateOptions({
+    					passThreshold: currentSettings.passThreshold
+    				});
+    			}
+    		}
+    	};
+
+    	return [
+    		learningQueue,
+    		categories,
+    		currentSettings,
+    		showSettings,
+    		isLearning,
+    		currentPhrase,
+    		status,
+    		upcomingQueue,
+    		canStart,
+    		learningLanguages,
+    		nativeLanguages,
+    		handleCategoryChange,
+    		handleDebugTest,
+    		updateUpcomingQueue,
+    		handleStartStop,
+    		toggleSettings,
+    		handleSettingsMouseDown,
+    		handleSettingsMouseUp,
+    		handleSettingsMouseLeave,
+    		resetLearningQueue,
+    		tutor,
+    		displaysettings_showExpectedOutput_binding,
+    		displaysettings_showCategory_binding,
+    		displaysettings_showFeedback_binding,
+    		displaysettings_showUpcomingQueue_binding,
+    		displaysettings_enableAudioHints_binding,
+    		displaysettings_translationThreshold_binding,
+    		displaysettings_pauseBetweenTests_binding,
+    		displaysettings_pauseWhenStruggling_binding,
+    		algorithmsettings_passThreshold_binding,
+    		algorithmsettings_repetitivenessFactor_binding,
+    		categorymanager_enabledCategories_binding,
+    		developersettings_loggingVerbosity_binding
+    	];
+    }
+
+    class App extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance, create_fragment, safe_not_equal, {}, null, [-1, -1]);
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "App",
+    			options,
+    			id: create_fragment.name
+    		});
+    	}
+    }
+
+    const app = new App({
+        target: document.body
+    });
+
+    return app;
+
+})();
 //# sourceMappingURL=bundle.js.map
