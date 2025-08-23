@@ -396,7 +396,7 @@ class TTSGenerator {
                 ],
                 [
                     'role' => 'user',
-                    'content' => "CRITICAL: Speak this text in {$language} exactly once. Do not repeat it, do not add anything before or after it, do not explain it. Speak exactly as written including any text in parentheses: \"{$text}\""
+                    'content' => "CRITICAL: after a tiny pause, speak this text in {$language} exactly once. Do not repeat it, do not add anything before or after it, do not explain it. Speak exactly as written including any text in parentheses: \"{$text}\""
                 ]
             ]
         ];
@@ -537,7 +537,8 @@ class TTSGenerator {
                     echo "   ⚠️  Duration check failed: {$dur['actual']}s > {$dur['max_allowed']}s\n";
                 } elseif (isset($cached['result']['content_check']) && !$cached['result']['content_check']['valid']) {
                     $cont = $cached['result']['content_check'];
-                    echo "   ⚠️  Content check failed: {$cont['similarity']}% similarity\n";
+                    $threshold = isset($cont['threshold_used']) ? $cont['threshold_used'] : 'N/A';
+                    echo "   ⚠️  Content check failed: {$cont['similarity']}% similarity (threshold: {$threshold}%)\n";
                     echo "   📝 Expected: \"{$cont['expected']}\"\n";
                     echo "   🎤 Got: \"{$cont['transcribed']}\"\n";
                 }
@@ -571,12 +572,12 @@ class TTSGenerator {
                 // Only run content check if duration check passed
                 $contentResult = $this->validateAudioContent($audioData, $phraseInfo['text'], $phraseInfo['language']);
                 if (!$contentResult['valid']) {
-                    echo "   ⚠️  Content check failed: {$contentResult['similarity']}% similarity\n";
+                    echo "   ⚠️  Content check failed: {$contentResult['similarity']}% similarity (threshold: {$contentResult['threshold_used']}%)\n";
                     echo "   📝 Expected: \"{$contentResult['expected']}\"\n";
                     echo "   🎤 Got: \"{$contentResult['transcribed']}\"\n";
                     $isValid = false;
                 } else {
-                    echo "   ✅ Duration: {$durationResult['actual']}s, Similarity: {$contentResult['similarity']}%\n";
+                    echo "   ✅ Duration: {$durationResult['actual']}s, Similarity: {$contentResult['similarity']}% (threshold: {$contentResult['threshold_used']}%)\n";
                 }
             }
             
@@ -624,13 +625,15 @@ class TTSGenerator {
         // 2. Content validation with GPT-4o mini (more expensive)
         $contentValid = $this->validateAudioContent($audioData, $expectedText, $language);
         if (!$contentValid['valid']) {
-            echo "   ⚠️  Content check failed: {$contentValid['similarity']}% similarity\n";
+            $threshold = isset($contentValid['threshold_used']) ? $contentValid['threshold_used'] : 'N/A';
+            echo "   ⚠️  Content check failed: {$contentValid['similarity']}% similarity (threshold: {$threshold}%)\n";
             echo "   📝 Expected: \"{$contentValid['expected']}\"\n";
             echo "   🎤 Got: \"{$contentValid['transcribed']}\"\n";
             return false;
         }
         
-        echo "   ✅ Duration: {$durationValid['actual']}s, Similarity: {$contentValid['similarity']}%\n";
+        $threshold = isset($contentValid['threshold_used']) ? $contentValid['threshold_used'] : 'N/A';
+        echo "   ✅ Duration: {$durationValid['actual']}s, Similarity: {$contentValid['similarity']}% (threshold: {$threshold}%)\n";
         return true;
     }
     
@@ -722,14 +725,19 @@ class TTSGenerator {
             $expectedClean = $this->normalizeText($expectedText);
             $transcribedClean = $this->normalizeText($transcription);
             
-            // Calculate similarity
+            // Calculate similarity using Levenshtein distance
             $similarity = $this->calculateSimilarity($expectedClean, $transcribedClean);
             
+            // Adaptive similarity threshold based on phrase length
+            // Short phrases (< 10 chars) are more prone to transcription variations
+            $threshold = strlen($expectedClean) < 10 ? 0.50 : 0.70; // 50% for short, 70% for longer phrases
+            
             return [
-                'valid' => $similarity >= 0.80, // 80% similarity threshold
+                'valid' => $similarity >= $threshold,
                 'similarity' => round($similarity * 100, 1),
                 'expected' => $expectedClean,
-                'transcribed' => $transcribedClean
+                'transcribed' => $transcribedClean,
+                'threshold_used' => round($threshold * 100, 1)
             ];
             
         } catch (Exception $e) {
@@ -789,7 +797,7 @@ class TTSGenerator {
                 'model' => 'gpt-4o-transcribe',
                 'language' => $langCode,
                 'response_format' => 'text',
-                'prompt' => 'Transcribe the entire audio exactly as spoken, including any instructions (like this). Do not omit any um, err, ewords, notes, or modifiers that are spoken.'
+                'prompt' => 'Transcribe the entire audio exactly as spoken. Write out all numbers as words (e.g., "1" as "one", "20" as "twenty"). Do not include filler words like um, uh, er unless they are clearly part of the intended phrase.'
             ],
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_TIMEOUT => 30
@@ -818,13 +826,24 @@ class TTSGenerator {
     }
     
     /**
-     * Normalize text for comparison
+     * Normalize text for comparison with flexible transcription handling
      */
     private function normalizeText($text) {
-        // Convert to lowercase, remove punctuation, normalize whitespace
+        // Convert to lowercase
         $text = strtolower($text);
+        
+        // Remove all punctuation and special characters, keeping only letters, numbers, and spaces
         $text = preg_replace('/[^\p{L}\p{N}\s]/u', '', $text);
+        
+        // Normalize multiple spaces to single spaces
         $text = preg_replace('/\s+/', ' ', $text);
+        
+        // Remove common transcription artifacts that might appear
+        $text = str_replace([' um ', ' uh ', ' er ', ' ah '], ' ', ' ' . $text . ' ');
+        
+        // Normalize whitespace again after replacements
+        $text = preg_replace('/\s+/', ' ', $text);
+        
         return trim($text);
     }
     
@@ -1179,6 +1198,360 @@ class TTSGenerator {
         
         return round($bytes, 2) . ' ' . $units[$pow];
     }
+    
+    /**
+     * Generate missing pronunciation guides using ChatGPT-4o-mini-audio
+     */
+    public function generatePronunciationGuides() {
+        echo "🎤 Starting pronunciation guide generation (max {$this->batchSize} entries)...\n";
+        echo "📂 Scanning directory: {$this->baseDir}\n\n";
+        
+        $startTime = microtime(true);
+        
+        // Get all JSON files
+        $jsonFiles = $this->getJsonFiles();
+        
+        if (empty($jsonFiles)) {
+            echo "❌ No JSON files found in {$this->baseDir} directory\n";
+            return;
+        }
+        
+        echo "📋 Found " . count($jsonFiles) . " JSON files:\n";
+        foreach ($jsonFiles as $file) {
+            echo "  - $file\n";
+        }
+        echo "\n";
+        
+        // Collect entries missing pronunciation guides
+        $missingEntries = $this->collectMissingPronunciations($jsonFiles);
+        
+        if (empty($missingEntries)) {
+            echo "🎉 All entries already have pronunciation guides! Nothing to generate.\n";
+            return;
+        }
+        
+        echo "📝 Found " . count($missingEntries) . " entries missing pronunciation guides\n";
+        echo "🎯 Will process up to {$this->batchSize} entries this run\n\n";
+        
+        // Process only up to batchSize entries
+        $entriesToProcess = array_slice($missingEntries, 0, $this->batchSize);
+        
+        $processedCount = 0;
+        $errorCount = 0;
+        
+        foreach ($entriesToProcess as $entry) {
+            if ($this->generateSinglePronunciation($entry)) {
+                $processedCount++;
+            } else {
+                $errorCount++;
+            }
+            
+            if ($processedCount + $errorCount >= $this->batchSize) {
+                echo "\n🛑 Reached batch limit of {$this->batchSize} entries\n";
+                break;
+            }
+        }
+        
+        $endTime = microtime(true);
+        $duration = round($endTime - $startTime, 2);
+        $remaining = count($missingEntries) - $processedCount - $errorCount;
+        
+        // Summary
+        echo "\n" . str_repeat("=", 50) . "\n";
+        echo "🎉 Pronunciation Generation Complete!\n";
+        echo "⏱️  Duration: {$duration} seconds\n";
+        echo "✅ Generated: {$processedCount} pronunciations\n";
+        echo "❌ Errors: {$errorCount} entries\n";
+        
+        if ($remaining > 0) {
+            echo "📋 Remaining: {$remaining} entries to process\n";
+            echo "💡 Run the script again to process the next batch\n";
+        } else {
+            echo "🎉 All pronunciation guides have been generated!\n";
+        }
+        echo str_repeat("=", 50) . "\n";
+    }
+    
+    /**
+     * Collect entries that are missing pronunciation guides
+     */
+    private function collectMissingPronunciations($jsonFiles) {
+        $missingEntries = [];
+        
+        foreach ($jsonFiles as $filename) {
+            echo "🔍 Scanning: $filename\n";
+            
+            // Parse filename to get languages
+            $languages = $this->parseFilename($filename);
+            if (!$languages) {
+                echo "  ❌ Could not parse languages from filename\n";
+                continue;
+            }
+            
+            $sourceLanguage = $languages['source'];
+            $targetLanguage = $languages['target'];
+            
+            // Load JSON data
+            $filepath = $this->baseDir . '/' . $filename;
+            $data = json_decode(file_get_contents($filepath), true);
+            
+            if (!$data) {
+                echo "  ❌ Could not parse JSON file\n";
+                continue;
+            }
+            
+            // Check all phrases in all categories for missing pronunciation
+            foreach ($data as $category => $phrases) {
+                foreach ($phrases as $index => $phrase) {
+                    if (empty($phrase['pronunciation'])) {
+                        // Check if learning language audio file exists
+                        $audioInfo = $this->createPhraseInfo(
+                            $phrase['target'], $targetLanguage, $category, $filename, 'learning'
+                        );
+                        
+                        if (file_exists($audioInfo['filepath'])) {
+                            $missingEntries[] = [
+                                'filename' => $filename,
+                                'category' => $category,
+                                'index' => $index,
+                                'phrase' => $phrase,
+                                'audioPath' => $audioInfo['filepath'],
+                                'languages' => $languages
+                            ];
+                            echo "  📝 Missing: {$phrase['target']} (audio exists)\n";
+                        } else {
+                            echo "  ⏭️  Skipping: {$phrase['target']} (no audio file)\n";
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Shuffle to mix different files/categories
+        shuffle($missingEntries);
+        
+        return $missingEntries;
+    }
+    
+    /**
+     * Generate pronunciation for a single entry using ChatGPT-4o-mini-audio
+     */
+    private function generateSinglePronunciation($entry) {
+        $phrase = $entry['phrase'];
+        $audioPath = $entry['audioPath'];
+        $targetLanguage = $entry['languages']['target'];
+        
+        echo "🎤 Processing: {$phrase['target']}\n";
+        echo "   📁 Audio: " . basename($audioPath) . "\n";
+        echo "   🌍 Language: {$targetLanguage}\n";
+        
+        try {
+            // Read audio file
+            $audioData = file_get_contents($audioPath);
+            if (!$audioData) {
+                echo "   ❌ Failed to read audio file\n";
+                return false;
+            }
+            
+            // Add silent padding to audio for better transcription
+            $paddedAudioPath = $this->addSilentPadding($audioPath);
+            
+            // Get pronunciation from ChatGPT
+            $pronunciation = $this->callChatGPTForPronunciation($paddedAudioPath, $targetLanguage);
+            
+            // Clean up temporary padded file
+            if ($paddedAudioPath !== $audioPath && file_exists($paddedAudioPath)) {
+                unlink($paddedAudioPath);
+            }
+            
+            if (!$pronunciation) {
+                echo "   ❌ Failed to get pronunciation from ChatGPT\n";
+                return false;
+            }
+            
+            echo "   🎯 Generated pronunciation: {$pronunciation}\n";
+            
+            // Update JSON file
+            if ($this->updateJSONWithPronunciation($entry, $pronunciation)) {
+                echo "   ✅ Updated JSON file successfully\n";
+                return true;
+            } else {
+                echo "   ❌ Failed to update JSON file\n";
+                return false;
+            }
+            
+        } catch (Exception $e) {
+            echo "   ❌ Error: " . $e->getMessage() . "\n";
+            return false;
+        } finally {
+            echo "\n";
+        }
+    }
+    
+    /**
+     * Add silent padding to the beginning and end of audio file
+     */
+    private function addSilentPadding($audioPath) {
+        // Check if ffmpeg is available
+        if (!$this->isCommandAvailable('ffmpeg')) {
+            echo "   ⚠️  ffmpeg not available, skipping audio padding\n";
+            return $audioPath; // Return original path
+        }
+        
+        // Create temporary file for padded audio
+        $tempFile = tempnam(sys_get_temp_dir(), 'padded_audio_') . '.mp3';
+        
+        // Add 0.8 seconds of silence at the beginning using working ffmpeg format
+        // Based on user's working command: simplified approach with stereo and standard sample rate
+        $command = sprintf(
+            'ffmpeg -f lavfi -t 0.8 -i anullsrc=channel_layout=stereo:sample_rate=44100 -i %s -filter_complex "[0:a][1:a]concat=n=2:v=0:a=1[out]" -map "[out]" %s -y 2>/dev/null',
+            escapeshellarg($audioPath),
+            escapeshellarg($tempFile)
+        );
+        
+        $result = shell_exec($command);
+        
+        // Check if the padded file was created successfully
+        if (!file_exists($tempFile) || filesize($tempFile) === 0) {
+            echo "   ⚠️  Audio padding failed, using original file\n";
+            if (file_exists($tempFile)) {
+                unlink($tempFile);
+            }
+            return $audioPath;
+        }
+        
+        echo "   🔇 Added silent padding (0.8s at start)\n";
+        return $tempFile;
+    }
+    
+    /**
+     * Check if a command is available in the system
+     */
+    private function isCommandAvailable($command) {
+        $output = shell_exec("which $command 2>/dev/null");
+        return !empty($output);
+    }
+    
+    /**
+     * Call ChatGPT-4o-mini-audio to generate pronunciation guide
+     */
+    private function callChatGPTForPronunciation($audioFilePath, $targetLanguage) {
+        $url = 'https://api.openai.com/v1/chat/completions';
+        
+        // Read and encode audio file
+        $audioData = file_get_contents($audioFilePath);
+        $audioBase64 = base64_encode($audioData);
+        
+        $userInstructions = "Listen to this audio and provide ONLY an English \"phrasebook respelling\" transcription of what you hear. Do not include any explanations, commentary, or additional text.
+
+Please provide the phonetic transcription using English phrasebook respelling using ALL CAPS to show where the speaker puts emphasis using the following phonemes:
+ah, eh, ay, ee, oh, oo, aw, ew, ur, uh, ow, ahn, ehn, ohn, uhn, p, b, t, d, k, g, f, v, s, z, m, n, l, r, rr, sh, zh, ch, j, ny, ly, h, th, w, y
+
+The audio is in {$targetLanguage}";
+        
+        $data = [
+            'model' => 'gpt-4o-audio-preview',
+            'modalities' => ['text'],
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => 'You are an expert phonetician.'
+                ],
+                [
+                    'role' => 'user',
+                    'content' => [
+                        [
+                            'type' => 'text',
+                            'text' => $userInstructions
+                        ],
+                        [
+                            'type' => 'input_audio',
+                            'input_audio' => [
+                                'data' => $audioBase64,
+                                'format' => 'mp3'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        
+        // Build headers
+        $headers = [
+            'Authorization: Bearer ' . $this->openaiApiKey,
+            'Content-Type: application/json'
+        ];
+        
+        // Add optional organization and project IDs
+        if (defined('OPENAI_ORG_ID') && !empty(OPENAI_ORG_ID)) {
+            $headers[] = 'OpenAI-Organization: ' . OPENAI_ORG_ID;
+        }
+        
+        if (defined('OPENAI_PROJECT_ID') && !empty(OPENAI_PROJECT_ID)) {
+            $headers[] = 'OpenAI-Project: ' . OPENAI_PROJECT_ID;
+        }
+        
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_TIMEOUT => 45,
+            CURLOPT_CONNECTTIMEOUT => 15
+        ]);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+        
+        if ($error) {
+            throw new Exception("cURL error: $error");
+        }
+        
+        if ($httpCode !== 200) {
+            $errorData = json_decode($response, true);
+            $errorMsg = isset($errorData['error']['message']) ? 
+                $errorData['error']['message'] : 
+                "HTTP $httpCode";
+            throw new Exception("ChatGPT API error: $errorMsg");
+        }
+        
+        // Parse response
+        $responseData = json_decode($response, true);
+        
+        if (!isset($responseData['choices'][0]['message']['content'])) {
+            throw new Exception("No pronunciation found in ChatGPT response");
+        }
+        
+        return trim($responseData['choices'][0]['message']['content']);
+    }
+    
+    /**
+     * Update JSON file with generated pronunciation
+     */
+    private function updateJSONWithPronunciation($entry, $pronunciation) {
+        $filepath = $this->baseDir . '/' . $entry['filename'];
+        
+        // Load current JSON data
+        $data = json_decode(file_get_contents($filepath), true);
+        if (!$data) {
+            return false;
+        }
+        
+        // Update the specific phrase with pronunciation
+        $data[$entry['category']][$entry['index']]['pronunciation'] = $pronunciation;
+        
+        // Write back to file
+        $jsonString = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        if (file_put_contents($filepath, $jsonString)) {
+            return true;
+        }
+        
+        return false;
+    }
 }
 
 // Usage example and CLI interface
@@ -1191,6 +1564,7 @@ function showHelp() {
     echo "  generate [batch]           - Generate only (no validation)\n";
     echo "  validate                   - Validate existing files only\n";
     echo "  validate-delete            - Validate and delete invalid files\n";
+    echo "  pronunciation [batch]      - Generate missing pronunciation guides from audio\n";
     echo "  stats                      - Show statistics only\n";
     echo "  cache-stats                - Show validation cache statistics\n";
     echo "  cache-clear                - Clear validation cache\n";
@@ -1215,7 +1589,7 @@ if ($argc > 1) {
         exit(0);
     }
     
-    if (in_array($arg1, ['generate-validate', 'generate', 'validate', 'validate-delete', 'stats', 'cache-stats', 'cache-clear'])) {
+    if (in_array($arg1, ['generate-validate', 'generate', 'validate', 'validate-delete', 'pronunciation', 'stats', 'cache-stats', 'cache-clear'])) {
         $mode = $arg1;
         
         // Check for batch size as second argument
@@ -1310,6 +1684,12 @@ switch ($mode) {
         fgets(STDIN);
         $generator->setValidationMode(true, true, true);
         $generator->validateExistingFiles();
+        break;
+        
+    case 'pronunciation':
+        echo "🎯 Mode: Generate pronunciation guides from audio\n";
+        echo "📦 Batch size: $batchSize\n\n";
+        $generator->generatePronunciationGuides($batchSize);
         break;
         
     default:

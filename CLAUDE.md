@@ -119,13 +119,32 @@ public/
 // public/learning/English-Italian-basic.json
 {
   "travel": [
-    { "source": "Good morning", "target": "Buongiorno" },
-    { "source": "Where is the station?", "target": "Dove è la stazione?" }
+    { 
+      "source": "Good morning", 
+      "target": "Buongiorno", 
+      "pronunciation": "bohn-JOHR-no" 
+    },
+    { 
+      "source": "Where is the station?", 
+      "target": "Dove è la stazione?",
+      "pronunciation": ["DOH-veh eh lah stah-tsee-OH-neh", "DOH-veh eh la sta-TSYO-neh"]
+    }
   ],
   "food": [
-    { "source": "I would like a coffee", "target": "Vorrei un caffè" }
+    { 
+      "source": "I would like a coffee", 
+      "target": "Vorrei un caffè",
+      "pronunciation": "vor-RAY oon kah-FEH"
+    }
   ]
 }
+```
+
+**Pronunciation Field Support:**
+- **String format**: Single pronunciation guide (traditional behavior)
+- **Array format**: Multiple pronunciation options - the system will test user input against all options and use the highest score
+- **Use cases for arrays**: Regional variations, alternative pronunciations, or different emphasis patterns
+- **Scoring**: When arrays are used, each option is scored independently and the best match is selected
 ```
 
 ### Component Development Patterns

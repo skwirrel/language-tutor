@@ -6,7 +6,7 @@
  */
 
 export class LearningQueue {
-  constructor(sourceLanguage, targetLanguage, level = 'basic', baseDir = '/learning/', options = {}) {
+  constructor(sourceLanguage, targetLanguage, level = 'basic', baseDir = '/learning/', options = {}, logFunction = null) {
     this.sourceLanguage = sourceLanguage;
     this.targetLanguage = targetLanguage;
     this.baseDir = baseDir;
@@ -16,6 +16,7 @@ export class LearningQueue {
     this.categories = {};
     this.currentTestIndex = 0;
     this.storageKey = `learning_queue_${sourceLanguage}_${targetLanguage}_${level}`;
+    this.log = logFunction || ((level, ...args) => {}); // Default to no-op if no logger provided
     
     // Initialize options with defaults
     this.options = {
@@ -91,15 +92,51 @@ export class LearningQueue {
       }
     }
     
+    // Filter out tests that are no longer in selected categories
     this.queue = this.queue.filter(item => {
       const testId = this.createTestId({ source: item.source, target: item.target });
       return expectedTests.has(testId);
+    });
+    
+    // Update existing queue items with new data from JSON (like pronunciation)
+    this.queue = this.queue.map(item => {
+      const testId = this.createTestId({ source: item.source, target: item.target });
+      
+      // Find the corresponding test in the database
+      for (const [categoryName, isSelected] of Object.entries(this.categories)) {
+        if (isSelected && this.testDatabase[categoryName]) {
+          const matchingTest = this.testDatabase[categoryName].find(test => 
+            this.createTestId(test) === testId
+          );
+          
+          if (matchingTest) {
+            // Debug: Log pronunciation data
+            this.log(8, '🔍 Syncing queue item:', {
+              testId,
+              oldItem: { source: item.source, target: item.target, pronunciation: item.pronunciation },
+              newData: { source: matchingTest.source, target: matchingTest.target, pronunciation: matchingTest.pronunciation }
+            });
+            
+            // Merge new fields from JSON while preserving learning progress
+            return {
+              ...item, // Keep existing progress data (inertia, recentResults, etc.)
+              source: matchingTest.source,
+              target: matchingTest.target,
+              pronunciation: matchingTest.pronunciation, // Update with new pronunciation data
+              category: categoryName
+            };
+          }
+        }
+      }
+      
+      return item; // Return unchanged if not found (shouldn't happen due to filter above)
     });
     
     const currentTestIds = new Set(this.queue.map(item => 
       this.createTestId({ source: item.source, target: item.target })
     ));
     
+    // Add new tests that aren't in the queue yet
     for (const [categoryName, isSelected] of Object.entries(this.categories)) {
       if (isSelected && this.testDatabase[categoryName]) {
         this.testDatabase[categoryName].forEach(test => {
@@ -127,6 +164,7 @@ export class LearningQueue {
     const queueItem = {
       source: test.source,
       target: test.target,
+      pronunciation: test.pronunciation, // Include pronunciation guide if available
       inertia: -1, // Start at maximum resistance - phrases are "sticky" until learned
       category: categoryName,
       recentResults: new Array(this.options.memoryLength).fill(0) // Initialize with full history of failures
@@ -187,9 +225,20 @@ export class LearningQueue {
     }
     
     const test = this.queue[this.currentTestIndex];
+    
+    // Debug: Log what's being returned
+    this.log(8, '📤 getNextTest returning:', {
+      source: test.source,
+      target: test.target,
+      pronunciation: test.pronunciation,
+      hasPronunciation: !!test.pronunciation,
+      fullTest: test
+    });
+    
     return {
       source: test.source,
       target: test.target,
+      pronunciation: test.pronunciation, // Include pronunciation guide
       inertia: test.inertia,
       category: test.category,
       recentResults: test.recentResults || [] // Include history in response
@@ -288,13 +337,13 @@ export class LearningQueue {
   }
   
   reset() {
-    console.log('🔄 Resetting LearningQueue to initial state');
+    this.log(5, '🔄 Resetting LearningQueue to initial state');
     this.queue = [];
     this.categories = {};
     this.currentTestIndex = 0;
     localStorage.removeItem(this.storageKey);
     this.initializeAllCategories();
-    console.log('✅ LearningQueue reset complete');
+    this.log(5, '✅ LearningQueue reset complete');
   }
   
   getQueueStats() {

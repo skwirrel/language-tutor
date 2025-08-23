@@ -24,6 +24,7 @@
   let categories = [];
   let upcomingQueue = [];
   let isInitialized = false;
+  let heardPronunciation = '';
   
   // Settings from store
   let currentSettings = {};
@@ -59,13 +60,9 @@
                 categories.length > 0;
   
   // Reactive updates for tutor and queue options (but not during language changes)
-  $: if (tutor && currentSettings.loggingVerbosity !== undefined && tutor.options) {
-    tutor.updateOptions({ loggingVerbosity: currentSettings.loggingVerbosity });
-  }
+  // LanguageTutor now uses passed-in log function, no need to update loggingVerbosity
   
-  $: if (learningQueue && currentSettings.loggingVerbosity !== undefined && learningQueue.options) {
-    learningQueue.updateOptions({ loggingVerbosity: currentSettings.loggingVerbosity });
-  }
+  // LearningQueue now uses passed-in log function, no need to update loggingVerbosity
   
   $: if (learningQueue && currentSettings.repetitivenessFactor !== undefined && learningQueue.options) {
     learningQueue.updateOptions({ repetitivenessFactor: currentSettings.repetitivenessFactor });
@@ -155,7 +152,8 @@
         passThreshold: currentSettings.passThreshold,
         memoryLength: 20,
         repetitivenessFactor: currentSettings.repetitivenessFactor
-      }
+      },
+      log // Pass the log function to LearningQueue
     );
     
     await learningQueue.init();
@@ -180,7 +178,7 @@
     tutor = new LanguageTutor(null, currentSettings.nativeLanguage, currentSettings.learningLanguage, {
       apiKeyEndpoint: 'openai.php',
       feedbackThreshold: currentSettings.translationThreshold,
-      loggingVerbosity: currentSettings.loggingVerbosity,
+      passThreshold: currentSettings.passThreshold,
       audioPath: 'audio/',
       enableAudioHints: currentSettings.enableAudioHints,
       statusCallback: (message) => {
@@ -194,7 +192,7 @@
           status = message;
         }
       }
-    });
+    }, log); // Pass the log function to LanguageTutor
   }
   
   // ========== EVENT HANDLERS ==========
@@ -280,12 +278,16 @@
       log(8, '📊 Phrase recentResults:', phrase.recentResults, 'length:', phrase.recentResults?.length);
       
       currentPhrase = phrase;
+      heardPronunciation = ''; // Clear previous heard pronunciation
       status = `Ready to listen to ${currentSettings.nativeLanguage} phrase...`;
       
       if (!isLearning) break;
       
       try {
-        const result = await tutor.test(phrase.source, phrase.target, phrase.recentResults || []);
+        const result = await tutor.test(phrase.source, phrase.target, phrase.pronunciation || '', phrase.recentResults || []);
+        
+        // Capture heard pronunciation from result
+        heardPronunciation = result.heardPronunciation || '';
         
         if (result.stop || !isLearning) {
           stopLearningSession();
@@ -426,6 +428,8 @@
     showFeedback={currentSettings.showFeedback}
     showExpectedOutput={currentSettings.showExpectedOutput}
     enableAudioHints={currentSettings.enableAudioHints}
+    {heardPronunciation}
+    {log}
     on:startStop={handleStartStop}
   />
 

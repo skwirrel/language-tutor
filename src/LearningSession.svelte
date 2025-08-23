@@ -10,6 +10,8 @@
   export let showFeedback;
   export let showExpectedOutput;
   export let enableAudioHints;
+  export let heardPronunciation = '';
+  export let log = (level, ...args) => {}; // Default no-op if not provided
   
   const dispatch = createEventDispatcher();
   
@@ -25,6 +27,17 @@
       return successRate < 0.25;
     }
     return true; // Default fallback
+  }
+  
+  // Debug: Log current phrase data
+  $: if (currentPhrase) {
+    log(8, '🎯 LearningSession currentPhrase:', {
+      source: currentPhrase.source,
+      target: currentPhrase.target,
+      pronunciation: currentPhrase.pronunciation,
+      hasPronunciation: !!currentPhrase.pronunciation,
+      fullPhrase: currentPhrase
+    });
   }
   
   function shouldShowAudioHint(phrase) {
@@ -55,6 +68,12 @@
       <p class="phrase-text">{currentPhrase.source}</p>
       {#if shouldShowExpectedOutput(currentPhrase)}
         <p class="expected-text">Expected: {currentPhrase.target}</p>
+        {#if currentPhrase.pronunciation}
+          <p class="pronunciation-text">Pronunciation: /{Array.isArray(currentPhrase.pronunciation) ? currentPhrase.pronunciation[0] : currentPhrase.pronunciation}/</p>
+        {/if}
+      {/if}
+      {#if heardPronunciation}
+        <p class="heard-pronunciation-text">You said: /{heardPronunciation}/</p>
       {/if}
     </div>
   {:else}
@@ -86,3 +105,20 @@
     {isLearning ? 'Stop Learning' : 'Start Learning'}
   </button>
 </div>
+
+<style>
+  .pronunciation-text {
+    color: #666;
+    font-style: italic;
+    font-size: 0.9em;
+    margin-top: 0.25rem;
+  }
+  
+  .heard-pronunciation-text {
+    color: #4a90e2;
+    font-style: italic;
+    font-size: 0.9em;
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+</style>

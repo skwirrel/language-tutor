@@ -6,19 +6,22 @@
  * Enhanced with audible notification bleeps for user interaction prompts.
  */
 
+import { PronunciationScorer } from './pronunciationScorer.js';
+
 export class LanguageTutor {
-    constructor(outputElement, sourceLanguage = 'English', targetLanguage = 'Italian', options = {}) {
+    constructor(outputElement, sourceLanguage = 'English', targetLanguage = 'Italian', options = {}, logFunction = null) {
         // Basic configuration
         this.outputElement = outputElement;
         this.sourceLanguage = sourceLanguage;
         this.targetLanguage = targetLanguage;
+        this.log = logFunction || ((level, ...args) => {}); // Use provided log function or no-op
         
         // Default options
         const defaultOptions = {
             apiKeyEndpoint: '?mode=get_key',
             feedbackThreshold: 7,  // Score below which target pronunciation is played
+            passThreshold: 7,      // Score threshold for determining pass/fail (for audio feedback)
             statusCallback: null,  // Optional callback for status updates
-            loggingVerbosity: 5,   // Logging verbosity level (0-10, 0=silent, 10=verbose)
             audioPath: 'audio/',   // Base path for pre-generated audio files
             enableBleep: true,     // Enable audible notification bleep (NEW)
             enableAudioHints: false, // Enable audio hints for struggling phrases
@@ -46,6 +49,9 @@ export class LanguageTutor {
         this.currentSessionKey = null;
         this.keyRefreshInterval = null;
         
+        // Initialize pronunciation scorer
+        this.pronunciationScorer = new PronunciationScorer();
+        
         this.log(3, `🎓 LanguageTutor initialized: ${sourceLanguage} → ${targetLanguage}`);
         this.log(7, '📋 Options:', this.options);
         
@@ -54,23 +60,8 @@ export class LanguageTutor {
     }
     
     // ========== LOGGING SYSTEM ==========
-    log(level, ...args) {
-        if (this.options.loggingVerbosity >= level) {
-            console.log(...args);
-        }
-    }
     
-    logError(level, ...args) {
-        if (this.options.loggingVerbosity >= level) {
-            console.error(...args);
-        }
-    }
-    
-    logWarn(level, ...args) {
-        if (this.options.loggingVerbosity >= level) {
-            console.warn(...args);
-        }
-    }
+    // Error and warning logging also use the passed-in log function
     
     // ========== UTILITY METHODS ==========
     mergeOptions(defaults, userOptions) {
@@ -147,8 +138,110 @@ export class LanguageTutor {
             });
             
         } catch (error) {
-            this.logWarn(4, '⚠️ Could not play notification bleep:', error.message);
+            this.log(4, '⚠️ Could not play notification bleep:', error.message);
             // Don't throw - this is a nice-to-have feature
+        }
+    }
+    
+    /**
+     * Play a success feedback bleep (ascending tones)
+     */
+    async playSuccessBleep() {
+        if (!this.options.enableBleep) {
+            this.log(7, '🔇 Success bleep disabled');
+            return;
+        }
+        
+        try {
+            this.log(6, '🎵 Playing success bleep');
+            
+            const tempAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const duration = 0.25; // 250ms
+            const sampleRate = tempAudioContext.sampleRate;
+            const buffer = tempAudioContext.createBuffer(1, duration * sampleRate, sampleRate);
+            const data = buffer.getChannelData(0);
+            
+            // Generate ascending success tones: 600Hz -> 800Hz -> 1000Hz
+            for (let i = 0; i < buffer.length; i++) {
+                const time = i / sampleRate;
+                let frequency;
+                let amplitude = 0.08; // Slightly quieter than notification
+                
+                if (time < 0.08) {
+                    frequency = 600;
+                    amplitude *= Math.sin(Math.PI * time / 0.08);
+                } else if (time < 0.16) {
+                    frequency = 800;
+                    amplitude *= Math.sin(Math.PI * (time - 0.08) / 0.08);
+                } else {
+                    frequency = 1000;
+                    amplitude *= Math.sin(Math.PI * (time - 0.16) / 0.09);
+                }
+                
+                data[i] = amplitude * Math.sin(2 * Math.PI * frequency * time);
+            }
+            
+            const source = tempAudioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(tempAudioContext.destination);
+            
+            return new Promise((resolve) => {
+                source.onended = () => {
+                    tempAudioContext.close();
+                    this.log(7, '✅ Success bleep completed');
+                    resolve();
+                };
+                source.start();
+            });
+            
+        } catch (error) {
+            this.log(4, '⚠️ Could not play success bleep:', error.message);
+        }
+    }
+    
+    /**
+     * Play a failure feedback bleep (descending tone)
+     */
+    async playFailureBleep() {
+        if (!this.options.enableBleep) {
+            this.log(7, '🔇 Failure bleep disabled');
+            return;
+        }
+        
+        try {
+            this.log(6, '🎵 Playing failure bleep');
+            
+            const tempAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const duration = 0.4; // 400ms - longer for failure
+            const sampleRate = tempAudioContext.sampleRate;
+            const buffer = tempAudioContext.createBuffer(1, duration * sampleRate, sampleRate);
+            const data = buffer.getChannelData(0);
+            
+            // Generate descending failure tone: 500Hz -> 300Hz
+            for (let i = 0; i < buffer.length; i++) {
+                const time = i / sampleRate;
+                const progress = time / duration;
+                const frequency = 500 - (200 * progress); // Descend from 500Hz to 300Hz
+                let amplitude = 0.06 * (1 - progress * 0.3); // Fade out gradually
+                
+                data[i] = amplitude * Math.sin(2 * Math.PI * frequency * time);
+            }
+            
+            const source = tempAudioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(tempAudioContext.destination);
+            
+            return new Promise((resolve) => {
+                source.onended = () => {
+                    tempAudioContext.close();
+                    this.log(7, '✅ Failure bleep completed');
+                    resolve();
+                };
+                source.start();
+            });
+            
+        } catch (error) {
+            this.log(4, '⚠️ Could not play failure bleep:', error.message);
         }
     }
     
@@ -158,7 +251,7 @@ export class LanguageTutor {
             await this.refreshSessionKey();
             this.startKeyRefreshTimer();
         } catch (error) {
-            this.logError(1, '❌ Failed to initialize session keys:', error);
+            this.log(1, '❌ Failed to initialize session keys:', error);
         }
     }
     
@@ -177,7 +270,7 @@ export class LanguageTutor {
             this.log(4, '✅ Session key refreshed successfully');
             return this.currentSessionKey;
         } catch (error) {
-            this.logError(2, '❌ Error refreshing session key:', error);
+            this.log(2, '❌ Error refreshing session key:', error);
             this.showError('Failed to refresh session key: ' + error.message);
             return null;
         }
@@ -237,7 +330,7 @@ export class LanguageTutor {
                 resolve();
                 
             } catch (error) {
-                this.logError(3, '❌ Error playing audio:', error);
+                this.log(3, '❌ Error playing audio:', error);
                 this.showError('Audio playback failed: ' + error.message);
                 reject(error);
             }
@@ -348,14 +441,14 @@ export class LanguageTutor {
                 };
                 
                 audio.onerror = (error) => {
-                    this.logError(3, '❌ Audio playback error:', error);
+                    this.log(3, '❌ Audio playback error:', error);
                     reject(new Error(`Failed to load audio from ${url}`));
                 };
                 
                 audio.oncanplaythrough = () => {
                     this.log(7, '▶️ Starting audio playback');
                     audio.play().catch(playError => {
-                        this.logError(3, '❌ Audio play() failed:', playError);
+                        this.log(3, '❌ Audio play() failed:', playError);
                         reject(playError);
                     });
                 };
@@ -365,7 +458,7 @@ export class LanguageTutor {
                 audio.load();
                 
             } catch (error) {
-                this.logError(3, '❌ Error setting up audio playback:', error);
+                this.log(3, '❌ Error setting up audio playback:', error);
                 reject(error);
             }
         });
@@ -417,13 +510,13 @@ export class LanguageTutor {
                     // Start playback
                     audio.play().catch(playError => {
                         clearTimeout(stopTimer);
-                        this.logError(3, '❌ Audio hint play() failed:', playError);
+                        this.log(3, '❌ Audio hint play() failed:', playError);
                         reject(playError);
                     });
                 };
                 
                 audio.onerror = (error) => {
-                    this.logError(3, '❌ Audio hint error:', error);
+                    this.log(3, '❌ Audio hint error:', error);
                     reject(new Error(`Failed to load audio hint from ${audioUrl}`));
                 };
                 
@@ -432,7 +525,7 @@ export class LanguageTutor {
                 audio.load();
                 
             } catch (error) {
-                this.logError(3, '❌ Error setting up audio hint:', error);
+                this.log(3, '❌ Error setting up audio hint:', error);
                 reject(error);
             }
         });
@@ -560,7 +653,7 @@ export class LanguageTutor {
             this.log(5, '🎤 Started recording and listening');
             
         } catch (error) {
-            this.logError(2, 'Error starting recording:', error);
+            this.log(2, 'Error starting recording:', error);
             this.showError('Could not access microphone: ' + error.message);
             throw error;
         }
@@ -630,7 +723,7 @@ export class LanguageTutor {
     }
     
     showError(message) {
-        this.logError(2, '❌ Error:', message);
+        this.log(2, '❌ Error:', message);
         // Could emit an event or call a callback here
         if (this.outputElement) {
             this.outputElement.textContent = 'Error: ' + message;
@@ -679,7 +772,7 @@ export class LanguageTutor {
     }
     
     // ========== MAIN TEST FUNCTION ==========
-    async test(sourceText, targetText, recentResults = [], waitTime = 10) {
+    async test(sourceText, targetText, expectedPronunciation = '', recentResults = [], waitTime = 10) {
         try {
             this.showStatus('Getting session key...');
             const sessionKey = await this.getSessionKey();
@@ -710,32 +803,16 @@ export class LanguageTutor {
                     this.log(5, '✅ Connected to ChatGPT Realtime API');
                     
                     // Prepare the prompt for ChatGPT
-                    const prompt = `You are a language learning tutor. Your job is to:
+                    const prompt = `You are an expert phonetician. Listen to the user's speech and provide ONLY a English "phrasebook respelling" transcription of what they said. Do not include any explanations, commentary, or additional text except for these special cases - if the user says any of these, return JUST the standardized word instead of a transcription:
+- If they say "stop", "pause", "that's enough", "quit", "finish", "done" or similar: return "stop"
+- If they say "again", "play it again", "repeat", "one more time" or similar: return "again" 
+- If they say "skip", "next", "pass", "I don't know", "I give up" or similar: return "skip"
+- If they remain completely silent or you hear nothing: return "silent"
 
-1. Listen to their pronunciation and translation
-2. Rate their overall performance from 1-10 (1=can't translate, 4=most words correct, but some missing, 6=words correct, but pronunciation is poor, 8=Right words, OK pronunciation, 10=perfect!) considering both:
-3. Special cases:
-   - If they say "I don't know", "I give up", "skip", "pass", or similar phrases in ${this.sourceLanguage}, give them a score of 1 and provide encouraging feedback
-   - If they say "again", "play it again", "repeat", "one more time", or similar in any language, give them a score of 0 with commentary explaining they'll hear it again
-   - If they say "stop", "pause", "that's enough", "quit", "finish", "done" or similar in any language, respond with {"score": 0, "commentary": "User requested to stop", "stop": true}
-   - If they remain completely silent, score them 0 with no commentary
-4. Provide specific, helpful commentary on their attempt including:
-   - For "I don't know" responses, provide the correct answer and encouragement
-
-The phrase they should be saying in ${this.targetLanguage} is:
-=============================
-${targetText}
-=============================
-
-
-Respond with a JSON object in this exact format:
-{
-    "score": [0-10],
-    "commentary": "Detailed feedback on their pronunciation and translation accuracy, including specific suggestions for improvement",
-    "stop": true|false
-}
-
-IMPORTANT: Your response must be valid JSON only. Do not include any text outside the JSON object.`;
+Please provide the phonetic transcription using English phrasebook respelling using ALL CAPS to show where the speaker puts emphasis using the following phonemes:
+ah, eh, ay, ee, oh, oo, aw, ew, ur, uh, ow, ahn, ehn, ohn, uhn, p, b, t, d, k, g, f, v, s, z, m, n, l, r, rr, sh, zh, ch, j, ny, ly, h, th, w, y
+The user is speaking in ${this.targetLanguage}
+`;
 
                     if (this.options.loggingVerbosity >= 8) {
                         this.log(8, '📤 Sending prompt to ChatGPT:');
@@ -765,7 +842,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                     
                     // Ensure we have an active learning session
                     if (!this.isLearningSessionActive) {
-                        this.logError(2, '❌ test() called without active learning session');
+                        this.log(2, '❌ test() called without active learning session');
                         return {
                             score: 0,
                             commentary: 'No active learning session. Please start a learning session first.',
@@ -888,39 +965,105 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                                                 this.log(7, '------- RESPONSE END -------');
                                             }
                                             
-                                            try {
-                                                const parsed = JSON.parse(content.text);
-                                                this.log(6, '✅ Successfully parsed JSON response:', parsed);
+                                            // ChatGPT now returns phonetic transcription or standardized special words
+                                            const response = content.text.trim();
+                                            this.log(6, '🎤 ChatGPT response:', response);
+                                            
+                                            // Check for standardized special cases
+                                            if (response === 'stop') {
+                                                result = {
+                                                    score: 0,
+                                                    heardPronunciation: response,
+                                                    commentary: 'User requested to stop',
+                                                    stop: true
+                                                };
+                                                this.log(5, '🛑 Stop command detected');
+                                            }
+                                            else if (response === 'again') {
+                                                result = {
+                                                    score: 0,
+                                                    heardPronunciation: response,
+                                                    commentary: "They'll hear it again",
+                                                    stop: false
+                                                };
+                                                this.log(5, '🔄 Repeat request detected');
+                                            }
+                                            else if (response === 'skip') {
+                                                result = {
+                                                    score: 1,
+                                                    heardPronunciation: response,
+                                                    commentary: 'Try your best! Practice makes perfect.',
+                                                    stop: false
+                                                };
+                                                this.log(5, '🤷 Skip/don\'t know response detected');
+                                            }
+                                            else if (response === 'silent') {
+                                                result = {
+                                                    score: 0,
+                                                    heardPronunciation: '',
+                                                    commentary: 'No response detected',
+                                                    stop: false
+                                                };
+                                                this.log(5, '🔇 Silent response detected');
+                                            }
+                                            // Normal pronunciation scoring
+                                            else if (response.length > 0) {
+                                                let scoringResult;
+                                                
+                                                // Handle both string and array pronunciations
+                                                if (Array.isArray(expectedPronunciation)) {
+                                                    // Array of pronunciation options - test against all and take the best score
+                                                    this.log(6, `🎯 Testing against ${expectedPronunciation.length} pronunciation options:`, expectedPronunciation);
+                                                    
+                                                    let bestResult = null;
+                                                    let bestScore = -1;
+                                                    
+                                                    for (let i = 0; i < expectedPronunciation.length; i++) {
+                                                        const option = expectedPronunciation[i];
+                                                        const testResult = this.pronunciationScorer.score(option, response);
+                                                        this.log(7, `📊 Option ${i + 1} "${option}": ${testResult.finalScore.toFixed(1)}/10`);
+                                                        
+                                                        if (testResult.finalScore > bestScore) {
+                                                            bestScore = testResult.finalScore;
+                                                            bestResult = testResult;
+                                                            bestResult.matchedPronunciation = option; // Track which option matched best
+                                                        }
+                                                    }
+                                                    
+                                                    scoringResult = bestResult;
+                                                    this.log(6, `🏆 Best match: "${scoringResult.matchedPronunciation}" with score ${scoringResult.finalScore.toFixed(1)}/10`);
+                                                } else {
+                                                    // Single string pronunciation (traditional behavior)
+                                                    scoringResult = this.pronunciationScorer.score(expectedPronunciation, response);
+                                                    this.log(6, `📊 Single pronunciation scoring: ${scoringResult.finalScore.toFixed(1)}/10`);
+                                                }
                                                 
                                                 result = {
-                                                    score: parseInt(parsed.score) || 0,
-                                                    commentary: parsed.commentary || 'No commentary provided',
-                                                    stop: Boolean(parsed.stop)
+                                                    score: scoringResult.finalScore,
+                                                    targetPronunciation: expectedPronunciation,
+                                                    heardPronunciation: response,
+                                                    commentary: `Score: ${scoringResult.finalScore.toFixed(1)}/10 (${scoringResult.grade})`,
+                                                    stop: false,
+                                                    matchedPronunciation: scoringResult.matchedPronunciation // Include which option was matched (only for arrays)
                                                 };
-                                                this.log(5, '📊 Processed result:', result);
-                                            } catch (e) {
-                                                this.logWarn(4, '❌ Failed to parse JSON response, attempting fallback parsing');
-                                                this.logWarn(6, 'Parse error:', e.message);
-                                                
-                                                // Fallback parsing for malformed JSON
-                                                const scoreMatch = content.text.match(/score["\s]*:["\s]*(\d+)/i);
-                                                const stopMatch = content.text.toLowerCase().includes('stop') || 
-                                                                content.text.toLowerCase().includes('pause') ||
-                                                                content.text.toLowerCase().includes('enough');
-                                                
+                                                this.log(5, '📊 Scored pronunciation:', result);
+                                            }
+                                            // Empty response fallback
+                                            else {
                                                 result = {
-                                                    score: scoreMatch ? parseInt(scoreMatch[1]) : 0,
-                                                    commentary: content.text,
-                                                    stop: stopMatch
+                                                    score: 0,
+                                                    heardPronunciation: '',
+                                                    commentary: 'No response received',
+                                                    stop: false
                                                 };
-                                                this.log(5, '🔧 Fallback parsed result:', result);
+                                                this.log(5, '🔇 Empty response');
                                             }
                                         }
                                     }
                                 }
                             }
                         } else {
-                            this.logWarn(3, '⚠️ No output found in ChatGPT response');
+                            this.log(3, '⚠️ No output found in ChatGPT response');
                         }
                         
                         // If user requested to stop, clean up and return immediately
@@ -929,6 +1072,20 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                             this.cleanup();
                             resolve(result);
                             return;
+                        }
+                        
+                        // Play audio feedback based on score
+                        if (result.score > 0) {
+                            // Determine pass/fail based on pass threshold (not feedback threshold)
+                            const passed = result.score >= this.options.passThreshold;
+                            this.log(6, `🎵 Playing ${passed ? 'success' : 'failure'} bleep for score ${result.score} (pass threshold: ${this.options.passThreshold})`);
+                            
+                            // Play appropriate feedback bleep (don't await to avoid blocking)
+                            if (passed) {
+                                this.playSuccessBleep().catch(err => this.log(4, 'Success bleep failed:', err));
+                            } else {
+                                this.playFailureBleep().catch(err => this.log(4, 'Failure bleep failed:', err));
+                            }
                         }
                         
                         // Show score feedback and potentially play target pronunciation
@@ -942,10 +1099,16 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                             const wasListening = this.isListening;
                             if (wasListening) this.pauseListening();
                             
+                            // Show what was heard before playing the correct pronunciation
+                            if (result.heardPronunciation && result.heardPronunciation.length > 0) {
+                                this.showStatus(`👂 I heard you say: "${result.heardPronunciation}"`);
+                                this.log(6, `👂 Displaying heard pronunciation: "${result.heardPronunciation}"`);
+                            }
+                            
                             // For very poor scores (< 3), repeat the phrase 3 times
                             if (result.score < 3) {
                                 this.log(4, `🔁 Score ${result.score} is very low, repeating target phrase 3 times for better learning`);
-                                this.showStatus(`🎵 Score ${result.score}/10 - Here's the ${this.targetLanguage} pronunciation (3 times)...`);
+                                this.showStatus(`🎵 Score ${result.score}/10 - Here's the correct ${this.targetLanguage} pronunciation (3 times)...`);
                                 
                                 for (let i = 1; i <= 3; i++) {
                                     this.log(6, `🎵 Playing repetition ${i}/3`);
@@ -958,7 +1121,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                                 }
                             } else {
                                 // Normal single playback for scores 3-6 (below threshold but not terrible)
-                                this.showStatus(`🎵 Here's the ${this.targetLanguage} pronunciation...`);
+                                this.showStatus(`🎵 Here's the correct ${this.targetLanguage} pronunciation...`);
                                 await this.speakText(targetText, this.targetLanguage);
                             }
                             
@@ -971,7 +1134,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                     }
                     
                     if (message.type === 'error') {
-                        this.logError(2, '❌ ChatGPT WebSocket error:', message.error);
+                        this.log(2, '❌ ChatGPT WebSocket error:', message.error);
                         this.log(8, '💥 Full error details:', JSON.stringify(message, null, 2));
                         this.showError('Error: ' + message.error.message);
                         this.cleanup();
@@ -984,7 +1147,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                 };
                 
                 this.ws.onerror = (error) => {
-                    this.logError(2, '❌ WebSocket connection error:', error);
+                    this.log(2, '❌ WebSocket connection error:', error);
                     this.showError('Connection error occurred');
                     this.cleanup();
                     resolve({
@@ -996,7 +1159,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
             });
             
         } catch (error) {
-            this.logError(1, '💥 Error in test method:', error);
+            this.log(1, '💥 Error in test method:', error);
             this.log(8, '🔍 Error stack trace:', error.stack);
             this.showError('Error: ' + error.message);
             return {

@@ -554,7 +554,7 @@ var app = (function () {
      */
 
     class LearningQueue {
-      constructor(sourceLanguage, targetLanguage, level = 'basic', baseDir = '/learning/', options = {}) {
+      constructor(sourceLanguage, targetLanguage, level = 'basic', baseDir = '/learning/', options = {}, logFunction = null) {
         this.sourceLanguage = sourceLanguage;
         this.targetLanguage = targetLanguage;
         this.baseDir = baseDir;
@@ -564,6 +564,7 @@ var app = (function () {
         this.categories = {};
         this.currentTestIndex = 0;
         this.storageKey = `learning_queue_${sourceLanguage}_${targetLanguage}_${level}`;
+        this.log = logFunction || ((level, ...args) => {}); // Default to no-op if no logger provided
         
         // Initialize options with defaults
         this.options = {
@@ -639,15 +640,51 @@ var app = (function () {
           }
         }
         
+        // Filter out tests that are no longer in selected categories
         this.queue = this.queue.filter(item => {
           const testId = this.createTestId({ source: item.source, target: item.target });
           return expectedTests.has(testId);
+        });
+        
+        // Update existing queue items with new data from JSON (like pronunciation)
+        this.queue = this.queue.map(item => {
+          const testId = this.createTestId({ source: item.source, target: item.target });
+          
+          // Find the corresponding test in the database
+          for (const [categoryName, isSelected] of Object.entries(this.categories)) {
+            if (isSelected && this.testDatabase[categoryName]) {
+              const matchingTest = this.testDatabase[categoryName].find(test => 
+                this.createTestId(test) === testId
+              );
+              
+              if (matchingTest) {
+                // Debug: Log pronunciation data
+                this.log(8, '🔍 Syncing queue item:', {
+                  testId,
+                  oldItem: { source: item.source, target: item.target, pronunciation: item.pronunciation },
+                  newData: { source: matchingTest.source, target: matchingTest.target, pronunciation: matchingTest.pronunciation }
+                });
+                
+                // Merge new fields from JSON while preserving learning progress
+                return {
+                  ...item, // Keep existing progress data (inertia, recentResults, etc.)
+                  source: matchingTest.source,
+                  target: matchingTest.target,
+                  pronunciation: matchingTest.pronunciation, // Update with new pronunciation data
+                  category: categoryName
+                };
+              }
+            }
+          }
+          
+          return item; // Return unchanged if not found (shouldn't happen due to filter above)
         });
         
         const currentTestIds = new Set(this.queue.map(item => 
           this.createTestId({ source: item.source, target: item.target })
         ));
         
+        // Add new tests that aren't in the queue yet
         for (const [categoryName, isSelected] of Object.entries(this.categories)) {
           if (isSelected && this.testDatabase[categoryName]) {
             this.testDatabase[categoryName].forEach(test => {
@@ -675,6 +712,7 @@ var app = (function () {
         const queueItem = {
           source: test.source,
           target: test.target,
+          pronunciation: test.pronunciation, // Include pronunciation guide if available
           inertia: -1, // Start at maximum resistance - phrases are "sticky" until learned
           category: categoryName,
           recentResults: new Array(this.options.memoryLength).fill(0) // Initialize with full history of failures
@@ -735,9 +773,20 @@ var app = (function () {
         }
         
         const test = this.queue[this.currentTestIndex];
+        
+        // Debug: Log what's being returned
+        this.log(8, '📤 getNextTest returning:', {
+          source: test.source,
+          target: test.target,
+          pronunciation: test.pronunciation,
+          hasPronunciation: !!test.pronunciation,
+          fullTest: test
+        });
+        
         return {
           source: test.source,
           target: test.target,
+          pronunciation: test.pronunciation, // Include pronunciation guide
           inertia: test.inertia,
           category: test.category,
           recentResults: test.recentResults || [] // Include history in response
@@ -836,13 +885,13 @@ var app = (function () {
       }
       
       reset() {
-        console.log('🔄 Resetting LearningQueue to initial state');
+        this.log(5, '🔄 Resetting LearningQueue to initial state');
         this.queue = [];
         this.categories = {};
         this.currentTestIndex = 0;
         localStorage.removeItem(this.storageKey);
         this.initializeAllCategories();
-        console.log('✅ LearningQueue reset complete');
+        this.log(5, '✅ LearningQueue reset complete');
       }
       
       getQueueStats() {
@@ -882,6 +931,323 @@ var app = (function () {
     }
 
     /**
+     * PronunciationScorer - A class for scoring pronunciation accuracy
+     * 
+     * This class compares a reference pronunciation with user input and provides
+     * scores for syllable accuracy and emphasis accuracy.
+     * 
+     * Usage:
+     *   import { PronunciationScorer } from './pronunciationScorer.js';
+     *   const scorer = new PronunciationScorer();
+     *   const result = scorer.score(reference, userInput);
+     *   console.log(`Score: ${result.finalScore}/10`);
+     * 
+     * Dependencies:
+     *   - Requires either fast-levenshtein library (preferred) or uses built-in fallback
+     *   - If using fast-levenshtein, ensure it's loaded before this class
+     */
+    class PronunciationScorer {
+        /**
+         * Constructor
+         * @param {Object} options - Configuration options
+         * @param {number} options.syllableWeight - Weight for syllable accuracy (0-1, default: 0.7)
+         * @param {number} options.emphasisWeight - Weight for emphasis accuracy (0-1, default: 0.3)
+         * @param {boolean} options.autoNormalizeWeights - Auto-normalize weights to sum to 1 (default: true)
+         */
+        constructor(options = {}) {
+            this.syllableWeight = options.syllableWeight || 0.8;
+            this.emphasisWeight = options.emphasisWeight || 0.2;
+            this.autoNormalizeWeights = options.autoNormalizeWeights !== false;
+            
+            // Normalize weights if requested
+            if (this.autoNormalizeWeights) {
+                this._normalizeWeights();
+            }
+            
+            // Initialize Levenshtein function
+            this._initializeLevenshtein();
+        }
+        
+        /**
+         * Set scoring weights
+         * @param {number} syllableWeight - Weight for syllable accuracy (0-1)
+         * @param {number} emphasisWeight - Weight for emphasis accuracy (0-1)
+         */
+        setWeights(syllableWeight, emphasisWeight) {
+            this.syllableWeight = syllableWeight;
+            this.emphasisWeight = emphasisWeight;
+            
+            if (this.autoNormalizeWeights) {
+                this._normalizeWeights();
+            }
+        }
+        
+        /**
+         * Score pronunciation accuracy
+         * @param {string} reference - Reference pronunciation with emphasis (case-sensitive)
+         * @param {string} userInput - User's pronunciation attempt
+         * @returns {Object} Scoring results
+         */
+        score(reference, userInput) {
+            // Validate inputs
+            if (typeof reference !== 'string' || typeof userInput !== 'string') {
+                throw new Error('Both reference and userInput must be strings');
+            }
+            
+            // Normalize both strings: replace non-alpha with spaces, collapse multiple spaces
+            const normalizedReference = this._normalizeString(reference);
+            const normalizedUserInput = this._normalizeString(userInput);
+            
+            if (normalizedReference.length === 0 || normalizedUserInput.length === 0) {
+                return this._createResult(0, {
+                    syllableDistance: Math.max(normalizedReference.length, normalizedUserInput.length),
+                    emphasisDistance: Math.max(normalizedReference.length, normalizedUserInput.length),
+                    emphasisDifference: 0,
+                    syllableScore: 1,
+                    emphasisScore: 0
+                }, reference, userInput);
+            }
+            
+            // Calculate both distances using normalized strings
+            const syllableDistance = this._levenshtein(normalizedReference.toLowerCase(), normalizedUserInput.toLowerCase());
+            const emphasisDistance = this._levenshtein(normalizedReference, normalizedUserInput);
+            
+            // Calculate maximum possible distances for normalization
+            const totalLength = normalizedReference.length + normalizedUserInput.length;
+            const maxSyllableDistance = totalLength;
+            const maxEmphasisDifference = Math.min(normalizedReference.length, normalizedUserInput.length);
+            
+            // Calculate normalized scores (0 = perfect, 1 = worst possible)
+            const syllableScore = maxSyllableDistance > 0 ? syllableDistance / maxSyllableDistance : 0;
+            
+            // Emphasis score is based on the difference between the two distances
+            const emphasisDifference = Math.abs(emphasisDistance - syllableDistance);
+            const emphasisScore = maxEmphasisDifference > 0 ? emphasisDifference / maxEmphasisDifference : 0;
+            
+            // Combine scores with weighting
+            const combinedScore = (syllableScore * this.syllableWeight) + (emphasisScore * this.emphasisWeight);
+            
+            // Convert to 0-10 scale (10 = perfect, 0 = terrible)
+            // Square the distance because the scores felt a bit top-heavy (it was giving heigh scores too often)
+            let finalScore = Math.max(0, 10 * ( (1 - combinedScore) ** 2));
+            
+            // Length-based leniency: shorter phrases get a score boost
+            const referenceLength = normalizedReference.length;
+            if (referenceLength <= 8) {
+                // Apply progressively more generous scoring for very short phrases
+                const lengthBonus = Math.max(0, (8 - referenceLength) * 0.5); // Up to 4 point bonus for very short phrases
+                finalScore = Math.min(10, finalScore + lengthBonus);
+            }
+            
+            return this._createResult(finalScore, {
+                syllableDistance,
+                emphasisDistance,
+                emphasisDifference,
+                syllableScore,
+                emphasisScore
+            }, reference, userInput);
+        }
+        
+        /**
+         * Batch score multiple pronunciation attempts
+         * @param {string} reference - Reference pronunciation
+         * @param {string[]} userInputs - Array of user pronunciation attempts
+         * @returns {Object[]} Array of scoring results
+         */
+        batchScore(reference, userInputs) {
+            if (!Array.isArray(userInputs)) {
+                throw new Error('userInputs must be an array');
+            }
+            
+            return userInputs.map(input => this.score(reference, input));
+        }
+        
+        /**
+         * Get the current configuration
+         * @returns {Object} Current configuration
+         */
+        getConfig() {
+            return {
+                syllableWeight: this.syllableWeight,
+                emphasisWeight: this.emphasisWeight,
+                autoNormalizeWeights: this.autoNormalizeWeights,
+                levenshteinSource: this._levenshteinSource
+            };
+        }
+        
+        /**
+         * Create a detailed result object
+         * @private
+         */
+        _createResult(finalScore, details, originalReference = '', originalUserInput = '') {
+            return {
+                finalScore: Math.round(finalScore * 10) / 10,
+                grade: this._getGrade(finalScore),
+                originalReference: originalReference,
+                originalUserInput: originalUserInput,
+                details: {
+                    syllableDistance: details.syllableDistance,
+                    emphasisDistance: details.emphasisDistance,
+                    emphasisDifference: details.emphasisDifference,
+                    syllableScore: Math.round(details.syllableScore * 1000) / 1000,
+                    emphasisScore: Math.round(details.emphasisScore * 1000) / 1000,
+                    syllableScoreOut10: Math.round(10 * (1 - details.syllableScore) * 10) / 10,
+                    emphasisScoreOut10: Math.round(10 * (1 - details.emphasisScore) * 10) / 10
+                },
+                weights: {
+                    syllable: this.syllableWeight,
+                    emphasis: this.emphasisWeight
+                }
+            };
+        }
+        
+        /**
+         * Get letter grade based on score
+         * @private
+         */
+        _getGrade(score) {
+            if (score >= 9) return 'A+';
+            if (score >= 8) return 'A';
+            if (score >= 7) return 'B';
+            if (score >= 6) return 'C';
+            if (score >= 5) return 'D';
+            return 'F';
+        }
+        
+        /**
+         * Normalize weights to sum to 1
+         * @private
+         */
+        _normalizeWeights() {
+            const total = this.syllableWeight + this.emphasisWeight;
+            if (total > 0) {
+                this.syllableWeight = this.syllableWeight / total;
+                this.emphasisWeight = this.emphasisWeight / total;
+            }
+        }
+        
+        /**
+         * Normalize input string by replacing non-alpha characters with spaces
+         * and collapsing multiple spaces into single spaces
+         * @private
+         */
+        _normalizeString(text) {
+            return text
+                .replace(/[^a-zA-Z]/g, ' ')  // Replace non-alphabetic characters with spaces
+                .replace(/\s+/g, ' ')        // Replace multiple spaces with single space
+                .trim();                     // Remove leading/trailing whitespace
+        }
+        
+        /**
+         * Initialize Levenshtein distance function
+         * @private
+         */
+        _initializeLevenshtein() {
+            // Try to use fast-levenshtein if available
+            if (typeof levenshtein !== 'undefined' && levenshtein.get) {
+                this._levenshtein = levenshtein.get;
+                this._levenshteinSource = 'fast-levenshtein';
+            }
+            // Try alternative global names
+            else if (typeof fastLevenshtein !== 'undefined' && fastLevenshtein.get) {
+                this._levenshtein = fastLevenshtein.get;
+                this._levenshteinSource = 'fast-levenshtein (fastLevenshtein)';
+            }
+            // Try window.Levenshtein (from levenshtein.min.js)
+            else if (typeof window !== 'undefined' && typeof window.Levenshtein !== 'undefined' && window.Levenshtein.get) {
+                this._levenshtein = window.Levenshtein.get;
+                this._levenshteinSource = 'fast-levenshtein (window.Levenshtein)';
+            }
+            // Try global Levenshtein
+            else if (typeof Levenshtein !== 'undefined' && Levenshtein.get) {
+                this._levenshtein = Levenshtein.get;
+                this._levenshteinSource = 'fast-levenshtein (Levenshtein)';
+            }
+            // Fallback to built-in implementation
+            else {
+                this._levenshtein = this._builtinLevenshtein;
+                this._levenshteinSource = 'built-in';
+            }
+        }
+        
+        /**
+         * Built-in Levenshtein distance implementation
+         * @private
+         */
+        _builtinLevenshtein(a, b) {
+            const matrix = [];
+            
+            // Initialize first row and column
+            for (let i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+            for (let j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+            
+            // Fill the matrix
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+            
+            return matrix[b.length][a.length];
+        }
+        
+        /**
+         * Static helper method to create a scorer with common presets
+         */
+        static createPreset(preset = 'balanced') {
+            const presets = {
+                'syllable-focused': { syllableWeight: 0.8, emphasisWeight: 0.2 },
+                'balanced': { syllableWeight: 0.7, emphasisWeight: 0.3 },
+                'emphasis-focused': { syllableWeight: 0.5, emphasisWeight: 0.5 },
+                'equal': { syllableWeight: 0.5, emphasisWeight: 0.5 }
+            };
+            
+            if (!presets[preset]) {
+                throw new Error(`Unknown preset: ${preset}. Available: ${Object.keys(presets).join(', ')}`);
+            }
+            
+            return new PronunciationScorer(presets[preset]);
+        }
+    }
+
+    // Example usage and tests (can be removed in production)
+    // Now using ES6 exports - import with: import { PronunciationScorer } from './pronunciationScorer.js';
+
+    // Example usage:
+    /*
+    // Basic usage
+    const scorer = new PronunciationScorer();
+    const result = scorer.score("DOH-veh POS-soh", "DOH-veh pos-soh");
+    console.log(`Score: ${result.finalScore}/10 (${result.grade})`);
+
+    // Custom weights
+    const customScorer = new PronunciationScorer({
+        syllableWeight: 0.8,
+        emphasisWeight: 0.2
+    });
+
+    // Using presets
+    const balancedScorer = PronunciationScorer.createPreset('balanced');
+    const emphasisScorer = PronunciationScorer.createPreset('emphasis-focused');
+
+    // Batch scoring
+    const attempts = ["DOH-veh pos-soh", "doh-VEH pos-SOH", "DOH-veh POS-soh"];
+    const results = scorer.batchScore("DOH-veh POS-soh", attempts);
+    */
+
+    /**
      * LanguageTutor - AI-Powered Language Learning with Real-time Pronunciation Scoring
      * 
      * A powerful JavaScript class for building language learning applications with real-time 
@@ -890,18 +1256,19 @@ var app = (function () {
      */
 
     class LanguageTutor {
-        constructor(outputElement, sourceLanguage = 'English', targetLanguage = 'Italian', options = {}) {
+        constructor(outputElement, sourceLanguage = 'English', targetLanguage = 'Italian', options = {}, logFunction = null) {
             // Basic configuration
             this.outputElement = outputElement;
             this.sourceLanguage = sourceLanguage;
             this.targetLanguage = targetLanguage;
+            this.log = logFunction || ((level, ...args) => {}); // Use provided log function or no-op
             
             // Default options
             const defaultOptions = {
                 apiKeyEndpoint: '?mode=get_key',
                 feedbackThreshold: 7,  // Score below which target pronunciation is played
+                passThreshold: 7,      // Score threshold for determining pass/fail (for audio feedback)
                 statusCallback: null,  // Optional callback for status updates
-                loggingVerbosity: 5,   // Logging verbosity level (0-10, 0=silent, 10=verbose)
                 audioPath: 'audio/',   // Base path for pre-generated audio files
                 enableBleep: true,     // Enable audible notification bleep (NEW)
                 enableAudioHints: false, // Enable audio hints for struggling phrases
@@ -929,6 +1296,9 @@ var app = (function () {
             this.currentSessionKey = null;
             this.keyRefreshInterval = null;
             
+            // Initialize pronunciation scorer
+            this.pronunciationScorer = new PronunciationScorer();
+            
             this.log(3, `🎓 LanguageTutor initialized: ${sourceLanguage} → ${targetLanguage}`);
             this.log(7, '📋 Options:', this.options);
             
@@ -937,23 +1307,8 @@ var app = (function () {
         }
         
         // ========== LOGGING SYSTEM ==========
-        log(level, ...args) {
-            if (this.options.loggingVerbosity >= level) {
-                console.log(...args);
-            }
-        }
         
-        logError(level, ...args) {
-            if (this.options.loggingVerbosity >= level) {
-                console.error(...args);
-            }
-        }
-        
-        logWarn(level, ...args) {
-            if (this.options.loggingVerbosity >= level) {
-                console.warn(...args);
-            }
-        }
+        // Error and warning logging also use the passed-in log function
         
         // ========== UTILITY METHODS ==========
         mergeOptions(defaults, userOptions) {
@@ -1030,8 +1385,110 @@ var app = (function () {
                 });
                 
             } catch (error) {
-                this.logWarn(4, '⚠️ Could not play notification bleep:', error.message);
+                this.log(4, '⚠️ Could not play notification bleep:', error.message);
                 // Don't throw - this is a nice-to-have feature
+            }
+        }
+        
+        /**
+         * Play a success feedback bleep (ascending tones)
+         */
+        async playSuccessBleep() {
+            if (!this.options.enableBleep) {
+                this.log(7, '🔇 Success bleep disabled');
+                return;
+            }
+            
+            try {
+                this.log(6, '🎵 Playing success bleep');
+                
+                const tempAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const duration = 0.25; // 250ms
+                const sampleRate = tempAudioContext.sampleRate;
+                const buffer = tempAudioContext.createBuffer(1, duration * sampleRate, sampleRate);
+                const data = buffer.getChannelData(0);
+                
+                // Generate ascending success tones: 600Hz -> 800Hz -> 1000Hz
+                for (let i = 0; i < buffer.length; i++) {
+                    const time = i / sampleRate;
+                    let frequency;
+                    let amplitude = 0.08; // Slightly quieter than notification
+                    
+                    if (time < 0.08) {
+                        frequency = 600;
+                        amplitude *= Math.sin(Math.PI * time / 0.08);
+                    } else if (time < 0.16) {
+                        frequency = 800;
+                        amplitude *= Math.sin(Math.PI * (time - 0.08) / 0.08);
+                    } else {
+                        frequency = 1000;
+                        amplitude *= Math.sin(Math.PI * (time - 0.16) / 0.09);
+                    }
+                    
+                    data[i] = amplitude * Math.sin(2 * Math.PI * frequency * time);
+                }
+                
+                const source = tempAudioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(tempAudioContext.destination);
+                
+                return new Promise((resolve) => {
+                    source.onended = () => {
+                        tempAudioContext.close();
+                        this.log(7, '✅ Success bleep completed');
+                        resolve();
+                    };
+                    source.start();
+                });
+                
+            } catch (error) {
+                this.log(4, '⚠️ Could not play success bleep:', error.message);
+            }
+        }
+        
+        /**
+         * Play a failure feedback bleep (descending tone)
+         */
+        async playFailureBleep() {
+            if (!this.options.enableBleep) {
+                this.log(7, '🔇 Failure bleep disabled');
+                return;
+            }
+            
+            try {
+                this.log(6, '🎵 Playing failure bleep');
+                
+                const tempAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const duration = 0.4; // 400ms - longer for failure
+                const sampleRate = tempAudioContext.sampleRate;
+                const buffer = tempAudioContext.createBuffer(1, duration * sampleRate, sampleRate);
+                const data = buffer.getChannelData(0);
+                
+                // Generate descending failure tone: 500Hz -> 300Hz
+                for (let i = 0; i < buffer.length; i++) {
+                    const time = i / sampleRate;
+                    const progress = time / duration;
+                    const frequency = 500 - (200 * progress); // Descend from 500Hz to 300Hz
+                    let amplitude = 0.06 * (1 - progress * 0.3); // Fade out gradually
+                    
+                    data[i] = amplitude * Math.sin(2 * Math.PI * frequency * time);
+                }
+                
+                const source = tempAudioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(tempAudioContext.destination);
+                
+                return new Promise((resolve) => {
+                    source.onended = () => {
+                        tempAudioContext.close();
+                        this.log(7, '✅ Failure bleep completed');
+                        resolve();
+                    };
+                    source.start();
+                });
+                
+            } catch (error) {
+                this.log(4, '⚠️ Could not play failure bleep:', error.message);
             }
         }
         
@@ -1041,7 +1498,7 @@ var app = (function () {
                 await this.refreshSessionKey();
                 this.startKeyRefreshTimer();
             } catch (error) {
-                this.logError(1, '❌ Failed to initialize session keys:', error);
+                this.log(1, '❌ Failed to initialize session keys:', error);
             }
         }
         
@@ -1060,7 +1517,7 @@ var app = (function () {
                 this.log(4, '✅ Session key refreshed successfully');
                 return this.currentSessionKey;
             } catch (error) {
-                this.logError(2, '❌ Error refreshing session key:', error);
+                this.log(2, '❌ Error refreshing session key:', error);
                 this.showError('Failed to refresh session key: ' + error.message);
                 return null;
             }
@@ -1120,7 +1577,7 @@ var app = (function () {
                     resolve();
                     
                 } catch (error) {
-                    this.logError(3, '❌ Error playing audio:', error);
+                    this.log(3, '❌ Error playing audio:', error);
                     this.showError('Audio playback failed: ' + error.message);
                     reject(error);
                 }
@@ -1231,14 +1688,14 @@ var app = (function () {
                     };
                     
                     audio.onerror = (error) => {
-                        this.logError(3, '❌ Audio playback error:', error);
+                        this.log(3, '❌ Audio playback error:', error);
                         reject(new Error(`Failed to load audio from ${url}`));
                     };
                     
                     audio.oncanplaythrough = () => {
                         this.log(7, '▶️ Starting audio playback');
                         audio.play().catch(playError => {
-                            this.logError(3, '❌ Audio play() failed:', playError);
+                            this.log(3, '❌ Audio play() failed:', playError);
                             reject(playError);
                         });
                     };
@@ -1248,7 +1705,7 @@ var app = (function () {
                     audio.load();
                     
                 } catch (error) {
-                    this.logError(3, '❌ Error setting up audio playback:', error);
+                    this.log(3, '❌ Error setting up audio playback:', error);
                     reject(error);
                 }
             });
@@ -1300,13 +1757,13 @@ var app = (function () {
                         // Start playback
                         audio.play().catch(playError => {
                             clearTimeout(stopTimer);
-                            this.logError(3, '❌ Audio hint play() failed:', playError);
+                            this.log(3, '❌ Audio hint play() failed:', playError);
                             reject(playError);
                         });
                     };
                     
                     audio.onerror = (error) => {
-                        this.logError(3, '❌ Audio hint error:', error);
+                        this.log(3, '❌ Audio hint error:', error);
                         reject(new Error(`Failed to load audio hint from ${audioUrl}`));
                     };
                     
@@ -1315,7 +1772,7 @@ var app = (function () {
                     audio.load();
                     
                 } catch (error) {
-                    this.logError(3, '❌ Error setting up audio hint:', error);
+                    this.log(3, '❌ Error setting up audio hint:', error);
                     reject(error);
                 }
             });
@@ -1443,7 +1900,7 @@ var app = (function () {
                 this.log(5, '🎤 Started recording and listening');
                 
             } catch (error) {
-                this.logError(2, 'Error starting recording:', error);
+                this.log(2, 'Error starting recording:', error);
                 this.showError('Could not access microphone: ' + error.message);
                 throw error;
             }
@@ -1513,7 +1970,7 @@ var app = (function () {
         }
         
         showError(message) {
-            this.logError(2, '❌ Error:', message);
+            this.log(2, '❌ Error:', message);
             // Could emit an event or call a callback here
             if (this.outputElement) {
                 this.outputElement.textContent = 'Error: ' + message;
@@ -1562,7 +2019,7 @@ var app = (function () {
         }
         
         // ========== MAIN TEST FUNCTION ==========
-        async test(sourceText, targetText, recentResults = [], waitTime = 10) {
+        async test(sourceText, targetText, expectedPronunciation = '', recentResults = [], waitTime = 10) {
             try {
                 this.showStatus('Getting session key...');
                 const sessionKey = await this.getSessionKey();
@@ -1593,32 +2050,16 @@ var app = (function () {
                         this.log(5, '✅ Connected to ChatGPT Realtime API');
                         
                         // Prepare the prompt for ChatGPT
-                        const prompt = `You are a language learning tutor. Your job is to:
+                        const prompt = `You are an expert phonetician. Listen to the user's speech and provide ONLY a English "phrasebook respelling" transcription of what they said. Do not include any explanations, commentary, or additional text except for these special cases - if the user says any of these, return JUST the standardized word instead of a transcription:
+- If they say "stop", "pause", "that's enough", "quit", "finish", "done" or similar: return "stop"
+- If they say "again", "play it again", "repeat", "one more time" or similar: return "again" 
+- If they say "skip", "next", "pass", "I don't know", "I give up" or similar: return "skip"
+- If they remain completely silent or you hear nothing: return "silent"
 
-1. Listen to their pronunciation and translation
-2. Rate their overall performance from 1-10 (1=can't translate, 4=most words correct, but some missing, 6=words correct, but pronunciation is poor, 8=Right words, OK pronunciation, 10=perfect!) considering both:
-3. Special cases:
-   - If they say "I don't know", "I give up", "skip", "pass", or similar phrases in ${this.sourceLanguage}, give them a score of 1 and provide encouraging feedback
-   - If they say "again", "play it again", "repeat", "one more time", or similar in any language, give them a score of 0 with commentary explaining they'll hear it again
-   - If they say "stop", "pause", "that's enough", "quit", "finish", "done" or similar in any language, respond with {"score": 0, "commentary": "User requested to stop", "stop": true}
-   - If they remain completely silent, score them 0 with no commentary
-4. Provide specific, helpful commentary on their attempt including:
-   - For "I don't know" responses, provide the correct answer and encouragement
-
-The phrase they should be saying in ${this.targetLanguage} is:
-=============================
-${targetText}
-=============================
-
-
-Respond with a JSON object in this exact format:
-{
-    "score": [0-10],
-    "commentary": "Detailed feedback on their pronunciation and translation accuracy, including specific suggestions for improvement",
-    "stop": true|false
-}
-
-IMPORTANT: Your response must be valid JSON only. Do not include any text outside the JSON object.`;
+Please provide the phonetic transcription using English phrasebook respelling using ALL CAPS to show where the speaker puts emphasis using the following phonemes:
+ah, eh, ay, ee, oh, oo, aw, ew, ur, uh, ow, ahn, ehn, ohn, uhn, p, b, t, d, k, g, f, v, s, z, m, n, l, r, rr, sh, zh, ch, j, ny, ly, h, th, w, y
+The user is speaking in ${this.targetLanguage}
+`;
 
                         if (this.options.loggingVerbosity >= 8) {
                             this.log(8, '📤 Sending prompt to ChatGPT:');
@@ -1648,7 +2089,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                         
                         // Ensure we have an active learning session
                         if (!this.isLearningSessionActive) {
-                            this.logError(2, '❌ test() called without active learning session');
+                            this.log(2, '❌ test() called without active learning session');
                             return {
                                 score: 0,
                                 commentary: 'No active learning session. Please start a learning session first.',
@@ -1771,39 +2212,105 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                                                     this.log(7, '------- RESPONSE END -------');
                                                 }
                                                 
-                                                try {
-                                                    const parsed = JSON.parse(content.text);
-                                                    this.log(6, '✅ Successfully parsed JSON response:', parsed);
+                                                // ChatGPT now returns phonetic transcription or standardized special words
+                                                const response = content.text.trim();
+                                                this.log(6, '🎤 ChatGPT response:', response);
+                                                
+                                                // Check for standardized special cases
+                                                if (response === 'stop') {
+                                                    result = {
+                                                        score: 0,
+                                                        heardPronunciation: response,
+                                                        commentary: 'User requested to stop',
+                                                        stop: true
+                                                    };
+                                                    this.log(5, '🛑 Stop command detected');
+                                                }
+                                                else if (response === 'again') {
+                                                    result = {
+                                                        score: 0,
+                                                        heardPronunciation: response,
+                                                        commentary: "They'll hear it again",
+                                                        stop: false
+                                                    };
+                                                    this.log(5, '🔄 Repeat request detected');
+                                                }
+                                                else if (response === 'skip') {
+                                                    result = {
+                                                        score: 1,
+                                                        heardPronunciation: response,
+                                                        commentary: 'Try your best! Practice makes perfect.',
+                                                        stop: false
+                                                    };
+                                                    this.log(5, '🤷 Skip/don\'t know response detected');
+                                                }
+                                                else if (response === 'silent') {
+                                                    result = {
+                                                        score: 0,
+                                                        heardPronunciation: '',
+                                                        commentary: 'No response detected',
+                                                        stop: false
+                                                    };
+                                                    this.log(5, '🔇 Silent response detected');
+                                                }
+                                                // Normal pronunciation scoring
+                                                else if (response.length > 0) {
+                                                    let scoringResult;
+                                                    
+                                                    // Handle both string and array pronunciations
+                                                    if (Array.isArray(expectedPronunciation)) {
+                                                        // Array of pronunciation options - test against all and take the best score
+                                                        this.log(6, `🎯 Testing against ${expectedPronunciation.length} pronunciation options:`, expectedPronunciation);
+                                                        
+                                                        let bestResult = null;
+                                                        let bestScore = -1;
+                                                        
+                                                        for (let i = 0; i < expectedPronunciation.length; i++) {
+                                                            const option = expectedPronunciation[i];
+                                                            const testResult = this.pronunciationScorer.score(option, response);
+                                                            this.log(7, `📊 Option ${i + 1} "${option}": ${testResult.finalScore.toFixed(1)}/10`);
+                                                            
+                                                            if (testResult.finalScore > bestScore) {
+                                                                bestScore = testResult.finalScore;
+                                                                bestResult = testResult;
+                                                                bestResult.matchedPronunciation = option; // Track which option matched best
+                                                            }
+                                                        }
+                                                        
+                                                        scoringResult = bestResult;
+                                                        this.log(6, `🏆 Best match: "${scoringResult.matchedPronunciation}" with score ${scoringResult.finalScore.toFixed(1)}/10`);
+                                                    } else {
+                                                        // Single string pronunciation (traditional behavior)
+                                                        scoringResult = this.pronunciationScorer.score(expectedPronunciation, response);
+                                                        this.log(6, `📊 Single pronunciation scoring: ${scoringResult.finalScore.toFixed(1)}/10`);
+                                                    }
                                                     
                                                     result = {
-                                                        score: parseInt(parsed.score) || 0,
-                                                        commentary: parsed.commentary || 'No commentary provided',
-                                                        stop: Boolean(parsed.stop)
+                                                        score: scoringResult.finalScore,
+                                                        targetPronunciation: expectedPronunciation,
+                                                        heardPronunciation: response,
+                                                        commentary: `Score: ${scoringResult.finalScore.toFixed(1)}/10 (${scoringResult.grade})`,
+                                                        stop: false,
+                                                        matchedPronunciation: scoringResult.matchedPronunciation // Include which option was matched (only for arrays)
                                                     };
-                                                    this.log(5, '📊 Processed result:', result);
-                                                } catch (e) {
-                                                    this.logWarn(4, '❌ Failed to parse JSON response, attempting fallback parsing');
-                                                    this.logWarn(6, 'Parse error:', e.message);
-                                                    
-                                                    // Fallback parsing for malformed JSON
-                                                    const scoreMatch = content.text.match(/score["\s]*:["\s]*(\d+)/i);
-                                                    const stopMatch = content.text.toLowerCase().includes('stop') || 
-                                                                    content.text.toLowerCase().includes('pause') ||
-                                                                    content.text.toLowerCase().includes('enough');
-                                                    
+                                                    this.log(5, '📊 Scored pronunciation:', result);
+                                                }
+                                                // Empty response fallback
+                                                else {
                                                     result = {
-                                                        score: scoreMatch ? parseInt(scoreMatch[1]) : 0,
-                                                        commentary: content.text,
-                                                        stop: stopMatch
+                                                        score: 0,
+                                                        heardPronunciation: '',
+                                                        commentary: 'No response received',
+                                                        stop: false
                                                     };
-                                                    this.log(5, '🔧 Fallback parsed result:', result);
+                                                    this.log(5, '🔇 Empty response');
                                                 }
                                             }
                                         }
                                     }
                                 }
                             } else {
-                                this.logWarn(3, '⚠️ No output found in ChatGPT response');
+                                this.log(3, '⚠️ No output found in ChatGPT response');
                             }
                             
                             // If user requested to stop, clean up and return immediately
@@ -1812,6 +2319,20 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                                 this.cleanup();
                                 resolve(result);
                                 return;
+                            }
+                            
+                            // Play audio feedback based on score
+                            if (result.score > 0) {
+                                // Determine pass/fail based on pass threshold (not feedback threshold)
+                                const passed = result.score >= this.options.passThreshold;
+                                this.log(6, `🎵 Playing ${passed ? 'success' : 'failure'} bleep for score ${result.score} (pass threshold: ${this.options.passThreshold})`);
+                                
+                                // Play appropriate feedback bleep (don't await to avoid blocking)
+                                if (passed) {
+                                    this.playSuccessBleep().catch(err => this.log(4, 'Success bleep failed:', err));
+                                } else {
+                                    this.playFailureBleep().catch(err => this.log(4, 'Failure bleep failed:', err));
+                                }
                             }
                             
                             // Show score feedback and potentially play target pronunciation
@@ -1825,10 +2346,16 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                                 const wasListening = this.isListening;
                                 if (wasListening) this.pauseListening();
                                 
+                                // Show what was heard before playing the correct pronunciation
+                                if (result.heardPronunciation && result.heardPronunciation.length > 0) {
+                                    this.showStatus(`👂 I heard you say: "${result.heardPronunciation}"`);
+                                    this.log(6, `👂 Displaying heard pronunciation: "${result.heardPronunciation}"`);
+                                }
+                                
                                 // For very poor scores (< 3), repeat the phrase 3 times
                                 if (result.score < 3) {
                                     this.log(4, `🔁 Score ${result.score} is very low, repeating target phrase 3 times for better learning`);
-                                    this.showStatus(`🎵 Score ${result.score}/10 - Here's the ${this.targetLanguage} pronunciation (3 times)...`);
+                                    this.showStatus(`🎵 Score ${result.score}/10 - Here's the correct ${this.targetLanguage} pronunciation (3 times)...`);
                                     
                                     for (let i = 1; i <= 3; i++) {
                                         this.log(6, `🎵 Playing repetition ${i}/3`);
@@ -1841,7 +2368,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                                     }
                                 } else {
                                     // Normal single playback for scores 3-6 (below threshold but not terrible)
-                                    this.showStatus(`🎵 Here's the ${this.targetLanguage} pronunciation...`);
+                                    this.showStatus(`🎵 Here's the correct ${this.targetLanguage} pronunciation...`);
                                     await this.speakText(targetText, this.targetLanguage);
                                 }
                                 
@@ -1854,7 +2381,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                         }
                         
                         if (message.type === 'error') {
-                            this.logError(2, '❌ ChatGPT WebSocket error:', message.error);
+                            this.log(2, '❌ ChatGPT WebSocket error:', message.error);
                             this.log(8, '💥 Full error details:', JSON.stringify(message, null, 2));
                             this.showError('Error: ' + message.error.message);
                             this.cleanup();
@@ -1867,7 +2394,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                     };
                     
                     this.ws.onerror = (error) => {
-                        this.logError(2, '❌ WebSocket connection error:', error);
+                        this.log(2, '❌ WebSocket connection error:', error);
                         this.showError('Connection error occurred');
                         this.cleanup();
                         resolve({
@@ -1879,7 +2406,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
                 });
                 
             } catch (error) {
-                this.logError(1, '💥 Error in test method:', error);
+                this.log(1, '💥 Error in test method:', error);
                 this.log(8, '🔍 Error stack trace:', error.stack);
                 this.showError('Error: ' + error.message);
                 return {
@@ -4577,7 +5104,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     /* src/LearningSession.svelte generated by Svelte v3.59.2 */
     const file$2 = "src/LearningSession.svelte";
 
-    // (60:2) {:else}
+    // (79:2) {:else}
     function create_else_block_1(ctx) {
     	let p;
 
@@ -4586,7 +5113,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			p = element("p");
     			p.textContent = "Ready to start learning";
     			attr_dev(p, "class", "placeholder-text");
-    			add_location(p, file$2, 60, 4, 1951);
+    			add_location(p, file$2, 79, 4, 2750);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -4601,14 +5128,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(60:2) {:else}",
+    		source: "(79:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (49:2) {#if currentPhrase}
+    // (62:2) {#if currentPhrase}
     function create_if_block_3(ctx) {
     	let div;
     	let t0;
@@ -4618,9 +5145,11 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	let t3_value = /*currentPhrase*/ ctx[0].source + "";
     	let t3;
     	let t4;
-    	let show_if = /*shouldShowExpectedOutput*/ ctx[6](/*currentPhrase*/ ctx[0]);
-    	let if_block0 = /*showCategory*/ ctx[4] && create_if_block_5(ctx);
-    	let if_block1 = show_if && create_if_block_4(ctx);
+    	let show_if = /*shouldShowExpectedOutput*/ ctx[7](/*currentPhrase*/ ctx[0]);
+    	let t5;
+    	let if_block0 = /*showCategory*/ ctx[4] && create_if_block_7(ctx);
+    	let if_block1 = show_if && create_if_block_5(ctx);
+    	let if_block2 = /*heardPronunciation*/ ctx[6] && create_if_block_4(ctx);
 
     	const block = {
     		c: function create() {
@@ -4634,12 +5163,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			t3 = text(t3_value);
     			t4 = space();
     			if (if_block1) if_block1.c();
+    			t5 = space();
+    			if (if_block2) if_block2.c();
     			attr_dev(p0, "class", "phrase-label");
-    			add_location(p0, file$2, 53, 6, 1692);
+    			add_location(p0, file$2, 66, 6, 2142);
     			attr_dev(p1, "class", "phrase-text");
-    			add_location(p1, file$2, 54, 6, 1742);
+    			add_location(p1, file$2, 67, 6, 2192);
     			attr_dev(div, "class", "phrase-content");
-    			add_location(div, file$2, 49, 4, 1546);
+    			add_location(div, file$2, 62, 4, 1996);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4651,13 +5182,15 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			append_dev(p1, t3);
     			append_dev(div, t4);
     			if (if_block1) if_block1.m(div, null);
+    			append_dev(div, t5);
+    			if (if_block2) if_block2.m(div, null);
     		},
     		p: function update(ctx, dirty) {
     			if (/*showCategory*/ ctx[4]) {
     				if (if_block0) {
     					if_block0.p(ctx, dirty);
     				} else {
-    					if_block0 = create_if_block_5(ctx);
+    					if_block0 = create_if_block_7(ctx);
     					if_block0.c();
     					if_block0.m(div, t0);
     				}
@@ -4667,25 +5200,39 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			}
 
     			if (dirty & /*currentPhrase*/ 1 && t3_value !== (t3_value = /*currentPhrase*/ ctx[0].source + "")) set_data_dev(t3, t3_value);
-    			if (dirty & /*currentPhrase*/ 1) show_if = /*shouldShowExpectedOutput*/ ctx[6](/*currentPhrase*/ ctx[0]);
+    			if (dirty & /*currentPhrase*/ 1) show_if = /*shouldShowExpectedOutput*/ ctx[7](/*currentPhrase*/ ctx[0]);
 
     			if (show_if) {
     				if (if_block1) {
     					if_block1.p(ctx, dirty);
     				} else {
-    					if_block1 = create_if_block_4(ctx);
+    					if_block1 = create_if_block_5(ctx);
     					if_block1.c();
-    					if_block1.m(div, null);
+    					if_block1.m(div, t5);
     				}
     			} else if (if_block1) {
     				if_block1.d(1);
     				if_block1 = null;
+    			}
+
+    			if (/*heardPronunciation*/ ctx[6]) {
+    				if (if_block2) {
+    					if_block2.p(ctx, dirty);
+    				} else {
+    					if_block2 = create_if_block_4(ctx);
+    					if_block2.c();
+    					if_block2.m(div, null);
+    				}
+    			} else if (if_block2) {
+    				if_block2.d(1);
+    				if_block2 = null;
     			}
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
     			if (if_block0) if_block0.d();
     			if (if_block1) if_block1.d();
+    			if (if_block2) if_block2.d();
     		}
     	};
 
@@ -4693,15 +5240,15 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_if_block_3.name,
     		type: "if",
-    		source: "(49:2) {#if currentPhrase}",
+    		source: "(62:2) {#if currentPhrase}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (51:6) {#if showCategory}
-    function create_if_block_5(ctx) {
+    // (64:6) {#if showCategory}
+    function create_if_block_7(ctx) {
     	let p;
     	let t0;
     	let t1_value = /*currentPhrase*/ ctx[0].category + "";
@@ -4713,7 +5260,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			t0 = text("Category: ");
     			t1 = text(t1_value);
     			attr_dev(p, "class", "phrase-category");
-    			add_location(p, file$2, 51, 8, 1608);
+    			add_location(p, file$2, 64, 8, 2058);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -4730,37 +5277,151 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_5.name,
+    		id: create_if_block_7.name,
     		type: "if",
-    		source: "(51:6) {#if showCategory}",
+    		source: "(64:6) {#if showCategory}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (56:6) {#if shouldShowExpectedOutput(currentPhrase)}
-    function create_if_block_4(ctx) {
+    // (69:6) {#if shouldShowExpectedOutput(currentPhrase)}
+    function create_if_block_5(ctx) {
     	let p;
     	let t0;
     	let t1_value = /*currentPhrase*/ ctx[0].target + "";
     	let t1;
+    	let t2;
+    	let if_block_anchor;
+    	let if_block = /*currentPhrase*/ ctx[0].pronunciation && create_if_block_6(ctx);
 
     	const block = {
     		c: function create() {
     			p = element("p");
     			t0 = text("Expected: ");
     			t1 = text(t1_value);
+    			t2 = space();
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty();
     			attr_dev(p, "class", "expected-text");
-    			add_location(p, file$2, 56, 8, 1852);
+    			add_location(p, file$2, 69, 8, 2302);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
     			append_dev(p, t0);
     			append_dev(p, t1);
+    			insert_dev(target, t2, anchor);
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*currentPhrase*/ 1 && t1_value !== (t1_value = /*currentPhrase*/ ctx[0].target + "")) set_data_dev(t1, t1_value);
+
+    			if (/*currentPhrase*/ ctx[0].pronunciation) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block_6(ctx);
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    			if (detaching) detach_dev(t2);
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_5.name,
+    		type: "if",
+    		source: "(69:6) {#if shouldShowExpectedOutput(currentPhrase)}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (71:8) {#if currentPhrase.pronunciation}
+    function create_if_block_6(ctx) {
+    	let p;
+    	let t0;
+
+    	let t1_value = (Array.isArray(/*currentPhrase*/ ctx[0].pronunciation)
+    	? /*currentPhrase*/ ctx[0].pronunciation[0]
+    	: /*currentPhrase*/ ctx[0].pronunciation) + "";
+
+    	let t1;
+    	let t2;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			t0 = text("Pronunciation: /");
+    			t1 = text(t1_value);
+    			t2 = text("/");
+    			attr_dev(p, "class", "pronunciation-text svelte-aa59dd");
+    			add_location(p, file$2, 71, 10, 2416);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t0);
+    			append_dev(p, t1);
+    			append_dev(p, t2);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*currentPhrase*/ 1 && t1_value !== (t1_value = (Array.isArray(/*currentPhrase*/ ctx[0].pronunciation)
+    			? /*currentPhrase*/ ctx[0].pronunciation[0]
+    			: /*currentPhrase*/ ctx[0].pronunciation) + "")) set_data_dev(t1, t1_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_6.name,
+    		type: "if",
+    		source: "(71:8) {#if currentPhrase.pronunciation}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (75:6) {#if heardPronunciation}
+    function create_if_block_4(ctx) {
+    	let p;
+    	let t0;
+    	let t1;
+    	let t2;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			t0 = text("You said: /");
+    			t1 = text(/*heardPronunciation*/ ctx[6]);
+    			t2 = text("/");
+    			attr_dev(p, "class", "heard-pronunciation-text svelte-aa59dd");
+    			add_location(p, file$2, 75, 8, 2640);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t0);
+    			append_dev(p, t1);
+    			append_dev(p, t2);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*heardPronunciation*/ 64) set_data_dev(t1, /*heardPronunciation*/ ctx[6]);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(p);
@@ -4771,14 +5432,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_if_block_4.name,
     		type: "if",
-    		source: "(56:6) {#if shouldShowExpectedOutput(currentPhrase)}",
+    		source: "(75:6) {#if heardPronunciation}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (73:2) {:else}
+    // (92:2) {:else}
     function create_else_block(ctx) {
     	let p;
 
@@ -4787,7 +5448,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			p = element("p");
     			p.textContent = "Ready to start learning!";
     			attr_dev(p, "class", "status-text");
-    			add_location(p, file$2, 73, 4, 2335);
+    			add_location(p, file$2, 92, 4, 3134);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -4802,14 +5463,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(73:2) {:else}",
+    		source: "(92:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (71:23) 
+    // (90:23) 
     function create_if_block_2(ctx) {
     	let p;
 
@@ -4818,7 +5479,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			p = element("p");
     			p.textContent = "Listening...";
     			attr_dev(p, "class", "status-text");
-    			add_location(p, file$2, 71, 4, 2281);
+    			add_location(p, file$2, 90, 4, 3080);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -4833,14 +5494,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(71:23) ",
+    		source: "(90:23) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (69:64) 
+    // (88:64) 
     function create_if_block_1(ctx) {
     	let p;
 
@@ -4849,7 +5510,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			p = element("p");
     			p.textContent = "🎯 Here is a hint for you";
     			attr_dev(p, "class", "status-text");
-    			add_location(p, file$2, 69, 4, 2200);
+    			add_location(p, file$2, 88, 4, 2999);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -4864,14 +5525,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(69:64) ",
+    		source: "(88:64) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (67:2) {#if showFeedback}
+    // (86:2) {#if showFeedback}
     function create_if_block$2(ctx) {
     	let p;
     	let t;
@@ -4881,7 +5542,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			p = element("p");
     			t = text(/*status*/ ctx[1]);
     			attr_dev(p, "class", "status-text");
-    			add_location(p, file$2, 67, 4, 2095);
+    			add_location(p, file$2, 86, 4, 2894);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -4899,7 +5560,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(67:2) {#if showFeedback}",
+    		source: "(86:2) {#if showFeedback}",
     		ctx
     	});
 
@@ -4940,7 +5601,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	function select_block_type_1(ctx, dirty) {
     		if (dirty & /*currentPhrase*/ 1) show_if = null;
     		if (/*showFeedback*/ ctx[5]) return create_if_block$2;
-    		if (show_if == null) show_if = !!(/*currentPhrase*/ ctx[0] && /*shouldShowAudioHint*/ ctx[7](/*currentPhrase*/ ctx[0]));
+    		if (show_if == null) show_if = !!(/*currentPhrase*/ ctx[0] && /*shouldShowAudioHint*/ ctx[8](/*currentPhrase*/ ctx[0]));
     		if (show_if) return create_if_block_1;
     		if (/*isLearning*/ ctx[2]) return create_if_block_2;
     		return create_else_block;
@@ -4964,16 +5625,16 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			t3 = space();
     			t4 = text(t4_value);
     			attr_dev(div0, "class", "phrase-display");
-    			add_location(div0, file$2, 47, 0, 1491);
+    			add_location(div0, file$2, 60, 0, 1941);
     			attr_dev(div1, "class", "status-area");
-    			add_location(div1, file$2, 65, 0, 2044);
+    			add_location(div1, file$2, 84, 0, 2843);
     			attr_dev(span, "class", "btn-icon");
-    			add_location(span, file$2, 84, 4, 2618);
+    			add_location(span, file$2, 103, 4, 3417);
     			attr_dev(button, "class", button_class_value = "start-stop-btn " + (/*isLearning*/ ctx[2] ? 'stop-btn' : 'start-btn'));
     			button.disabled = button_disabled_value = !/*canStart*/ ctx[3] && !/*isLearning*/ ctx[2];
-    			add_location(button, file$2, 79, 2, 2463);
+    			add_location(button, file$2, 98, 2, 3262);
     			attr_dev(div2, "class", "button-container");
-    			add_location(div2, file$2, 78, 0, 2430);
+    			add_location(div2, file$2, 97, 0, 3229);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4993,7 +5654,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			append_dev(button, t4);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*handleStartStop*/ ctx[8], false, false, false, false);
+    				dispose = listen_dev(button, "click", /*handleStartStop*/ ctx[9], false, false, false, false);
     				mounted = true;
     			}
     		},
@@ -5073,6 +5734,12 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	let { showFeedback } = $$props;
     	let { showExpectedOutput } = $$props;
     	let { enableAudioHints } = $$props;
+    	let { heardPronunciation = '' } = $$props;
+
+    	let { log = (level, ...args) => {
+    		
+    	} } = $$props;
+
     	const dispatch = createEventDispatcher();
 
     	function shouldShowExpectedOutput(phrase) {
@@ -5150,7 +5817,9 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		'showCategory',
     		'showFeedback',
     		'showExpectedOutput',
-    		'enableAudioHints'
+    		'enableAudioHints',
+    		'heardPronunciation',
+    		'log'
     	];
 
     	Object.keys($$props).forEach(key => {
@@ -5164,8 +5833,10 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		if ('canStart' in $$props) $$invalidate(3, canStart = $$props.canStart);
     		if ('showCategory' in $$props) $$invalidate(4, showCategory = $$props.showCategory);
     		if ('showFeedback' in $$props) $$invalidate(5, showFeedback = $$props.showFeedback);
-    		if ('showExpectedOutput' in $$props) $$invalidate(9, showExpectedOutput = $$props.showExpectedOutput);
-    		if ('enableAudioHints' in $$props) $$invalidate(10, enableAudioHints = $$props.enableAudioHints);
+    		if ('showExpectedOutput' in $$props) $$invalidate(10, showExpectedOutput = $$props.showExpectedOutput);
+    		if ('enableAudioHints' in $$props) $$invalidate(11, enableAudioHints = $$props.enableAudioHints);
+    		if ('heardPronunciation' in $$props) $$invalidate(6, heardPronunciation = $$props.heardPronunciation);
+    		if ('log' in $$props) $$invalidate(12, log = $$props.log);
     	};
 
     	$$self.$capture_state = () => ({
@@ -5178,6 +5849,8 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		showFeedback,
     		showExpectedOutput,
     		enableAudioHints,
+    		heardPronunciation,
+    		log,
     		dispatch,
     		shouldShowExpectedOutput,
     		shouldShowAudioHint,
@@ -5191,13 +5864,30 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		if ('canStart' in $$props) $$invalidate(3, canStart = $$props.canStart);
     		if ('showCategory' in $$props) $$invalidate(4, showCategory = $$props.showCategory);
     		if ('showFeedback' in $$props) $$invalidate(5, showFeedback = $$props.showFeedback);
-    		if ('showExpectedOutput' in $$props) $$invalidate(9, showExpectedOutput = $$props.showExpectedOutput);
-    		if ('enableAudioHints' in $$props) $$invalidate(10, enableAudioHints = $$props.enableAudioHints);
+    		if ('showExpectedOutput' in $$props) $$invalidate(10, showExpectedOutput = $$props.showExpectedOutput);
+    		if ('enableAudioHints' in $$props) $$invalidate(11, enableAudioHints = $$props.enableAudioHints);
+    		if ('heardPronunciation' in $$props) $$invalidate(6, heardPronunciation = $$props.heardPronunciation);
+    		if ('log' in $$props) $$invalidate(12, log = $$props.log);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*currentPhrase, log*/ 4097) {
+    			// Debug: Log current phrase data
+    			if (currentPhrase) {
+    				log(8, '🎯 LearningSession currentPhrase:', {
+    					source: currentPhrase.source,
+    					target: currentPhrase.target,
+    					pronunciation: currentPhrase.pronunciation,
+    					hasPronunciation: !!currentPhrase.pronunciation,
+    					fullPhrase: currentPhrase
+    				});
+    			}
+    		}
+    	};
 
     	return [
     		currentPhrase,
@@ -5206,11 +5896,13 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		canStart,
     		showCategory,
     		showFeedback,
+    		heardPronunciation,
     		shouldShowExpectedOutput,
     		shouldShowAudioHint,
     		handleStartStop,
     		showExpectedOutput,
-    		enableAudioHints
+    		enableAudioHints,
+    		log
     	];
     }
 
@@ -5225,8 +5917,10 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			canStart: 3,
     			showCategory: 4,
     			showFeedback: 5,
-    			showExpectedOutput: 9,
-    			enableAudioHints: 10
+    			showExpectedOutput: 10,
+    			enableAudioHints: 11,
+    			heardPronunciation: 6,
+    			log: 12
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -5298,6 +5992,22 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	}
 
     	set enableAudioHints(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get heardPronunciation() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set heardPronunciation(value) {
+    		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get log() {
+    		throw new Error("<LearningSession>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set log(value) {
     		throw new Error("<LearningSession>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -5667,7 +6377,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     const { Object: Object_1, console: console_1 } = globals;
     const file = "src/App.svelte";
 
-    // (449:4) {#if showSettings}
+    // (453:4) {#if showSettings}
     function create_if_block(ctx) {
     	let div2;
     	let languagesettings;
@@ -5707,43 +6417,43 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			props: {
     				nativeLanguage: /*currentSettings*/ ctx[2].nativeLanguage,
     				learningLanguage: /*currentSettings*/ ctx[2].learningLanguage,
-    				nativeLanguages: /*nativeLanguages*/ ctx[10],
-    				learningLanguages: /*learningLanguages*/ ctx[9],
+    				nativeLanguages: /*nativeLanguages*/ ctx[11],
+    				learningLanguages: /*learningLanguages*/ ctx[10],
     				loggingVerbosity: /*currentSettings*/ ctx[2].loggingVerbosity
     			},
     			$$inline: true
     		});
 
     	function displaysettings_showExpectedOutput_binding(value) {
-    		/*displaysettings_showExpectedOutput_binding*/ ctx[21](value);
+    		/*displaysettings_showExpectedOutput_binding*/ ctx[22](value);
     	}
 
     	function displaysettings_showCategory_binding(value) {
-    		/*displaysettings_showCategory_binding*/ ctx[22](value);
+    		/*displaysettings_showCategory_binding*/ ctx[23](value);
     	}
 
     	function displaysettings_showFeedback_binding(value) {
-    		/*displaysettings_showFeedback_binding*/ ctx[23](value);
+    		/*displaysettings_showFeedback_binding*/ ctx[24](value);
     	}
 
     	function displaysettings_showUpcomingQueue_binding(value) {
-    		/*displaysettings_showUpcomingQueue_binding*/ ctx[24](value);
+    		/*displaysettings_showUpcomingQueue_binding*/ ctx[25](value);
     	}
 
     	function displaysettings_enableAudioHints_binding(value) {
-    		/*displaysettings_enableAudioHints_binding*/ ctx[25](value);
+    		/*displaysettings_enableAudioHints_binding*/ ctx[26](value);
     	}
 
     	function displaysettings_translationThreshold_binding(value) {
-    		/*displaysettings_translationThreshold_binding*/ ctx[26](value);
+    		/*displaysettings_translationThreshold_binding*/ ctx[27](value);
     	}
 
     	function displaysettings_pauseBetweenTests_binding(value) {
-    		/*displaysettings_pauseBetweenTests_binding*/ ctx[27](value);
+    		/*displaysettings_pauseBetweenTests_binding*/ ctx[28](value);
     	}
 
     	function displaysettings_pauseWhenStruggling_binding(value) {
-    		/*displaysettings_pauseWhenStruggling_binding*/ ctx[28](value);
+    		/*displaysettings_pauseWhenStruggling_binding*/ ctx[29](value);
     	}
 
     	let displaysettings_props = {};
@@ -5793,14 +6503,14 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	binding_callbacks.push(() => bind(displaysettings, 'translationThreshold', displaysettings_translationThreshold_binding));
     	binding_callbacks.push(() => bind(displaysettings, 'pauseBetweenTests', displaysettings_pauseBetweenTests_binding));
     	binding_callbacks.push(() => bind(displaysettings, 'pauseWhenStruggling', displaysettings_pauseWhenStruggling_binding));
-    	displaysettings.$on("updateQueue", /*updateUpcomingQueue*/ ctx[13]);
+    	displaysettings.$on("updateQueue", /*updateUpcomingQueue*/ ctx[15]);
 
     	function algorithmsettings_passThreshold_binding(value) {
-    		/*algorithmsettings_passThreshold_binding*/ ctx[29](value);
+    		/*algorithmsettings_passThreshold_binding*/ ctx[30](value);
     	}
 
     	function algorithmsettings_repetitivenessFactor_binding(value) {
-    		/*algorithmsettings_repetitivenessFactor_binding*/ ctx[30](value);
+    		/*algorithmsettings_repetitivenessFactor_binding*/ ctx[31](value);
     	}
 
     	let algorithmsettings_props = {};
@@ -5822,7 +6532,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	binding_callbacks.push(() => bind(algorithmsettings, 'repetitivenessFactor', algorithmsettings_repetitivenessFactor_binding));
 
     	function categorymanager_enabledCategories_binding(value) {
-    		/*categorymanager_enabledCategories_binding*/ ctx[31](value);
+    		/*categorymanager_enabledCategories_binding*/ ctx[32](value);
     	}
 
     	let categorymanager_props = {
@@ -5840,10 +6550,10 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		});
 
     	binding_callbacks.push(() => bind(categorymanager, 'enabledCategories', categorymanager_enabledCategories_binding));
-    	categorymanager.$on("categoryChange", /*handleCategoryChange*/ ctx[11]);
+    	categorymanager.$on("categoryChange", /*handleCategoryChange*/ ctx[13]);
 
     	function developersettings_loggingVerbosity_binding(value) {
-    		/*developersettings_loggingVerbosity_binding*/ ctx[32](value);
+    		/*developersettings_loggingVerbosity_binding*/ ctx[33](value);
     	}
 
     	let developersettings_props = {
@@ -5860,7 +6570,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		});
 
     	binding_callbacks.push(() => bind(developersettings, 'loggingVerbosity', developersettings_loggingVerbosity_binding));
-    	developersettings.$on("debugTest", /*handleDebugTest*/ ctx[12]);
+    	developersettings.$on("debugTest", /*handleDebugTest*/ ctx[14]);
 
     	const block = {
     		c: function create() {
@@ -5883,16 +6593,16 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			t7 = space();
     			create_component(developersettings.$$.fragment);
     			attr_dev(h3, "class", "section-header");
-    			add_location(h3, file, 488, 10, 16217);
+    			add_location(h3, file, 492, 10, 16406);
     			attr_dev(button, "class", "management-btn reset-btn");
     			button.disabled = button_disabled_value = !/*learningQueue*/ ctx[0];
-    			add_location(button, file, 490, 0, 16303);
+    			add_location(button, file, 494, 0, 16492);
     			attr_dev(div0, "class", "management-buttons");
-    			add_location(div0, file, 489, 10, 16270);
+    			add_location(div0, file, 493, 10, 16459);
     			attr_dev(div1, "class", "management-section");
-    			add_location(div1, file, 487, 8, 16174);
+    			add_location(div1, file, 491, 8, 16363);
     			attr_dev(div2, "class", "settings-panel");
-    			add_location(div2, file, 449, 6, 14639);
+    			add_location(div2, file, 453, 6, 14828);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div2, anchor);
@@ -5915,7 +6625,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			current = true;
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*resetLearningQueue*/ ctx[19], false, false, false, false);
+    				dispose = listen_dev(button, "click", /*resetLearningQueue*/ ctx[21], false, false, false, false);
     				mounted = true;
     			}
     		},
@@ -5923,7 +6633,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			const languagesettings_changes = {};
     			if (dirty[0] & /*currentSettings*/ 4) languagesettings_changes.nativeLanguage = /*currentSettings*/ ctx[2].nativeLanguage;
     			if (dirty[0] & /*currentSettings*/ 4) languagesettings_changes.learningLanguage = /*currentSettings*/ ctx[2].learningLanguage;
-    			if (dirty[0] & /*learningLanguages*/ 512) languagesettings_changes.learningLanguages = /*learningLanguages*/ ctx[9];
+    			if (dirty[0] & /*learningLanguages*/ 1024) languagesettings_changes.learningLanguages = /*learningLanguages*/ ctx[10];
     			if (dirty[0] & /*currentSettings*/ 4) languagesettings_changes.loggingVerbosity = /*currentSettings*/ ctx[2].loggingVerbosity;
     			languagesettings.$set(languagesettings_changes);
     			const displaysettings_changes = {};
@@ -6052,7 +6762,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(449:4) {#if showSettings}",
+    		source: "(453:4) {#if showSettings}",
     		ctx
     	});
 
@@ -6088,16 +6798,18 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     				currentPhrase: /*currentPhrase*/ ctx[5],
     				status: /*status*/ ctx[6],
     				isLearning: /*isLearning*/ ctx[4],
-    				canStart: /*canStart*/ ctx[8],
+    				canStart: /*canStart*/ ctx[9],
     				showCategory: /*currentSettings*/ ctx[2].showCategory,
     				showFeedback: /*currentSettings*/ ctx[2].showFeedback,
     				showExpectedOutput: /*currentSettings*/ ctx[2].showExpectedOutput,
-    				enableAudioHints: /*currentSettings*/ ctx[2].enableAudioHints
+    				enableAudioHints: /*currentSettings*/ ctx[2].enableAudioHints,
+    				heardPronunciation: /*heardPronunciation*/ ctx[8],
+    				log: /*log*/ ctx[12]
     			},
     			$$inline: true
     		});
 
-    	learningsession.$on("startStop", /*handleStartStop*/ ctx[14]);
+    	learningsession.$on("startStop", /*handleStartStop*/ ctx[16]);
     	let if_block = /*showSettings*/ ctx[3] && create_if_block(ctx);
 
     	queuedisplay = new QueueDisplay({
@@ -6131,26 +6843,26 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			if (if_block) if_block.c();
     			t9 = space();
     			create_component(queuedisplay.$$.fragment);
-    			add_location(h1, file, 414, 4, 13431);
-    			add_location(p, file, 415, 4, 13459);
+    			add_location(h1, file, 416, 4, 13585);
+    			add_location(p, file, 417, 4, 13613);
     			attr_dev(div0, "class", "title");
-    			add_location(div0, file, 413, 2, 13407);
+    			add_location(div0, file, 415, 2, 13561);
     			attr_dev(span0, "class", "settings-icon svelte-15o4qf2");
     			toggle_class(span0, "developer-mode", /*currentSettings*/ ctx[2].showDeveloperSettings);
-    			add_location(span0, file, 443, 6, 14412);
+    			add_location(span0, file, 447, 6, 14601);
     			attr_dev(span1, "class", "chevron-icon");
-    			add_location(span1, file, 445, 6, 14532);
+    			add_location(span1, file, 449, 6, 14721);
     			attr_dev(button, "class", "settings-toggle");
 
     			attr_dev(button, "title", button_title_value = /*currentSettings*/ ctx[2].showDeveloperSettings
     			? "Developer mode active! Long press again to disable."
     			: "Long press for developer settings");
 
-    			add_location(button, file, 433, 4, 13961);
+    			add_location(button, file, 437, 4, 14150);
     			attr_dev(div1, "class", "settings-section");
-    			add_location(div1, file, 432, 2, 13926);
+    			add_location(div1, file, 436, 2, 14115);
     			attr_dev(main, "class", "app-container");
-    			add_location(main, file, 411, 0, 13359);
+    			add_location(main, file, 413, 0, 13513);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6178,12 +6890,12 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(button, "click", /*toggleSettings*/ ctx[15], false, false, false, false),
-    					listen_dev(button, "mousedown", /*handleSettingsMouseDown*/ ctx[16], false, false, false, false),
-    					listen_dev(button, "mouseup", /*handleSettingsMouseUp*/ ctx[17], false, false, false, false),
-    					listen_dev(button, "mouseleave", /*handleSettingsMouseLeave*/ ctx[18], false, false, false, false),
-    					listen_dev(button, "touchstart", /*handleSettingsMouseDown*/ ctx[16], { passive: true }, false, false, false),
-    					listen_dev(button, "touchend", /*handleSettingsMouseUp*/ ctx[17], { passive: true }, false, false, false)
+    					listen_dev(button, "click", /*toggleSettings*/ ctx[17], false, false, false, false),
+    					listen_dev(button, "mousedown", /*handleSettingsMouseDown*/ ctx[18], false, false, false, false),
+    					listen_dev(button, "mouseup", /*handleSettingsMouseUp*/ ctx[19], false, false, false, false),
+    					listen_dev(button, "mouseleave", /*handleSettingsMouseLeave*/ ctx[20], false, false, false, false),
+    					listen_dev(button, "touchstart", /*handleSettingsMouseDown*/ ctx[18], { passive: true }, false, false, false),
+    					listen_dev(button, "touchend", /*handleSettingsMouseUp*/ ctx[19], { passive: true }, false, false, false)
     				];
 
     				mounted = true;
@@ -6194,11 +6906,12 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			if (dirty[0] & /*currentPhrase*/ 32) learningsession_changes.currentPhrase = /*currentPhrase*/ ctx[5];
     			if (dirty[0] & /*status*/ 64) learningsession_changes.status = /*status*/ ctx[6];
     			if (dirty[0] & /*isLearning*/ 16) learningsession_changes.isLearning = /*isLearning*/ ctx[4];
-    			if (dirty[0] & /*canStart*/ 256) learningsession_changes.canStart = /*canStart*/ ctx[8];
+    			if (dirty[0] & /*canStart*/ 512) learningsession_changes.canStart = /*canStart*/ ctx[9];
     			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.showCategory = /*currentSettings*/ ctx[2].showCategory;
     			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.showFeedback = /*currentSettings*/ ctx[2].showFeedback;
     			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.showExpectedOutput = /*currentSettings*/ ctx[2].showExpectedOutput;
     			if (dirty[0] & /*currentSettings*/ 4) learningsession_changes.enableAudioHints = /*currentSettings*/ ctx[2].enableAudioHints;
+    			if (dirty[0] & /*heardPronunciation*/ 256) learningsession_changes.heardPronunciation = /*heardPronunciation*/ ctx[8];
     			learningsession.$set(learningsession_changes);
 
     			if (!current || dirty[0] & /*currentSettings*/ 4) {
@@ -6289,6 +7002,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	let categories = [];
     	let upcomingQueue = [];
     	let isInitialized = false;
+    	let heardPronunciation = '';
 
     	// Settings from store
     	let currentSettings = {};
@@ -6390,7 +7104,8 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     				passThreshold: currentSettings.passThreshold,
     				memoryLength: 20,
     				repetitivenessFactor: currentSettings.repetitivenessFactor
-    			}));
+    			},
+    		log)); // Pass the log function to LearningQueue
 
     		await learningQueue.init();
     		const availableCategories = learningQueue.getCategories();
@@ -6410,13 +7125,13 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     	}
 
     	function initializeTutor() {
-    		$$invalidate(20, tutor = new LanguageTutor(null,
+    		tutor = new LanguageTutor(null,
     		currentSettings.nativeLanguage,
     		currentSettings.learningLanguage,
     		{
     				apiKeyEndpoint: 'openai.php',
     				feedbackThreshold: currentSettings.translationThreshold,
-    				loggingVerbosity: currentSettings.loggingVerbosity,
+    				passThreshold: currentSettings.passThreshold,
     				audioPath: 'audio/',
     				enableAudioHints: currentSettings.enableAudioHints,
     				statusCallback: message => {
@@ -6430,7 +7145,8 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     						$$invalidate(6, status = message);
     					}
     				}
-    			}));
+    			},
+    		log); // Pass the log function to LanguageTutor
     	}
 
     	// ========== EVENT HANDLERS ==========
@@ -6514,11 +7230,15 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     			log(8, '📋 Got phrase from queue:', phrase);
     			log(8, '📊 Phrase recentResults:', phrase.recentResults, 'length:', phrase.recentResults?.length);
     			$$invalidate(5, currentPhrase = phrase);
+    			$$invalidate(8, heardPronunciation = ''); // Clear previous heard pronunciation
     			$$invalidate(6, status = `Ready to listen to ${currentSettings.nativeLanguage} phrase...`);
     			if (!isLearning) break;
 
     			try {
-    				const result = await tutor.test(phrase.source, phrase.target, phrase.recentResults || []);
+    				const result = await tutor.test(phrase.source, phrase.target, phrase.pronunciation || '', phrase.recentResults || []);
+
+    				// Capture heard pronunciation from result
+    				$$invalidate(8, heardPronunciation = result.heardPronunciation || '');
 
     				if (result.stop || !isLearning) {
     					stopLearningSession();
@@ -6764,6 +7484,7 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		categories,
     		upcomingQueue,
     		isInitialized,
+    		heardPronunciation,
     		currentSettings,
     		previousNativeLanguage,
     		previousLearningLanguage,
@@ -6800,16 +7521,17 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		if ('currentPhrase' in $$props) $$invalidate(5, currentPhrase = $$props.currentPhrase);
     		if ('status' in $$props) $$invalidate(6, status = $$props.status);
     		if ('learningQueue' in $$props) $$invalidate(0, learningQueue = $$props.learningQueue);
-    		if ('tutor' in $$props) $$invalidate(20, tutor = $$props.tutor);
+    		if ('tutor' in $$props) tutor = $$props.tutor;
     		if ('categories' in $$props) $$invalidate(1, categories = $$props.categories);
     		if ('upcomingQueue' in $$props) $$invalidate(7, upcomingQueue = $$props.upcomingQueue);
     		if ('isInitialized' in $$props) isInitialized = $$props.isInitialized;
+    		if ('heardPronunciation' in $$props) $$invalidate(8, heardPronunciation = $$props.heardPronunciation);
     		if ('currentSettings' in $$props) $$invalidate(2, currentSettings = $$props.currentSettings);
     		if ('previousNativeLanguage' in $$props) previousNativeLanguage = $$props.previousNativeLanguage;
     		if ('previousLearningLanguage' in $$props) previousLearningLanguage = $$props.previousLearningLanguage;
     		if ('settingsLongPressTimer' in $$props) settingsLongPressTimer = $$props.settingsLongPressTimer;
-    		if ('canStart' in $$props) $$invalidate(8, canStart = $$props.canStart);
-    		if ('learningLanguages' in $$props) $$invalidate(9, learningLanguages = $$props.learningLanguages);
+    		if ('canStart' in $$props) $$invalidate(9, canStart = $$props.canStart);
+    		if ('learningLanguages' in $$props) $$invalidate(10, learningLanguages = $$props.learningLanguages);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -6818,32 +7540,18 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
 
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty[0] & /*currentSettings*/ 4) {
-    			$$invalidate(9, learningLanguages = languageOptions[currentSettings.nativeLanguage] || []);
+    			$$invalidate(10, learningLanguages = languageOptions[currentSettings.nativeLanguage] || []);
     		}
 
     		if ($$self.$$.dirty[0] & /*currentSettings, categories*/ 6) {
     			// Reactive computed values
-    			$$invalidate(8, canStart = Object.values(currentSettings.enabledCategories).some(enabled => enabled) && categories.length > 0);
+    			$$invalidate(9, canStart = Object.values(currentSettings.enabledCategories).some(enabled => enabled) && categories.length > 0);
     		}
 
-    		if ($$self.$$.dirty[0] & /*tutor, currentSettings*/ 1048580) {
+    		if ($$self.$$.dirty[0] & /*learningQueue, currentSettings*/ 5) {
     			// Reactive updates for tutor and queue options (but not during language changes)
-    			if (tutor && currentSettings.loggingVerbosity !== undefined && tutor.options) {
-    				tutor.updateOptions({
-    					loggingVerbosity: currentSettings.loggingVerbosity
-    				});
-    			}
-    		}
-
-    		if ($$self.$$.dirty[0] & /*learningQueue, currentSettings*/ 5) {
-    			if (learningQueue && currentSettings.loggingVerbosity !== undefined && learningQueue.options) {
-    				learningQueue.updateOptions({
-    					loggingVerbosity: currentSettings.loggingVerbosity
-    				});
-    			}
-    		}
-
-    		if ($$self.$$.dirty[0] & /*learningQueue, currentSettings*/ 5) {
+    			// LanguageTutor now uses passed-in log function, no need to update loggingVerbosity
+    			// LearningQueue now uses passed-in log function, no need to update loggingVerbosity
     			if (learningQueue && currentSettings.repetitivenessFactor !== undefined && learningQueue.options) {
     				learningQueue.updateOptions({
     					repetitivenessFactor: currentSettings.repetitivenessFactor
@@ -6869,9 +7577,11 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		currentPhrase,
     		status,
     		upcomingQueue,
+    		heardPronunciation,
     		canStart,
     		learningLanguages,
     		nativeLanguages,
+    		log,
     		handleCategoryChange,
     		handleDebugTest,
     		updateUpcomingQueue,
@@ -6881,7 +7591,6 @@ IMPORTANT: Your response must be valid JSON only. Do not include any text outsid
     		handleSettingsMouseUp,
     		handleSettingsMouseLeave,
     		resetLearningQueue,
-    		tutor,
     		displaysettings_showExpectedOutput_binding,
     		displaysettings_showCategory_binding,
     		displaysettings_showFeedback_binding,
