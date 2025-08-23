@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Transcription</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            margin-bottom: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 80px;
+            flex-shrink: 1;
+        }
+
+        .btn-start {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-start:hover {
+            background-color: #45a049;
+        }
+
+        .btn-start:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .btn-stop {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-stop:hover {
+            background-color: #da190b;
+        }
+
+        .btn-stop:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .font-select {
+            padding: 12px 8px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            min-width: 100px;
+            flex-shrink: 1;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .status.connecting {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status.listening {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status.idle {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .transcription-container {
+            flex: 1;
+            position: relative;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .transcription {
+            height: 100%;
+            width: 100%;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            overflow-y: auto;
+            background: transparent;
+        }
+
+        .transcription.font-small {
+            font-size: 16px;
+        }
+
+        .transcription.font-medium {
+            font-size: 20px;
+        }
+
+        .transcription.font-large {
+            font-size: 24px;
+        }
+
+        .transcription.font-xlarge {
+            font-size: 32px;
+        }
+
+        .utterance {
+            margin-bottom: 8px;
+            padding: 4px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .utterance:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .utterance.highlight {
+            background-color: #d4edda;
+            border-radius: 4px;
+            padding: 8px;
+            transition: background-color 3s ease-out;
+        }
+
+        .utterance.highlight.fade-out {
+            background-color: transparent;
+        }
+
+        .jump-to-end {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .jump-to-end.visible {
+            opacity: 1;
+        }
+
+        .jump-to-end:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .controls {
+                gap: 5px;
+                padding: 10px;
+            }
+            
+            .btn {
+                padding: 10px 12px;
+                font-size: 14px;
+                min-width: 60px;
+            }
+            
+            .font-select {
+                padding: 10px 6px;
+                font-size: 14px;
+                min-width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button id="startBtn" class="btn btn-start">Start</button>
+        <button id="stopBtn" class="btn btn-stop" disabled>Stop</button>
+        <select id="fontSelect" class="font-select">
+            <option value="small">Small Text</option>
+            <option value="medium" selected>Medium Text</option>
+            <option value="large">Large Text</option>
+            <option value="xlarge">Extra Large Text</option>
+        </select>
+    </div>
+
+    <div id="status" class="status idle">Press Start when you need me</div>
+
+    <div class="transcription-container">
+        <div id="transcription" class="transcription font-medium">
+            <div class="utterance" style="color: #999; font-style: italic;">
+                Transcription will appear here when you start listening...
+            </div>
+        </div>
+        <button id="jumpToEnd" class="jump-to-end">Jump to End</button>
+    </div>
+
+    <script>
+        class LiveTranscription {
+            constructor() {
+                this.ws = null;
+                this.isListening = false;
+                this.isUserScrolling = false;
+                this.scrollTimeout = null;
+                this.audioContext = null;
+                this.mediaStream = null;
+                this.audioProcessor = null;
+                
+                this.startBtn = document.getElementById('startBtn');
+                this.stopBtn = document.getElementById('stopBtn');
+                this.fontSelect = document.getElementById('fontSelect');
+                this.status = document.getElementById('status');
+                this.transcription = document.getElementById('transcription');
+                this.jumpToEnd = document.getElementById('jumpToEnd');
+                
+                this.initializeEventListeners();
+            }
+            
+            initializeEventListeners() {
+                this.startBtn.addEventListener('click', () => this.start());
+                this.stopBtn.addEventListener('click', () => this.stop());
+                this.fontSelect.addEventListener('change', () => this.changeFontSize());
+                this.jumpToEnd.addEventListener('click', () => this.jumpToEndOfText());
+                
+                this.transcription.addEventListener('scroll', () => {
+                    this.handleScroll();
+                });
+            }
+            
+            async start() {
+                try {
+                    this.updateStatus('Requesting microphone access...', 'connecting');
+                    this.startBtn.disabled = true;
+                    
+                    // First get microphone access
+                    await this.setupAudioCapture();
+                    
+                    this.updateStatus('Connecting to ChatGPT...', 'connecting');
+                    
+                    const token = await this.getSessionToken();
+                    if (!token) {
+                        throw new Error('Failed to get session token');
+                    }
+                    
+                    this.ws = new WebSocket('wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01', [
+                        'realtime', `openai-insecure-api-key.${token}`, 'openai-beta.realtime-v1'
+                    ]);
+                    
+                    this.ws.onopen = () => {
+                        console.log('WebSocket connected');
+                        this.configureSession();
+                    };
+                    
+                    this.ws.onmessage = (event) => {
+                        this.handleMessage(JSON.parse(event.data));
+                    };
+                    
+                    this.ws.onclose = () => {
+                        console.log('WebSocket disconnected');
+                        this.stop();
+                    };
+                    
+                    this.ws.onerror = (error) => {
+                        console.error('WebSocket error:', error);
+                        this.updateStatus('Connection error', 'error');
+                        this.stop();
+                    };
+                    
+                } catch (error) {
+                    console.error('Failed to start:', error);
+                    this.updateStatus('Failed to connect: ' + error.message, 'error');
+                    this.startBtn.disabled = false;
+                    this.cleanup();
+                }
+            }
+            
+            stop() {
+                this.isListening = false;
+                this.cleanup();
+                this.updateStatus('Press Start when you need me', 'idle');
+                this.startBtn.disabled = false;
+                this.stopBtn.disabled = true;
+            }
+            
+            async getSessionToken() {
+                try {
+                    // Use pre-signed model parameter (signed offline for security)
+                    const signedModel = 'gpt-4o-realtime-preview-2024-10-01.c5d92caacd0e6d5b0c6323393e16b07b8f7540d66d169ecb06b064913136eec6';
+                    
+                    const response = await fetch('./openai.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: signedModel
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    return data.session_token;
+                } catch (error) {
+                    console.error('Error getting session token:', error);
+                    return null;
+                }
+            }
+            
+            configureSession() {
+                const sessionConfig = {
+                    type: 'session.update',
+                    session: {
+                        modalities: ['text', 'audio'],
+                        instructions: 'You are a live transcription assistant. Listen to audio input and provide accurate, real-time transcription. Only respond with the transcribed text, no additional commentary or formatting.',
+                        voice: 'alloy',
+                        input_audio_format: 'pcm16',
+                        output_audio_format: 'pcm16',
+                        input_audio_transcription: {
+                            model: 'whisper-1'
+                        },
+                        turn_detection: {
+                            type: 'server_vad',
+                            threshold: 0.6,
+                            prefix_padding_ms: 300,
+                            silence_duration_ms: 800
+                        }
+                    }
+                };
+                
+                this.ws.send(JSON.stringify(sessionConfig));
+                this.updateStatus('Listening for speech...', 'listening');
+                this.stopBtn.disabled = false;
+                this.isListening = true;
+                console.log('Session configured with VAD enabled, now listening for audio');
+            }
+            
+            handleMessage(message) {
+                console.log('Received message:', message.type, message);
+                
+                switch (message.type) {
+                    case 'session.updated':
+                        console.log('Session updated successfully');
+                        break;
+                        
+                    case 'input_audio_buffer.speech_started':
+                        console.log('Speech detected');
+                        this.updateStatus('Someone is speaking...', 'listening');
+                        break;
+                        
+                    case 'input_audio_buffer.speech_stopped':
+                        console.log('Speech stopped, processing...');
+                        this.updateStatus('Processing speech...', 'connecting');
+                        break;
+                        
+                    case 'conversation.item.input_audio_transcription.completed':
+                        console.log('Transcription completed:', message.transcript);
+                        if (message.transcript && message.transcript.trim()) {
+                            this.addTranscription(message.transcript.trim());
+                        }
+                        this.updateStatus('Listening for speech...', 'listening');
+                        break;
+                        
+                    case 'response.text.delta':
+                        if (message.delta) {
+                            this.addTranscription(message.delta);
+                        }
+                        break;
+                        
+                    case 'response.done':
+                        console.log('Response completed');
+                        this.updateStatus('Listening for speech...', 'listening');
+                        break;
+                        
+                    case 'error':
+                        console.error('OpenAI error:', message);
+                        this.updateStatus('Error: ' + message.error.message, 'error');
+                        break;
+                        
+                    default:
+                        console.log('Unhandled message type:', message.type);
+                        break;
+                }
+            }
+            
+            addTranscription(text) {
+                // Clear placeholder if it exists
+                const placeholder = this.transcription.querySelector('[style*="color: #999"]');
+                if (placeholder) {
+                    this.transcription.removeChild(placeholder);
+                }
+                
+                // Remove highlight from previous utterance
+                const previousHighlight = this.transcription.querySelector('.utterance.highlight');
+                if (previousHighlight) {
+                    previousHighlight.classList.remove('highlight', 'fade-out');
+                }
+                
+                // Create new utterance div
+                const utteranceDiv = document.createElement('div');
+                utteranceDiv.className = 'utterance highlight';
+                utteranceDiv.textContent = text;
+                
+                // Add to transcription container
+                this.transcription.appendChild(utteranceDiv);
+                
+                // Start fade-out after a brief moment
+                setTimeout(() => {
+                    utteranceDiv.classList.add('fade-out');
+                }, 100);
+                
+                // Remove highlight classes completely after fade completes
+                setTimeout(() => {
+                    utteranceDiv.classList.remove('highlight', 'fade-out');
+                }, 3200);
+                
+                if (!this.isUserScrolling) {
+                    this.scrollToEnd();
+                }
+            }
+            
+            updateStatus(message, type) {
+                this.status.textContent = message;
+                this.status.className = `status ${type}`;
+            }
+            
+            changeFontSize() {
+                const size = this.fontSelect.value;
+                this.transcription.className = `transcription font-${size}`;
+            }
+            
+            handleScroll() {
+                const element = this.transcription;
+                const isAtBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - 10;
+                
+                this.isUserScrolling = !isAtBottom;
+                
+                if (this.isUserScrolling) {
+                    this.jumpToEnd.classList.add('visible');
+                } else {
+                    this.jumpToEnd.classList.remove('visible');
+                }
+                
+                clearTimeout(this.scrollTimeout);
+                this.scrollTimeout = setTimeout(() => {
+                    if (isAtBottom) {
+                        this.isUserScrolling = false;
+                        this.jumpToEnd.classList.remove('visible');
+                    }
+                }, 1000);
+            }
+            
+            jumpToEndOfText() {
+                this.scrollToEnd();
+                this.isUserScrolling = false;
+                this.jumpToEnd.classList.remove('visible');
+            }
+            
+            scrollToEnd() {
+                this.transcription.scrollTop = this.transcription.scrollHeight;
+            }
+            
+            async setupAudioCapture() {
+                try {
+                    this.mediaStream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
+                            sampleRate: 24000,
+                            channelCount: 1,
+                            echoCancellation: true,
+                            noiseSuppression: true
+                        }
+                    });
+                    
+                    this.audioContext = new AudioContext({ sampleRate: 24000 });
+                    const source = this.audioContext.createMediaStreamSource(this.mediaStream);
+                    
+                    // Use deprecated createScriptProcessor for now (modern approach would use AudioWorklet)
+                    this.audioProcessor = this.audioContext.createScriptProcessor(1024, 1, 1);
+                    
+                    this.audioProcessor.onaudioprocess = (event) => {
+                        if (this.ws && this.ws.readyState === WebSocket.OPEN && this.isListening) {
+                            const audioData = event.inputBuffer.getChannelData(0);
+                            const pcm16 = new Int16Array(audioData.length);
+                            
+                            // Convert float32 to PCM16
+                            for (let i = 0; i < audioData.length; i++) {
+                                pcm16[i] = Math.max(-32768, Math.min(32767, audioData[i] * 32768));
+                            }
+                            
+                            // Convert to base64 and send
+                            const uint8Array = new Uint8Array(pcm16.buffer);
+                            const base64Audio = btoa(String.fromCharCode.apply(null, uint8Array));
+                            
+                            this.ws.send(JSON.stringify({
+                                type: 'input_audio_buffer.append',
+                                audio: base64Audio
+                            }));
+                        }
+                    };
+                    
+                    source.connect(this.audioProcessor);
+                    this.audioProcessor.connect(this.audioContext.destination);
+                    
+                    console.log('Audio capture setup complete');
+                    
+                } catch (error) {
+                    throw new Error('Microphone access denied or unavailable: ' + error.message);
+                }
+            }
+            
+            cleanup() {
+                if (this.ws) {
+                    this.ws.close();
+                    this.ws = null;
+                }
+                
+                if (this.audioProcessor) {
+                    this.audioProcessor.disconnect();
+                    this.audioProcessor = null;
+                }
+                
+                if (this.mediaStream) {
+                    this.mediaStream.getTracks().forEach(track => track.stop());
+                    this.mediaStream = null;
+                }
+                
+                if (this.audioContext && this.audioContext.state !== 'closed') {
+                    this.audioContext.close();
+                    this.audioContext = null;
+                }
+                
+                this.isListening = false;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new LiveTranscription();
+        });
+    </script>
+</body>
+</html>
