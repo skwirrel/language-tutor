@@ -1,1779 +1,1776 @@
 {
     "Politeness & Social Basics": [
-        {
-            "source": "Hello",
-            "target": "Ciao",
-            "pronunciation": [ "chow" ]
-        },
-        {
-            "source": "Hi (informal)",
-            "target": "Salve",
-            "pronunciation": "SAHL-veh"
-        },
-        {
-            "source": "Good morning",
-            "target": "Buongiorno",
-            "pronunciation": [
-                "bwohn-JOHR-no",
-                "bohn-JOHR-no"
-            ]
-        },
-        {
-            "source": "Good afternoon",
-            "target": "Buon pomeriggio",
-            "pronunciation": [ "bwon-poh-meh-REEJ-joh","bwon-poh-meh-REE-joh"]
-        },
-        {
-            "source": "Good evening",
-            "target": "Buonasera",
-            "pronunciation": "bwah-neh-SEH-rah"
-        },
-        {
-            "source": "Good night",
-            "target": "Buonanotte",
-            "pronunciation": "bwon-nah-NOHT-teh"
-        },
-        {
-            "source": "How are you? (informal)",
-            "target": "Come stai?",
-            "pronunciation": [ "koh-meh STAH-ee","koh-meh STAI" ]
-        },
-        {
-            "source": "How are you? (formal)",
-            "target": "Come sta?",
-            "pronunciation": [ "KOH-meh STA", "koh-meh STAH" ]
-        },
-        {
-            "source": "I'm fine, thank you",
-            "target": "Sto bene, grazie",
-            "pronunciation": "STAHL BEH-neh, GRAHT-see-ah"
-        },
-        {
-            "source": "And you? (informal)",
-            "target": "E tu?",
-            "pronunciation": "eh TOO"
-        },
-        {
-            "source": "And you? (formal)",
-            "target": "E Lei?",
-            "pronunciation": ["eh LAY","eh lay-ee","eh LEH"]
-        },
-        {
-            "source": "Please",
-            "target": "Per favore",
-            "pronunciation": ["pehr fah-VOH-reh","pehr fah-VOH-rey","pehr fah-VOH-ray"]
-        },
-        {
-            "source": "Thank you",
-            "target": "Grazie",
-            "pronunciation": "GRAHT-see-eh"
-        },
-        {
-            "source": "Thank you very much",
-            "target": "Grazie mille",
-            "pronunciation": "GRAH-tsyeh NEEL-leh"
-        },
-        {
-            "source": "You're welcome",
-            "target": "Prego",
-            "pronunciation": "PRAY-goh"
-        },
-        {
-            "source": "Excuse me (getting attention)",
-            "target": "Mi scusi",
-            "pronunciation": "mee SKOO-zee"
-        },
-        {
-            "source": "Excuse me (informal, moving past someone)",
-            "target": "Scusa",
-            "pronunciation": "SKOO-zah"
-        },
-        {
-            "source": "I'm sorry",
-            "target": "Mi dispiace",
-            "pronunciation": "mee dee-SPYAH-chee"
-        },
-        {
-            "source": "No problem \/ Don't worry",
-            "target": "Nessun problema",
-            "pronunciation": "neh-SOON proh-BLEH-ma"
-        },
-        {
-            "source": "What is your name? (informal)",
-            "target": "Come ti chiami?",
-            "pronunciation": "KOH-meh tee KYAH-mee"
-        },
-        {
-            "source": "What is your name? (formal)",
-            "target": "Come si chiama?",
-            "pronunciation": [ "KOH-meh see KYAH-ma", "KOH-meh see KYAH-mah"]
-        },
-        {
-            "source": "My name is...",
-            "target": "Mi chiamo...",
-            "pronunciation": "mee KYAH-moh"
-        },
-        {
-            "source": "Nice to meet you (informal)",
-            "target": "Piacere di conoscerti",
-            "pronunciation": "pyah-CHAY-reh dee koh-NOH-shair-tee"
-        },
-        {
-            "source": "Nice to meet you (formal)",
-            "target": "Piacere di conoscerLa",
-            "pronunciation": "pyah-CHEH-reh dee koh-NOH-shair-lah"
-        },
-        {
-            "source": "See you later",
-            "target": "A dopo",
-            "pronunciation": "ah DOH-poh"
-        },
-        {
-            "source": "See you soon",
-            "target": "A presto",
-            "pronunciation": [ "ah-PREHS-toh", "ah-PREH-stoh"]
-        },
-        {
-            "source": "See you tomorrow",
-            "target": "A domani",
-            "pronunciation": "ah doh-MAH-nee"
-        },
-        {
-            "source": "Goodbye (formal)",
-            "target": "Arrivederci",
-            "pronunciation": "ah-ree-veh-DEHR-chee"
-        },
-        {
-            "source": "Goodbye (very polite)",
-            "target": "ArrivederLa",
-            "pronunciation": "ah-ree-veh-DEHR-lah"
-        },
-        {
-            "source": "Good luck",
-            "target": "Buona fortuna",
-            "pronunciation": "bwoh-nah fohr-TOO-nah"
-        }
-    ],
+    {
+        "source": "Hello",
+        "target": "Ciao",
+        "pronunciation": ["CHAH-oh", "chow"]
+    },
+    {
+        "source": "Hi (informal)",
+        "target": "Salve",
+        "pronunciation": ["SAHL-veh"]
+    },
+    {
+        "source": "Good morning",
+        "target": "Buongiorno",
+        "pronunciation": ["bwohn-JOHR-noh", "bwohn-JOHR-no", "bohn-JOHR-no"]
+    },
+    {
+        "source": "Good afternoon",
+        "target": "Buon pomeriggio",
+        "pronunciation": ["bwohn poh-meh-REED-joh", "bwon-poh-meh-REEJ-joh", "bwon-poh-meh-REE-joh"]
+    },
+    {
+        "source": "Good evening",
+        "target": "Buonasera",
+        "pronunciation": ["bwoh-nah-SEH-rah", "bwah-neh-SEH-rah"]
+    },
+    {
+        "source": "Good night",
+        "target": "Buonanotte",
+        "pronunciation": ["bwoh-nah-NOHT-teh", "bwon-nah-NOHT-teh"]
+    },
+    {
+        "source": "How are you? (informal)",
+        "target": "Come stai?",
+        "pronunciation": ["KOH-meh STAH-ee", "koh-meh STAH-ee", "koh-meh STAI"]
+    },
+    {
+        "source": "How are you? (formal)",
+        "target": "Come sta?",
+        "pronunciation": ["KOH-meh STAH", "KOH-meh STA", "koh-meh STAH"]
+    },
+    {
+        "source": "I'm fine, thank you",
+        "target": "Sto bene, grazie",
+        "pronunciation": ["stoh BEH-neh GRAH-tsee-eh", "STAHL BEH-neh, GRAHT-see-ah"]
+    },
+    {
+        "source": "And you? (informal)",
+        "target": "E tu?",
+        "pronunciation": ["eh TOO"]
+    },
+    {
+        "source": "And you? (formal)",
+        "target": "E Lei?",
+        "pronunciation": ["eh LAY-ee", "eh LAY", "eh lay-ee", "eh LEH"]
+    },
+    {
+        "source": "Please",
+        "target": "Per favore",
+        "pronunciation": ["pehr fah-VOH-reh", "pehr fah-VOH-rey", "pehr fah-VOH-ray"]
+    },
+    {
+        "source": "Thank you",
+        "target": "Grazie",
+        "pronunciation": ["GRAH-tsee-eh", "GRAHT-see-eh"]
+    },
+    {
+        "source": "Thank you very much",
+        "target": "Grazie mille",
+        "pronunciation": ["GRAH-tsee-eh MEEL-leh", "GRAH-tsyeh NEEL-leh"]
+    },
+    {
+        "source": "You're welcome",
+        "target": "Prego",
+        "pronunciation": ["PREH-goh", "PRAY-goh"]
+    },
+    {
+        "source": "Excuse me (getting attention)",
+        "target": "Mi scusi",
+        "pronunciation": ["mee SKOO-zee"]
+    },
+    {
+        "source": "Excuse me (informal, moving past someone)",
+        "target": "Scusa",
+        "pronunciation": ["SKOO-zah"]
+    },
+    {
+        "source": "I'm sorry",
+        "target": "Mi dispiace",
+        "pronunciation": ["mee dee-SPYAH-cheh", "mee dee-SPYAH-chee"]
+    },
+    {
+        "source": "No problem / Don't worry",
+        "target": "Nessun problema",
+        "pronunciation": ["nehs-SOON proh-BLEH-mah", "neh-SOON proh-BLEH-ma"]
+    },
+    {
+        "source": "What is your name? (informal)",
+        "target": "Come ti chiami?",
+        "pronunciation": ["KOH-meh tee KYAH-mee"]
+    },
+    {
+        "source": "What is your name? (formal)",
+        "target": "Come si chiama?",
+        "pronunciation": ["KOH-meh see KYAH-mah", "KOH-meh see KYAH-ma"]
+    },
+    {
+        "source": "My name is...",
+        "target": "Mi chiamo...",
+        "pronunciation": ["mee KYAH-moh"]
+    },
+    {
+        "source": "Nice to meet you (informal)",
+        "target": "Piacere di conoscerti",
+        "pronunciation": ["pyah-CHEH-reh dee koh-noh-SHEHR-tee", "pyah-CHAY-reh dee koh-NOH-shair-tee"]
+    },
+    {
+        "source": "Nice to meet you (formal)",
+        "target": "Piacere di conoscerLa",
+        "pronunciation": ["pyah-CHEH-reh dee koh-noh-SHEHR-lah", "pyah-CHEH-reh dee koh-NOH-shair-lah"]
+    },
+    {
+        "source": "See you later",
+        "target": "A dopo",
+        "pronunciation": ["ah DOH-poh"]
+    },
+    {
+        "source": "See you soon",
+        "target": "A presto",
+        "pronunciation": ["ah PREHS-toh", "ah-PREHS-toh", "ah-PREH-stoh"]
+    },
+    {
+        "source": "See you tomorrow",
+        "target": "A domani",
+        "pronunciation": ["ah doh-MAH-nee"]
+    },
+    {
+        "source": "Goodbye (formal)",
+        "target": "Arrivederci",
+        "pronunciation": ["ah-ree-veh-DEHR-chee"]
+    },
+    {
+        "source": "Goodbye (very polite)",
+        "target": "ArrivederLa",
+        "pronunciation": ["ah-ree-veh-DEHR-lah"]
+    },
+    {
+        "source": "Good luck",
+        "target": "Buona fortuna",
+        "pronunciation": ["BWOH-nah fohr-TOO-nah", "bwoh-nah fohr-TOO-nah"]
+    }
+],
     "Travel & Transport": [
-        {
-            "source": "Where is the bus station?",
-            "target": "Dov'è la stazione degli autobus?",
-            "pronunciation": "DOO-veh eh lah staht-TSEE-oh-neh deyl-YAHW-too-boos"
-        },
-        {
-            "source": "Where is the train station?",
-            "target": "Dov'è la stazione ferroviaria?",
-            "pronunciation": "doo-VEH lah staht-TSEE-oh-neh fehr-roh-VYAH-ree-ah"
-        },
-        {
-            "source": "Where is the taxi rank?",
-            "target": "Dov'è la fermata dei taxi?",
-            "pronunciation": "doo-VEH lah fehr-MAH-tah day TAHK-see"
-        },
-        {
-            "source": "Where is the airport?",
-            "target": "Dov'è l'aeroporto?",
-            "pronunciation": "doo-VEH lah eh-roh-POHR-toh"
-        },
-        {
-            "source": "Where can I buy a ticket?",
-            "target": "Dove posso comprare un biglietto?",
-            "pronunciation": "doh-veh PAW-ssoh kohm-PRAH-reh oon beel-YEHT-toh"
-        },
-        {
-            "source": "How much is a ticket to...? (informal)",
-            "target": "Quanto costa un biglietto per...?",
-            "pronunciation": "KWAHN-toh KAW-stah oon bee-YEHT-toh PEHR"
-        },
-        {
-            "source": "I would like a ticket to...",
-            "target": "Vorrei un biglietto per...",
-            "pronunciation": "voh-RAY oon beel-YET-toh PEHR"
-        },
-        {
-            "source": "A return ticket, please",
-            "target": "Un biglietto di andata e ritorno, per favore",
-            "pronunciation": "oon bee-YEHT-toh dee ahn-DAH-tah ee ree-TOR-noh, pehr fah-VOH-reh"
-        },
-        {
-            "source": "A single ticket, please",
-            "target": "Un biglietto di sola andata, per favore",
-            "pronunciation": "oon beel-YEHT-toh dee SOH-lah ahn-DAH-tah per fah-VOH-reh"
-        },
-        {
-            "source": "What time does the bus leave?",
-            "target": "A che ora parte l'autobus?",
-            "pronunciation": "ah kee OH-rah PAR-teh lah OO-too-boos"
-        },
-        {
-            "source": "What time does the train leave?",
-            "target": "A che ora parte il treno?",
-            "pronunciation": "ah kay OH-rah PAR-teh eel TRAY-no"
-        },
-        {
-            "source": "Is this the right bus for...?",
-            "target": "È questo l'autobus per...?",
-            "pronunciation": "eh KWEES-toh LOW-toh-boos PEHR"
-        },
-        {
-            "source": "Is this the right platform for...?",
-            "target": "È questo il binario per...?",
-            "pronunciation": "eh KWEH-stoh eel bee-NAH-ryoh PEHR"
-        },
-        {
-            "source": "Which platform is it?",
-            "target": "Qual è il binario?",
-            "pronunciation": "kwah-LEH ee bee-NAH-ryoh"
-        },
-        {
-            "source": "How long does it take to get there?",
-            "target": "Quanto ci vuole per arrivare?",
-            "pronunciation": "KWAHN-toh chee VWAW-leh peh-rahr-ree-VAH-reh"
-        },
-        {
-            "source": "Does this bus stop at...?",
-            "target": "Questo autobus si ferma a...?",
-            "pronunciation": "KWES-toh OW-too-boos see FEHR-mah ah"
-        },
-        {
-            "source": "Can you call me a taxi, please? (formal)",
-            "target": "Può chiamarmi un taxi, per favore?",
-            "pronunciation": "pwoh kyah-MAR-mee oon TAK-see, pehr fah-VOR-eh"
-        },
-        {
-            "source": "Please take me to this address",
-            "target": "Per favore mi porti a questo indirizzo",
-            "pronunciation": "pehr fah-VOH-reh, mee POR-tee ah KWEHS-toh een-dee-REET-soh"
-        },
-        {
-            "source": "How much will it cost? (informal)",
-            "target": "Quanto costerà?",
-            "pronunciation": "KWAHN-toh koh-steh-RAH"
-        },
-        {
-            "source": "How much will it cost? (formal)",
-            "target": "Quanto costerà, per favore?",
-            "pronunciation": "KWAHN-toh koh-steh-RAH, pehr fah-VOH-reh"
-        },
-        {
-            "source": "Could you drop me here, please?",
-            "target": "Può lasciarmi qui, per favore?",
-            "pronunciation": "kwah-LAH-shar-mee kwee? pehr-fah-VOH-reh?"
-        },
-        {
-            "source": "How far is it from here?",
-            "target": "Quanto dista da qui?",
-            "pronunciation": "KWAHN-toh DEE-stah dah KWEE"
-        },
-        {
-            "source": "I am lost",
-            "target": "Mi sono perso",
-            "pronunciation": "mee SOH-noh PEHR-so"
-        },
-        {
-            "source": "Can you show me on the map? (informal)",
-            "target": "Puoi mostrarmelo sulla mappa?",
-            "pronunciation": "vwoy moh-STRAHR-meh-loh, soo lah MAHP-pah"
-        },
-        {
-            "source": "Can you show me on the map? (formal)",
-            "target": "Può mostrarmelo sulla mappa?",
-            "pronunciation": "pwah-moh-STRAHR-meh-loh soo-lah MAHP-pah"
-        },
-        {
-            "source": "Straight ahead",
-            "target": "Dritto",
-            "pronunciation": "DREE-toh"
-        },
-        {
-            "source": "Turn left",
-            "target": "Giri a sinistra",
-            "pronunciation": "jee-ree ah see-NEES-trah"
-        },
-        {
-            "source": "Turn right",
-            "target": "Giri a destra",
-            "pronunciation": "JEE-ree ah DEHS-trah"
-        },
-        {
-            "source": "Is it far from here?",
-            "target": "È lontano da qui?",
-            "pronunciation": "eh lohn-TAH-noh dah kwee"
-        },
-        {
-            "source": "How do I get to...?",
-            "target": "Come arrivo a...?",
-            "pronunciation": "oh-mee ah-REE-voh ah"
-        }
-    ],
+    {
+        "source": "Where is the bus station?",
+        "target": "Dov'è la stazione degli autobus?",
+        "pronunciation": ["doh-VEH lah stah-TSYOH-neh dehl-yah-OOH-toh-boos", "DOO-veh eh lah staht-TSEE-oh-neh deyl-YAHW-too-boos"]
+    },
+    {
+        "source": "Where is the train station?",
+        "target": "Dov'è la stazione ferroviaria?",
+        "pronunciation": ["doh-VEH lah stah-TSYOH-neh fehr-roh-vee-AH-ree-ah", "doo-VEH lah staht-TSEE-oh-neh fehr-roh-VYAH-ree-ah"]
+    },
+    {
+        "source": "Where is the taxi rank?",
+        "target": "Dov'è la fermata dei taxi?",
+        "pronunciation": ["doh-VEH lah fehr-MAH-tah day TAHK-see", "doo-VEH lah fehr-MAH-tah day TAHK-see"]
+    },
+    {
+        "source": "Where is the airport?",
+        "target": "Dov'è l'aeroporto?",
+        "pronunciation": ["doh-VEH lah-eh-roh-POHR-toh", "doo-VEH lah eh-roh-POHR-toh"]
+    },
+    {
+        "source": "Where can I buy a ticket?",
+        "target": "Dove posso comprare un biglietto?",
+        "pronunciation": ["DOH-veh POHS-soh kohm-PRAH-reh oon bee-LYEHT-toh", "doh-veh PAW-ssoh kohm-PRAH-reh oon beel-YEHT-toh"]
+    },
+    {
+        "source": "How much is a ticket to...? (informal)",
+        "target": "Quanto costa un biglietto per...?",
+        "pronunciation": ["KWAHN-toh KOH-stah oon bee-LYEHT-toh pehr", "KWAHN-toh KAW-stah oon bee-YEHT-toh PEHR"]
+    },
+    {
+        "source": "I would like a ticket to...",
+        "target": "Vorrei un biglietto per...",
+        "pronunciation": ["vohr-RAY oon bee-LYEHT-toh pehr", "voh-RAY oon beel-YET-toh PEHR"]
+    },
+    {
+        "source": "A return ticket, please",
+        "target": "Un biglietto di andata e ritorno, per favore",
+        "pronunciation": ["oon bee-LYEHT-toh dee ahn-DAH-tah eh ree-TOHR-noh pehr fah-VOH-reh", "oon bee-YEHT-toh dee ahn-DAH-tah ee ree-TOR-noh, pehr fah-VOH-reh"]
+    },
+    {
+        "source": "A single ticket, please",
+        "target": "Un biglietto di sola andata, per favore",
+        "pronunciation": ["oon bee-LYEHT-toh dee SOH-lah ahn-DAH-tah pehr fah-VOH-reh", "oon beel-YEHT-toh dee SOH-lah ahn-DAH-tah per fah-VOH-reh"]
+    },
+    {
+        "source": "What time does the bus leave?",
+        "target": "A che ora parte l'autobus?",
+        "pronunciation": ["ah keh OH-rah PAHR-teh lah-OOH-toh-boos", "ah kee OH-rah PAR-teh lah OO-too-boos"]
+    },
+    {
+        "source": "What time does the train leave?",
+        "target": "A che ora parte il treno?",
+        "pronunciation": ["ah keh OH-rah PAHR-teh eel TREH-noh", "ah kay OH-rah PAR-teh eel TRAY-no"]
+    },
+    {
+        "source": "Is this the right bus for...?",
+        "target": "È questo l'autobus per...?",
+        "pronunciation": ["eh KWEH-stoh lah-OOH-toh-boos pehr", "eh KWEES-toh LOW-toh-boos PEHR"]
+    },
+    {
+        "source": "Is this the right platform for...?",
+        "target": "È questo il binario per...?",
+        "pronunciation": ["eh KWEH-stoh eel bee-NAH-ree-oh pehr", "eh KWEH-stoh eel bee-NAH-ryoh PEHR"]
+    },
+    {
+        "source": "Which platform is it?",
+        "target": "Qual è il binario?",
+        "pronunciation": ["kwah-LEH eel bee-NAH-ree-oh", "kwah-LEH ee bee-NAH-ryoh"]
+    },
+    {
+        "source": "How long does it take to get there?",
+        "target": "Quanto ci vuole per arrivare?",
+        "pronunciation": ["KWAHN-toh chee VWOH-leh pehr ahr-ree-VAH-reh", "KWAHN-toh chee VWAW-leh peh-rahr-ree-VAH-reh"]
+    },
+    {
+        "source": "Does this bus stop at...?",
+        "target": "Questo autobus si ferma a...?",
+        "pronunciation": ["KWEH-stoh ah-OOH-toh-boos see FEHR-mah ah", "KWES-toh OW-too-boos see FEHR-mah ah"]
+    },
+    {
+        "source": "Can you call me a taxi, please? (formal)",
+        "target": "Può chiamarmi un taxi, per favore?",
+        "pronunciation": ["PWOH kyah-MAHR-mee oon TAHK-see pehr fah-VOH-reh", "pwoh kyah-MAR-mee oon TAK-see, pehr fah-VOR-eh"]
+    },
+    {
+        "source": "Please take me to this address",
+        "target": "Per favore mi porti a questo indirizzo",
+        "pronunciation": ["pehr fah-VOH-reh mee POHR-tee ah KWEH-stoh een-dee-REET-tsoh", "pehr fah-VOH-reh, mee POR-tee ah KWEHS-toh een-dee-REET-soh"]
+    },
+    {
+        "source": "How much will it cost? (informal)",
+        "target": "Quanto costerà?",
+        "pronunciation": ["KWAHN-toh koh-steh-RAH"]
+    },
+    {
+        "source": "How much will it cost? (formal)",
+        "target": "Quanto costerà, per favore?",
+        "pronunciation": ["KWAHN-toh koh-steh-RAH pehr fah-VOH-reh", "KWAHN-toh koh-steh-RAH, pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Could you drop me here, please?",
+        "target": "Può lasciarmi qui, per favore?",
+        "pronunciation": ["PWOH lah-SHAHR-mee kwee pehr fah-VOH-reh", "kwah-LAH-shar-mee kwee? pehr-fah-VOH-reh?"]
+    },
+    {
+        "source": "How far is it from here?",
+        "target": "Quanto dista da qui?",
+        "pronunciation": ["KWAHN-toh DEE-stah dah kwee", "KWAHN-toh DEE-stah dah KWEE"]
+    },
+    {
+        "source": "I am lost",
+        "target": "Mi sono perso",
+        "pronunciation": ["mee SOH-noh PEHR-soh", "mee SOH-noh PEHR-so"]
+    },
+    {
+        "source": "Can you show me on the map? (informal)",
+        "target": "Puoi mostrarmelo sulla mappa?",
+        "pronunciation": ["PWOH-ee moh-STRAHR-meh-loh SOOL-lah MAHP-pah", "vwoy moh-STRAHR-meh-loh, soo lah MAHP-pah"]
+    },
+    {
+        "source": "Can you show me on the map? (formal)",
+        "target": "Può mostrarmelo sulla mappa?",
+        "pronunciation": ["PWOH moh-STRAHR-meh-loh SOOL-lah MAHP-pah", "pwah-moh-STRAHR-meh-loh soo-lah MAHP-pah"]
+    },
+    {
+        "source": "Straight ahead",
+        "target": "Dritto",
+        "pronunciation": ["DREET-toh", "DREE-toh"]
+    },
+    {
+        "source": "Turn left",
+        "target": "Giri a sinistra",
+        "pronunciation": ["JEE-ree ah see-NEES-trah", "jee-ree ah see-NEES-trah"]
+    },
+    {
+        "source": "Turn right",
+        "target": "Giri a destra",
+        "pronunciation": ["JEE-ree ah DEHS-trah"]
+    },
+    {
+        "source": "Is it far from here?",
+        "target": "È lontano da qui?",
+        "pronunciation": ["eh lohn-TAH-noh dah kwee"]
+    },
+    {
+        "source": "How do I get to...?",
+        "target": "Come arrivo a...?",
+        "pronunciation": ["KOH-meh ahr-REE-voh ah", "oh-mee ah-REE-voh ah"]
+    }
+],
     "Accommodation": [
-        {
-            "source": "I have a reservation",
-            "target": "Ho una prenotazione",
-            "pronunciation": "hoh oo-nah preh-noh-tah-TSYOH-neh"
-        },
-        {
-            "source": "I booked a room for two nights",
-            "target": "Ho prenotato una camera per due notti",
-            "pronunciation": "hoh preh-noh-TAH-toh oo-nah KAH-meh-rah pehr DOO-eh NAWT-tee"
-        },
-        {
-            "source": "Do you have any rooms available?",
-            "target": "Avete camere disponibili?",
-            "pronunciation": "ah-VEH-teh KAH-meh-reh dee-spo-NEE-bee-lee"
-        },
-        {
-            "source": "I would like a single room, please",
-            "target": "Vorrei una camera singola, per favore",
-            "pronunciation": "vohr-RAHy oo-nah KAH-meh-rah SEEN-goh-rah, pehr fah-VOH-reh"
-        },
-        {
-            "source": "I would like a double room, please",
-            "target": "Vorrei una camera doppia, per favore",
-            "pronunciation": "vor-RAY oo-nah KAH-meh-rah DOHP-pyah per fah-VOR-eh"
-        },
-        {
-            "source": "With a bathroom, please",
-            "target": "Con bagno, per favore",
-            "pronunciation": "kohm-BAH-nyoh pehr-fah-VOH-reh"
-        },
-        {
-            "source": "With a shower, please",
-            "target": "Con doccia, per favore",
-            "pronunciation": "kohn DOH-chah pehr fah-VOH-reh"
-        },
-        {
-            "source": "With air conditioning, please",
-            "target": "Con aria condizionata, per favore",
-            "pronunciation": "kohn-AH-ree-ah kohn-deets-yoh-NAH-tah pehr fah-VOH-reh"
-        },
-        {
-            "source": "How much per night?",
-            "target": "Quanto costa a notte?",
-            "pronunciation": "KWAHN-toh KOH-stah NOHT-teh"
-        },
-        {
-            "source": "Is breakfast included?",
-            "target": "La colazione è inclusa?",
-            "pronunciation": "lah koh-la-TSYOH-neh eh een-KLOO-zah"
-        },
-        {
-            "source": "Can I see the room first? (informal)",
-            "target": "Posso vedere la camera prima?",
-            "pronunciation": "POS-soh vee-DEH-reh lah KAH-meh-rah PREE-mah"
-        },
-        {
-            "source": "Can I see the room first? (formal)",
-            "target": "Posso vedere la camera prima, per favore?",
-            "pronunciation": "POS-soh veh-DEH-reh lah KAH-meh-rah PREE-mah? per fah-VOH-reh?"
-        },
-        {
-            "source": "We will stay for three nights",
-            "target": "Resteremo per tre notti",
-            "pronunciation": "reh-steh-RAY-moh pehr TREH NAWT-tee"
-        },
-        {
-            "source": "We will check out tomorrow",
-            "target": "Faremo il check-out domani",
-            "pronunciation": "dah-REH-moh ee chehk-OWT doh-MAH-nee"
-        },
-        {
-            "source": "I would like to extend my stay",
-            "target": "Vorrei prolungare il soggiorno",
-            "pronunciation": "vohr-RAH-ee pro-loon-GAH-reh eel soj-JOR-no"
-        },
-        {
-            "source": "I would like to cancel my booking",
-            "target": "Vorrei cancellare la prenotazione",
-            "pronunciation": "vor-RAY can-chel-LAH-ray la preh-no-tat-TSYOH-neh"
-        },
-        {
-            "source": "There is a problem with the room",
-            "target": "C'è un problema con la camera",
-            "pronunciation": "eh OWN proh-BLEH-ma kohn lah KAH-meh-rah"
-        },
-        {
-            "source": "The air conditioning is not working",
-            "target": "L'aria condizionata non funziona",
-            "pronunciation": "lahr-yah kohn-deet-syoh-NAH-tah nohn foon-TSYOH-nah"
-        },
-        {
-            "source": "The heating is not working",
-            "target": "Il riscaldamento non funziona",
-            "pronunciation": "eel rees-kahl-dah-MEN-toh NON foon-TSYOH-nah"
-        },
-        {
-            "source": "The shower is not working",
-            "target": "La doccia non funziona",
-            "pronunciation": "lah DOH-chah nohn foon-TSEE-oh-nah"
-        },
-        {
-            "source": "Can you fix it, please? (formal)",
-            "target": "Può aggiustarlo, per favore?",
-            "pronunciation": "kwah joo-STAHR-loh per fah-VOH-reh"
-        },
-        {
-            "source": "The room is noisy",
-            "target": "La camera è rumorosa",
-            "pronunciation": "lah KAH-meh-rah ay roo-moh-ROH-zah"
-        },
-        {
-            "source": "Can we change rooms? (formal)",
-            "target": "Possiamo cambiare camera, per favore?",
-            "pronunciation": "pohs-YAH-moh kahm-BYAH-reh KAH-meh-rah? per fah-VOH-reh?"
-        },
-        {
-            "source": "Where is the lift?",
-            "target": "Dov'è l'ascensore?",
-            "pronunciation": "doh-VEH lah-shen-SOH-reh"
-        },
-        {
-            "source": "Where is the swimming pool?",
-            "target": "Dov'è la piscina?",
-            "pronunciation": "doh-VEH lah pee-SHEE-nah"
-        },
-        {
-            "source": "Where is the restaurant?",
-            "target": "Dov'è il ristorante?",
-            "pronunciation": "doh-VAY eel ree-sto-RAHN-teh"
-        },
-        {
-            "source": "What time is breakfast?",
-            "target": "A che ora è la colazione?",
-            "pronunciation": "ah kee OH-rah eh lah koh-laht-SYOH-neh"
-        },
-        {
-            "source": "What time is check-out?",
-            "target": "A che ora è il check-out?",
-            "pronunciation": "ah keh OH-rah ee chek-OWT"
-        },
-        {
-            "source": "Could you call me a taxi, please? (formal)",
-            "target": "Può chiamarmi un taxi, per favore?",
-            "pronunciation": "pwoh kyah-MAR-mee oon TAK-see per fah-VOR-eh"
-        },
-        {
-            "source": "Thank you for your help",
-            "target": "Grazie per il suo aiuto",
-            "pronunciation": "GRAH-tsyeh peh-REEL SOO-ah yoo-TOH"
-        }
-    ],
+    {
+        "source": "I have a reservation",
+        "target": "Ho una prenotazione",
+        "pronunciation": ["oh OO-nah preh-noh-tah-TSYOH-neh", "hoh oo-nah preh-noh-tah-TSYOH-neh"]
+    },
+    {
+        "source": "I booked a room for two nights",
+        "target": "Ho prenotato una camera per due notti",
+        "pronunciation": ["oh preh-noh-TAH-toh OO-nah KAH-meh-rah pehr DOO-eh NOHT-tee", "hoh preh-noh-TAH-toh oo-nah KAH-meh-rah pehr DOO-eh NAWT-tee"]
+    },
+    {
+        "source": "Do you have any rooms available?",
+        "target": "Avete camere disponibili?",
+        "pronunciation": ["ah-VEH-teh KAH-meh-reh dee-spoh-NEE-bee-lee", "ah-VEH-teh KAH-meh-reh dee-spo-NEE-bee-lee"]
+    },
+    {
+        "source": "I would like a single room, please",
+        "target": "Vorrei una camera singola, per favore",
+        "pronunciation": ["vohr-RAY OO-nah KAH-meh-rah SEEN-goh-lah pehr fah-VOH-reh", "vohr-RAHy oo-nah KAH-meh-rah SEEN-goh-rah, pehr fah-VOH-reh"]
+    },
+    {
+        "source": "I would like a double room, please",
+        "target": "Vorrei una camera doppia, per favore",
+        "pronunciation": ["vohr-RAY OO-nah KAH-meh-rah DOHP-pyah pehr fah-VOH-reh", "vor-RAY oo-nah KAH-meh-rah DOHP-pyah per fah-VOR-eh"]
+    },
+    {
+        "source": "With a bathroom, please",
+        "target": "Con bagno, per favore",
+        "pronunciation": ["kohn BAH-nyoh pehr fah-VOH-reh", "kohm-BAH-nyoh pehr-fah-VOH-reh"]
+    },
+    {
+        "source": "With a shower, please",
+        "target": "Con doccia, per favore",
+        "pronunciation": ["kohn DOHT-chah pehr fah-VOH-reh", "kohn DOH-chah pehr fah-VOH-reh"]
+    },
+    {
+        "source": "With air conditioning, please",
+        "target": "Con aria condizionata, per favore",
+        "pronunciation": ["kohn AH-ree-ah kohn-dee-tsyoh-NAH-tah pehr fah-VOH-reh", "kohn-AH-ree-ah kohn-deets-yoh-NAH-tah pehr fah-VOH-reh"]
+    },
+    {
+        "source": "How much per night?",
+        "target": "Quanto costa a notte?",
+        "pronunciation": ["KWAHN-toh KOH-stah ah NOHT-teh", "KWAHN-toh KOH-stah NOHT-teh"]
+    },
+    {
+        "source": "Is breakfast included?",
+        "target": "La colazione è inclusa?",
+        "pronunciation": ["lah koh-lah-TSYOH-neh eh een-KLOO-sah", "lah koh-la-TSYOH-neh eh een-KLOO-zah"]
+    },
+    {
+        "source": "Can I see the room first? (informal)",
+        "target": "Posso vedere la camera prima?",
+        "pronunciation": ["POHS-soh veh-DEH-reh lah KAH-meh-rah PREE-mah", "POS-soh vee-DEH-reh lah KAH-meh-rah PREE-mah"]
+    },
+    {
+        "source": "Can I see the room first? (formal)",
+        "target": "Posso vedere la camera prima, per favore?",
+        "pronunciation": ["POHS-soh veh-DEH-reh lah KAH-meh-rah PREE-mah pehr fah-VOH-reh", "POS-soh veh-DEH-reh lah KAH-meh-rah PREE-mah? per fah-VOH-reh?"]
+    },
+    {
+        "source": "We will stay for three nights",
+        "target": "Resteremo per tre notti",
+        "pronunciation": ["reh-steh-REH-moh pehr treh NOHT-tee", "reh-steh-RAY-moh pehr TREH NAWT-tee"]
+    },
+    {
+        "source": "We will check out tomorrow",
+        "target": "Faremo il check-out domani",
+        "pronunciation": ["fah-REH-moh eel check-out doh-MAH-nee", "dah-REH-moh ee chehk-OWT doh-MAH-nee"]
+    },
+    {
+        "source": "I would like to extend my stay",
+        "target": "Vorrei prolungare il soggiorno",
+        "pronunciation": ["vohr-RAY proh-loon-GAH-reh eel sohd-JOHR-noh", "vohr-RAH-ee pro-loon-GAH-reh eel soj-JOR-no"]
+    },
+    {
+        "source": "I would like to cancel my booking",
+        "target": "Vorrei cancellare la prenotazione",
+        "pronunciation": ["vohr-RAY kahn-chehl-LAH-reh lah preh-noh-tah-TSYOH-neh", "vor-RAY can-chel-LAH-ray la preh-no-tat-TSYOH-neh"]
+    },
+    {
+        "source": "There is a problem with the room",
+        "target": "C'è un problema con la camera",
+        "pronunciation": ["cheh oon proh-BLEH-mah kohn lah KAH-meh-rah", "eh OWN proh-BLEH-ma kohn lah KAH-meh-rah"]
+    },
+    {
+        "source": "The air conditioning is not working",
+        "target": "L'aria condizionata non funziona",
+        "pronunciation": ["LAH-ree-ah kohn-dee-tsyoh-NAH-tah nohn foon-TSYOH-nah", "lahr-yah kohn-deet-syoh-NAH-tah nohn foon-TSYOH-nah"]
+    },
+    {
+        "source": "The heating is not working",
+        "target": "Il riscaldamento non funziona",
+        "pronunciation": ["eel ree-skahl-dah-MEHN-toh nohn foon-TSYOH-nah", "eel rees-kahl-dah-MEN-toh NON foon-TSYOH-nah"]
+    },
+    {
+        "source": "The shower is not working",
+        "target": "La doccia non funziona",
+        "pronunciation": ["lah DOHT-chah nohn foon-TSYOH-nah", "lah DOH-chah nohn foon-TSEE-oh-nah"]
+    },
+    {
+        "source": "Can you fix it, please? (formal)",
+        "target": "Può aggiustarlo, per favore?",
+        "pronunciation": ["PWOH ahd-joo-STAHR-loh pehr fah-VOH-reh", "kwah joo-STAHR-loh per fah-VOH-reh"]
+    },
+    {
+        "source": "The room is noisy",
+        "target": "La camera è rumorosa",
+        "pronunciation": ["lah KAH-meh-rah eh roo-moh-ROH-sah", "lah KAH-meh-rah ay roo-moh-ROH-zah"]
+    },
+    {
+        "source": "Can we change rooms? (formal)",
+        "target": "Possiamo cambiare camera, per favore?",
+        "pronunciation": ["pohs-see-AH-moh kahm-bee-AH-reh KAH-meh-rah pehr fah-VOH-reh", "pohs-YAH-moh kahm-BYAH-reh KAH-meh-rah? per fah-VOH-reh?"]
+    },
+    {
+        "source": "Where is the lift?",
+        "target": "Dov'è l'ascensore?",
+        "pronunciation": ["doh-VEH lah-shehn-SOH-reh", "doh-VEH lah-shen-SOH-reh"]
+    },
+    {
+        "source": "Where is the swimming pool?",
+        "target": "Dov'è la piscina?",
+        "pronunciation": ["doh-VEH lah pee-SHEE-nah"]
+    },
+    {
+        "source": "Where is the restaurant?",
+        "target": "Dov'è il ristorante?",
+        "pronunciation": ["doh-VEH eel ree-stoh-RAHN-teh", "doh-VAY eel ree-sto-RAHN-teh"]
+    },
+    {
+        "source": "What time is breakfast?",
+        "target": "A che ora è la colazione?",
+        "pronunciation": ["ah keh OH-rah eh lah koh-lah-TSYOH-neh", "ah kee OH-rah eh lah koh-laht-SYOH-neh"]
+    },
+    {
+        "source": "What time is check-out?",
+        "target": "A che ora è il check-out?",
+        "pronunciation": ["ah keh OH-rah eh eel check-out", "ah keh OH-rah ee chek-OWT"]
+    },
+    {
+        "source": "Could you call me a taxi, please? (formal)",
+        "target": "Può chiamarmi un taxi, per favore?",
+        "pronunciation": ["PWOH kyah-MAHR-mee oon TAHK-see pehr fah-VOH-reh", "pwoh kyah-MAR-mee oon TAK-see per fah-VOR-eh"]
+    },
+    {
+        "source": "Thank you for your help",
+        "target": "Grazie per il suo aiuto",
+        "pronunciation": ["GRAH-tsee-eh pehr eel SOO-oh ah-YOO-toh", "GRAH-tsyeh peh-REEL SOO-ah yoo-TOH"]
+    }
+],
     "Eating & Drinking Out": [
-        {
-            "source": "A table for two, please",
-            "target": "Un tavolo per due, per favore",
-            "pronunciation": "oon TAH-voh-loh pehr DOO-eh pehr fah-VOH-reh"
-        },
-        {
-            "source": "A table for four, please",
-            "target": "Un tavolo per quattro, per favore",
-            "pronunciation": "oom TAH-voh-loh pehr KWAHT-troh pehr fah-VOH-reh"
-        },
-        {
-            "source": "Do you have a table outside?",
-            "target": "Avete un tavolo fuori?",
-            "pronunciation": "ah-VAY-teh oon TAH-voh-loh FWAH-ree"
-        },
-        {
-            "source": "Do you have a table inside?",
-            "target": "Avete un tavolo dentro?",
-            "pronunciation": "ah-VEE-tee oon TAH-voh-loh DEN-troh"
-        },
-        {
-            "source": "Could we sit by the window?",
-            "target": "Possiamo sederci vicino alla finestra?",
-            "pronunciation": "koh-SYAH-moh seh-DEHR-chee vee-CHEE-noh ahl-lah fee-NEHS-trah"
-        },
-        {
-            "source": "May I see the menu, please?",
-            "target": "Posso vedere il menù, per favore?",
-            "pronunciation": "POS-soh veh-DEH-reh eel meh-NOO pehr fah-VOH-reh"
-        },
-        {
-            "source": "Do you have today's specials?",
-            "target": "Avete i piatti del giorno?",
-            "pronunciation": "ah-VAY-tay ee PYAHT-tee del JOR-no"
-        },
-        {
-            "source": "What do you recommend?",
-            "target": "Cosa consiglia?",
-            "pronunciation": "oh zah kohn-SEEL-yah"
-        },
-        {
-            "source": "I am allergic to...",
-            "target": "Sono allergico a...",
-            "pronunciation": "SOH-noh ahl-LER-jee-koh ahl lahk-TOH-zoh"
-        },
-        {
-            "source": "I am vegetarian",
-            "target": "Sono vegetariano",
-            "pronunciation": "SOH-noh veh-jeh-tah-ree-AH-noh"
-        },
-        {
-            "source": "I am vegan",
-            "target": "Sono vegano",
-            "pronunciation": "SOH-noh veh-GAH-loh"
-        },
-        {
-            "source": "Without meat, please",
-            "target": "Senza carne, per favore",
-            "pronunciation": "SEHN-tsah KAR-neh, pehr fah-VOH-reh"
-        },
-        {
-            "source": "Without cheese, please",
-            "target": "Senza formaggio, per favore",
-            "pronunciation": "SEHN-sah fohr-MAH-joh per fah-VOH-reh"
-        },
-        {
-            "source": "Without nuts, please",
-            "target": "Senza frutta secca, per favore",
-            "pronunciation": "SEHN-tsah FROOK-tah SEHK-kah, pehr fah-VOH-reh"
-        },
-        {
-            "source": "Can I have still water, please?",
-            "target": "Posso avere acqua naturale, per favore?",
-            "pronunciation": "POS-soh ah-VYEH-reh AH-kwah nah-too-RAH-leh per fah-VOH-reh"
-        },
-        {
-            "source": "Can I have sparkling water, please?",
-            "target": "Posso avere acqua frizzante, per favore?",
-            "pronunciation": "POS-soh ah-VEH-ray AH-kwah freet-ZAHN-teh, pehr fah-VOR-eh"
-        },
-        {
-            "source": "One coffee, please",
-            "target": "Un caffè, per favore",
-            "pronunciation": "oon kahf-FEH, PER fah-VOH-reh"
-        },
-        {
-            "source": "One cappuccino, please",
-            "target": "Un cappuccino, per favore",
-            "pronunciation": "ohn kahp-poo-CHEE-noh pehr fah-VOH-reh"
-        },
-        {
-            "source": "One glass of red wine, please",
-            "target": "Un bicchiere di vino rosso, per favore",
-            "pronunciation": "oon bee-KYEH-reh dee VEE-noh ROHS-soh, pehr fah-VOH-reh"
-        },
-        {
-            "source": "One glass of white wine, please",
-            "target": "Un bicchiere di vino bianco, per favore",
-            "pronunciation": "oon beek-YEH-reh dee VEE-noh BYAHN-koh pehr fah-MOH-reh"
-        },
-        {
-            "source": "The bill, please",
-            "target": "Il conto, per favore",
-            "pronunciation": "eel KOHN-toh pehr fah-VOH-reh"
-        },
-        {
-            "source": "Do you take credit cards?",
-            "target": "Accettate carte di credito?",
-            "pronunciation": "ah-chehp-TAH-teh KAR-teh dee KREH-dee-toh"
-        },
-        {
-            "source": "Where is the toilet?",
-            "target": "Dov'è il bagno?",
-            "pronunciation": "doh-VEH ee BAH-nyoh"
-        },
-        {
-            "source": "That was delicious",
-            "target": "Era delizioso",
-            "pronunciation": "EH-rah deh-lee-TYOH-zoh"
-        },
-        {
-            "source": "Could we have some bread, please?",
-            "target": "Possiamo avere del pane, per favore?",
-            "pronunciation": "oh-SYAH-moh ah-VEH-reh del PAH-neh per fah-VOH-reh"
-        },
-        {
-            "source": "Could we have some olive oil, please?",
-            "target": "Possiamo avere dell'olio d'oliva, per favore?",
-            "pronunciation": "poh-SYAH-moh ah-VEH-deh LL-AWL-yoh doh-LEE-vah, pehr-fah-VOH-reh"
-        },
-        {
-            "source": "Could we have the wine list, please?",
-            "target": "Possiamo avere la lista dei vini, per favore?",
-            "pronunciation": "poh-SYAH-moh ah-VEH-ray lah LEES-tah day ee VEE-nee pehr fah-VOH-reh"
-        },
-        {
-            "source": "What time do you open?",
-            "target": "A che ora aprite?",
-            "pronunciation": "ah KAY oh-rah ah-PREE-teh"
-        },
-        {
-            "source": "What time do you close?",
-            "target": "A che ora chiudete?",
-            "pronunciation": "ahk KAY oh-rah kyoo-DEH-teh"
-        },
-        {
-            "source": "Do you have a children's menu?",
-            "target": "Avete un menù per bambini?",
-            "pronunciation": "ah-VAY-teh oo meh-NOO per bahm-BEE-nee"
-        }
-    ],
+    {
+        "source": "A table for two, please",
+        "target": "Un tavolo per due, per favore",
+        "pronunciation": ["oon TAH-voh-loh pehr DOO-eh pehr fah-VOH-reh"]
+    },
+    {
+        "source": "A table for four, please",
+        "target": "Un tavolo per quattro, per favore",
+        "pronunciation": ["oon TAH-voh-loh pehr KWAHT-troh pehr fah-VOH-reh", "oom TAH-voh-loh pehr KWAHT-troh pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Do you have a table outside?",
+        "target": "Avete un tavolo fuori?",
+        "pronunciation": ["ah-VEH-teh oon TAH-voh-loh FWOH-ree", "ah-VAY-teh oon TAH-voh-loh FWAH-ree"]
+    },
+    {
+        "source": "Do you have a table inside?",
+        "target": "Avete un tavolo dentro?",
+        "pronunciation": ["ah-VEH-teh oon TAH-voh-loh DEHN-troh", "ah-VEE-tee oon TAH-voh-loh DEN-troh"]
+    },
+    {
+        "source": "Could we sit by the window?",
+        "target": "Possiamo sederci vicino alla finestra?",
+        "pronunciation": ["pohs-see-AH-moh seh-DEHR-chee vee-CHEE-noh AHL-lah fee-NEHS-trah", "koh-SYAH-moh seh-DEHR-chee vee-CHEE-noh ahl-lah fee-NEHS-trah"]
+    },
+    {
+        "source": "May I see the menu, please?",
+        "target": "Posso vedere il menù, per favore?",
+        "pronunciation": ["POHS-soh veh-DEH-reh eel meh-NOO pehr fah-VOH-reh", "POS-soh veh-DEH-reh eel meh-NOO pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Do you have today's specials?",
+        "target": "Avete i piatti del giorno?",
+        "pronunciation": ["ah-VEH-teh ee PYAHT-tee dehl JOHR-noh", "ah-VAY-tay ee PYAHT-tee del JOR-no"]
+    },
+    {
+        "source": "What do you recommend?",
+        "target": "Cosa consiglia?",
+        "pronunciation": ["KOH-sah kohn-SEEL-yah", "oh zah kohn-SEEL-yah"]
+    },
+    {
+        "source": "I am allergic to...",
+        "target": "Sono allergico a...",
+        "pronunciation": ["SOH-noh ahl-LEHR-jee-koh ah", "SOH-noh ahl-LER-jee-koh ahl lahk-TOH-zoh"]
+    },
+    {
+        "source": "I am vegetarian",
+        "target": "Sono vegetariano",
+        "pronunciation": ["SOH-noh veh-jeh-tah-ree-AH-noh"]
+    },
+    {
+        "source": "I am vegan",
+        "target": "Sono vegano",
+        "pronunciation": ["SOH-noh veh-GAH-noh", "SOH-noh veh-GAH-loh"]
+    },
+    {
+        "source": "Without meat, please",
+        "target": "Senza carne, per favore",
+        "pronunciation": ["SEHN-tsah KAHR-neh pehr fah-VOH-reh", "SEHN-tsah KAR-neh, pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Without cheese, please",
+        "target": "Senza formaggio, per favore",
+        "pronunciation": ["SEHN-tsah fohr-MAHD-joh pehr fah-VOH-reh", "SEHN-sah fohr-MAH-joh per fah-VOH-reh"]
+    },
+    {
+        "source": "Without nuts, please",
+        "target": "Senza frutta secca, per favore",
+        "pronunciation": ["SEHN-tsah FROOTH-tah SEHK-kah pehr fah-VOH-reh", "SEHN-tsah FROOK-tah SEHK-kah, pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Can I have still water, please?",
+        "target": "Posso avere acqua naturale, per favore?",
+        "pronunciation": ["POHS-soh ah-VEH-reh AHK-kwah nah-too-RAH-leh pehr fah-VOH-reh", "POS-soh ah-VYEH-reh AH-kwah nah-too-RAH-leh per fah-VOH-reh"]
+    },
+    {
+        "source": "Can I have sparkling water, please?",
+        "target": "Posso avere acqua frizzante, per favore?",
+        "pronunciation": ["POHS-soh ah-VEH-reh AHK-kwah freet-SAHN-teh pehr fah-VOH-reh", "POS-soh ah-VEH-ray AH-kwah freet-ZAHN-teh, pehr fah-VOR-eh"]
+    },
+    {
+        "source": "One coffee, please",
+        "target": "Un caffè, per favore",
+        "pronunciation": ["oon kahf-FEH pehr fah-VOH-reh", "oon kahf-FEH, PER fah-VOH-reh"]
+    },
+    {
+        "source": "One cappuccino, please",
+        "target": "Un cappuccino, per favore",
+        "pronunciation": ["oon kahp-poot-CHEE-noh pehr fah-VOH-reh", "ohn kahp-poo-CHEE-noh pehr fah-VOH-reh"]
+    },
+    {
+        "source": "One glass of red wine, please",
+        "target": "Un bicchiere di vino rosso, per favore",
+        "pronunciation": ["oon beek-KYEH-reh dee VEE-noh ROHS-soh pehr fah-VOH-reh", "oon bee-KYEH-reh dee VEE-noh ROHS-soh, pehr fah-VOH-reh"]
+    },
+    {
+        "source": "One glass of white wine, please",
+        "target": "Un bicchiere di vino bianco, per favore",
+        "pronunciation": ["oon beek-KYEH-reh dee VEE-noh bee-AHN-koh pehr fah-VOH-reh", "oon beek-YEH-reh dee VEE-noh BYAHN-koh pehr fah-MOH-reh"]
+    },
+    {
+        "source": "The bill, please",
+        "target": "Il conto, per favore",
+        "pronunciation": ["eel KOHN-toh pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Do you take credit cards?",
+        "target": "Accettate carte di credito?",
+        "pronunciation": ["aht-cheht-TAH-teh KAHR-teh dee KREH-dee-toh", "ah-chehp-TAH-teh KAR-teh dee KREH-dee-toh"]
+    },
+    {
+        "source": "Where is the toilet?",
+        "target": "Dov'è il bagno?",
+        "pronunciation": ["doh-VEH eel BAH-nyoh", "doh-VEH ee BAH-nyoh"]
+    },
+    {
+        "source": "That was delicious",
+        "target": "Era delizioso",
+        "pronunciation": ["EH-rah deh-lee-tsee-OH-soh", "EH-rah deh-lee-TYOH-zoh"]
+    },
+    {
+        "source": "Could we have some bread, please?",
+        "target": "Possiamo avere del pane, per favore?",
+        "pronunciation": ["pohs-see-AH-moh ah-VEH-reh dehl PAH-neh pehr fah-VOH-reh", "oh-SYAH-moh ah-VEH-reh del PAH-neh per fah-VOH-reh"]
+    },
+    {
+        "source": "Could we have some olive oil, please?",
+        "target": "Possiamo avere dell'olio d'oliva, per favore?",
+        "pronunciation": ["pohs-see-AH-moh ah-VEH-reh dehl-LOH-lee-oh doh-LEE-vah pehr fah-VOH-reh", "poh-SYAH-moh ah-VEH-deh LL-AWL-yoh doh-LEE-vah, pehr-fah-VOH-reh"]
+    },
+    {
+        "source": "Could we have the wine list, please?",
+        "target": "Possiamo avere la lista dei vini, per favore?",
+        "pronunciation": ["pohs-see-AH-moh ah-VEH-reh lah LEES-tah day VEE-nee pehr fah-VOH-reh", "poh-SYAH-moh ah-VEH-ray lah LEES-tah day ee VEE-nee pehr fah-VOH-reh"]
+    },
+    {
+        "source": "What time do you open?",
+        "target": "A che ora aprite?",
+        "pronunciation": ["ah keh OH-rah ah-PREE-teh", "ah KAY oh-rah ah-PREE-teh"]
+    },
+    {
+        "source": "What time do you close?",
+        "target": "A che ora chiudete?",
+        "pronunciation": ["ah keh OH-rah kyoo-DEH-teh", "ahk KAY oh-rah kyoo-DEH-teh"]
+    },
+    {
+        "source": "Do you have a children's menu?",
+        "target": "Avete un menù per bambini?",
+        "pronunciation": ["ah-VEH-teh oon meh-NOO pehr bahm-BEE-nee", "ah-VAY-teh oo meh-NOO per bahm-BEE-nee"]
+    }
+],
     "Shopping (Food & Markets)": [
-        {
-            "source": "Where is the nearest supermarket?",
-            "target": "Dov'è il supermercato più vicino?",
-            "pronunciation": "doh-VAY ee soo-pehr-mehr-KAH-toh pyoo wee-CHEE-noh"
-        },
-        {
-            "source": "Where is the nearest bakery?",
-            "target": "Dov'è il panificio più vicino?",
-            "pronunciation": "doh-VEH eel pah-nee-FEE-choh pyoo vee-CHEE-noh"
-        },
-        {
-            "source": "Where is the nearest butcher?",
-            "target": "Dov'è la macelleria più vicina?",
-            "pronunciation": "doo-VEH lah mah-chehl-leh-REE-ah pyoo vee-CHEE-nah"
-        },
-        {
-            "source": "Where is the nearest greengrocer?",
-            "target": "Dov'è il fruttivendolo più vicino?",
-            "pronunciation": "DOO VY EE FROOT-TEE-VEHN-DOH-LOH PYOO VEE-CHEE-NOH"
-        },
-        {
-            "source": "Where is the nearest fishmonger?",
-            "target": "Dov'è la pescheria più vicina?",
-            "pronunciation": "doh-VEH la pehs-keh-REE-ah pyoo vee-CHEE-nah"
-        },
-        {
-            "source": "I would like half a kilo of apples, please",
-            "target": "Vorrei mezzo chilo di mele, per favore",
-            "pronunciation": "vor-RAY MED-zoh KEE-loh dee MEH-leh per fah-VOR-eh"
-        },
-        {
-            "source": "I would like a kilo of tomatoes, please",
-            "target": "Vorrei un chilo di pomodori, per favore",
-            "pronunciation": "vohr-RAY oon KEE-loh dee poh-moh-DOH-ree, pair-fah-VOH-ray"
-        },
-        {
-            "source": "Can I have two slices of ham, please?",
-            "target": "Posso avere due fette di prosciutto, per favore?",
-            "pronunciation": "POS-soh ah-VEH-ree DOO-eh FEHT-teh dee proh-SHOOT-toh pehr fah-VOH-reh"
-        },
-        {
-            "source": "Can I have 200 grams of cheese, please?",
-            "target": "Posso avere duecento grammi di formaggio, per favore?",
-            "pronunciation": "POS-soh ah-VEH-reh dway-CHEN-toh GRAHM-mee dee for-MAHD-joh per fah-VOH-reh"
-        },
-        {
-            "source": "Can I have a loaf of bread, please?",
-            "target": "Posso avere una pagnotta di pane, per favore?",
-            "pronunciation": "POS-soh ah-veh-ray nnah pa-NYAW-tah dee PAH-neh, per fah-VOH-reh?"
-        },
-        {
-            "source": "Can I have a bottle of olive oil, please?",
-            "target": "Posso avere una bottiglia di olio d'oliva, per favore?",
-            "pronunciation": "POS-soh ah-VEH-reh oo-nah boh-TEE-lyah dee OH-lyoh doh-LEE-vah, pehr fah-VOH-reh"
-        },
-        {
-            "source": "Can I have a bottle of wine, please?",
-            "target": "Posso avere una bottiglia di vino, per favore?",
-            "pronunciation": "POS-soh ah-VEH-reh OO-nah boo-TEEL-yah dee VEE-noh per fah-VOH-reh"
-        },
-        {
-            "source": "Do you sell fresh milk?",
-            "target": "Vendete latte fresco?",
-            "pronunciation": "vehn-DEH-teh LAHT-teh FRESH-koh"
-        },
-        {
-            "source": "Do you sell eggs?",
-            "target": "Vendete uova?",
-            "pronunciation": "vehn-DEE-teh WOH-vah"
-        },
-        {
-            "source": "Do you sell butter?",
-            "target": "Vendete burro?",
-            "pronunciation": "vehn-DEH-tee BOOR-ro"
-        },
-        {
-            "source": "Do you sell bottled water?",
-            "target": "Vendete acqua in bottiglia?",
-            "pronunciation": "vin-DEH-teh AH-kwah een bot-TEE-yeh"
-        },
-        {
-            "source": "Do you sell fresh fish?",
-            "target": "Vendete pesce fresco?",
-            "pronunciation": "veen-DEH-teh PEH-sheh FREH-skoh"
-        },
-        {
-            "source": "How much is this?",
-            "target": "Quanto costa questo?",
-            "pronunciation": "KWAHN-toh KOH-stah KWEES-toh"
-        },
-        {
-            "source": "How much are these?",
-            "target": "Quanto costano questi?",
-            "pronunciation": "KWAHN-toh KOH-stah-noh KWEHS-tee"
-        },
-        {
-            "source": "I would like a bag, please",
-            "target": "Vorrei una borsa, per favore",
-            "pronunciation": "vor-RAY oo-nah BOR-sah pehr fah-VOH-reh"
-        },
-        {
-            "source": "Can you give me a smaller one?",
-            "target": "Può darmi uno più piccolo?",
-            "pronunciation": "kwah-DAHR-mee OO-noh pryu PEEK-koh-loh"
-        },
-        {
-            "source": "Can you give me a bigger one?",
-            "target": "Può darmi uno più grande?",
-            "pronunciation": "pwaw DAR-mee OO-noh pyoo GRAHN-deh"
-        },
-        {
-            "source": "I don't need a bag, thank you",
-            "target": "Non mi serve una borsa, grazie",
-            "pronunciation": "noh mee SER-veh oo-nah BOR-sah, GRAHT-syeh"
-        },
-        {
-            "source": "Can I pay by card?",
-            "target": "Posso pagare con la carta?",
-            "pronunciation": "POS-soh pah-GAH-reh kohn lah KAR-tah"
-        },
-        {
-            "source": "Can I pay in cash?",
-            "target": "Posso pagare in contanti?",
-            "pronunciation": "POS-soh pah-GAH-reh in kohn-TAHN-tee"
-        },
-        {
-            "source": "Do you have change for a twenty?",
-            "target": "Ha il resto per una ventina?",
-            "pronunciation": "eye REH-stoh peh-roo-nah vain-TEE-nah"
-        },
-        {
-            "source": "That's too expensive",
-            "target": "È troppo caro",
-            "pronunciation": "ay TROHP-poh KAH-ro"
-        },
-        {
-            "source": "Can you make it cheaper?",
-            "target": "Può farmi uno sconto?",
-            "pronunciation": "woh FAR-mee oo-noh SKON-toh"
-        },
-        {
-            "source": "It's very fresh",
-            "target": "È molto fresco",
-            "pronunciation": "eh MOL-toh FRES-koh"
-        },
-        {
-            "source": "It looks delicious",
-            "target": "Sembra delizioso",
-            "pronunciation": "SEHM-brah deh-lee-TSYOH-zoh"
-        }
-    ],
+    {
+        "source": "Where is the nearest supermarket?",
+        "target": "Dov'è il supermercato più vicino?",
+        "pronunciation": ["doh-VEH eel soo-pehr-mehr-KAH-toh pyoo vee-CHEE-noh", "doh-VAY ee soo-pehr-mehr-KAH-toh pyoo wee-CHEE-noh"]
+    },
+    {
+        "source": "Where is the nearest bakery?",
+        "target": "Dov'è il panificio più vicino?",
+        "pronunciation": ["doh-VEH eel pah-nee-FEE-choh pyoo vee-CHEE-noh"]
+    },
+    {
+        "source": "Where is the nearest butcher?",
+        "target": "Dov'è la macelleria più vicina?",
+        "pronunciation": ["doh-VEH lah mah-chehl-leh-REE-ah pyoo vee-CHEE-nah", "doo-VEH lah mah-chehl-leh-REE-ah pyoo vee-CHEE-nah"]
+    },
+    {
+        "source": "Where is the nearest greengrocer?",
+        "target": "Dov'è il fruttivendolo più vicino?",
+        "pronunciation": ["doh-VEH eel froot-tee-VEHN-doh-loh pyoo vee-CHEE-noh", "DOO VY EE FROOT-TEE-VEHN-DOH-LOH PYOO VEE-CHEE-NOH"]
+    },
+    {
+        "source": "Where is the nearest fishmonger?",
+        "target": "Dov'è la pescheria più vicina?",
+        "pronunciation": ["doh-VEH lah peh-skeh-REE-ah pyoo vee-CHEE-nah", "doh-VEH la pehs-keh-REE-ah pyoo vee-CHEE-nah"]
+    },
+    {
+        "source": "I would like half a kilo of apples, please",
+        "target": "Vorrei mezzo chilo di mele, per favore",
+        "pronunciation": ["vohr-RAY MEHD-tsoh KEE-loh dee MEH-leh pehr fah-VOH-reh", "vor-RAY MED-zoh KEE-loh dee MEH-leh per fah-VOR-eh"]
+    },
+    {
+        "source": "I would like a kilo of tomatoes, please",
+        "target": "Vorrei un chilo di pomodori, per favore",
+        "pronunciation": ["vohr-RAY oon KEE-loh dee poh-moh-DOH-ree pehr fah-VOH-reh", "vohr-RAY oon KEE-loh dee poh-moh-DOH-ree, pair-fah-VOH-ray"]
+    },
+    {
+        "source": "Can I have two slices of ham, please?",
+        "target": "Posso avere due fette di prosciutto, per favore?",
+        "pronunciation": ["POHS-soh ah-VEH-reh DOO-eh FEHT-teh dee proh-SHOOT-toh pehr fah-VOH-reh", "POS-soh ah-VEH-ree DOO-eh FEHT-teh dee proh-SHOOT-toh pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Can I have 200 grams of cheese, please?",
+        "target": "Posso avere duecento grammi di formaggio, per favore?",
+        "pronunciation": ["POHS-soh ah-VEH-reh doo-eh-CHEHN-toh GRAHM-mee dee fohr-MAHD-joh pehr fah-VOH-reh", "POS-soh ah-VEH-reh dway-CHEN-toh GRAHM-mee dee for-MAHD-joh per fah-VOH-reh"]
+    },
+    {
+        "source": "Can I have a loaf of bread, please?",
+        "target": "Posso avere una pagnotta di pane, per favore?",
+        "pronunciation": ["POHS-soh ah-VEH-reh OO-nah pah-NYOHT-tah dee PAH-neh pehr fah-VOH-reh", "POS-soh ah-veh-ray nnah pa-NYAW-tah dee PAH-neh, per fah-VOH-reh?"]
+    },
+    {
+        "source": "Can I have a bottle of olive oil, please?",
+        "target": "Posso avere una bottiglia di olio d'oliva, per favore?",
+        "pronunciation": ["POHS-soh ah-VEH-reh OO-nah boht-TEEL-yah dee OH-lee-oh doh-LEE-vah pehr fah-VOH-reh", "POS-soh ah-VEH-reh oo-nah boh-TEE-lyah dee OH-lyoh doh-LEE-vah, pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Can I have a bottle of wine, please?",
+        "target": "Posso avere una bottiglia di vino, per favore?",
+        "pronunciation": ["POHS-soh ah-VEH-reh OO-nah boht-TEEL-yah dee VEE-noh pehr fah-VOH-reh", "POS-soh ah-VEH-reh OO-nah boo-TEEL-yah dee VEE-noh per fah-VOH-reh"]
+    },
+    {
+        "source": "Do you sell fresh milk?",
+        "target": "Vendete latte fresco?",
+        "pronunciation": ["vehn-DEH-teh LAHT-teh FREHS-koh", "vehn-DEH-teh LAHT-teh FRESH-koh"]
+    },
+    {
+        "source": "Do you sell eggs?",
+        "target": "Vendete uova?",
+        "pronunciation": ["vehn-DEH-teh WOH-vah", "vehn-DEE-teh WOH-vah"]
+    },
+    {
+        "source": "Do you sell butter?",
+        "target": "Vendete burro?",
+        "pronunciation": ["vehn-DEH-teh BOOR-roh", "vehn-DEH-tee BOOR-ro"]
+    },
+    {
+        "source": "Do you sell bottled water?",
+        "target": "Vendete acqua in bottiglia?",
+        "pronunciation": ["vehn-DEH-teh AHK-kwah een boht-TEEL-yah", "vin-DEH-teh AH-kwah een bot-TEE-yeh"]
+    },
+    {
+        "source": "Do you sell fresh fish?",
+        "target": "Vendete pesce fresco?",
+        "pronunciation": ["vehn-DEH-teh PEH-sheh FREHS-koh", "veen-DEH-teh PEH-sheh FREH-skoh"]
+    },
+    {
+        "source": "How much is this?",
+        "target": "Quanto costa questo?",
+        "pronunciation": ["KWAHN-toh KOH-stah KWEH-stoh", "KWAHN-toh KOH-stah KWEES-toh"]
+    },
+    {
+        "source": "How much are these?",
+        "target": "Quanto costano questi?",
+        "pronunciation": ["KWAHN-toh KOH-stah-noh KWEH-stee", "KWAHN-toh KOH-stah-noh KWEHS-tee"]
+    },
+    {
+        "source": "I would like a bag, please",
+        "target": "Vorrei una borsa, per favore",
+        "pronunciation": ["vohr-RAY OO-nah BOHR-sah pehr fah-VOH-reh", "vor-RAY oo-nah BOR-sah pehr fah-VOH-reh"]
+    },
+    {
+        "source": "Can you give me a smaller one?",
+        "target": "Può darmi uno più piccolo?",
+        "pronunciation": ["PWOH DAHR-mee OO-noh pyoo PEEK-koh-loh", "kwah-DAHR-mee OO-noh pryu PEEK-koh-loh"]
+    },
+    {
+        "source": "Can you give me a bigger one?",
+        "target": "Può darmi uno più grande?",
+        "pronunciation": ["PWOH DAHR-mee OO-noh pyoo GRAHN-deh", "pwaw DAR-mee OO-noh pyoo GRAHN-deh"]
+    },
+    {
+        "source": "I don't need a bag, thank you",
+        "target": "Non mi serve una borsa, grazie",
+        "pronunciation": ["nohn mee SEHR-veh OO-nah BOHR-sah GRAH-tsee-eh", "noh mee SER-veh oo-nah BOR-sah, GRAHT-syeh"]
+    },
+    {
+        "source": "Can I pay by card?",
+        "target": "Posso pagare con la carta?",
+        "pronunciation": ["POHS-soh pah-GAH-reh kohn lah KAHR-tah", "POS-soh pah-GAH-reh kohn lah KAR-tah"]
+    },
+    {
+        "source": "Can I pay in cash?",
+        "target": "Posso pagare in contanti?",
+        "pronunciation": ["POHS-soh pah-GAH-reh een kohn-TAHN-tee", "POS-soh pah-GAH-reh in kohn-TAHN-tee"]
+    },
+    {
+        "source": "Do you have change for a twenty?",
+        "target": "Ha il resto per una ventina?",
+        "pronunciation": ["ah eel REH-stoh pehr OO-nah vehn-TEE-nah", "eye REH-stoh peh-roo-nah vain-TEE-nah"]
+    },
+    {
+        "source": "That's too expensive",
+        "target": "È troppo caro",
+        "pronunciation": ["eh TROHP-poh KAH-roh", "ay TROHP-poh KAH-ro"]
+    },
+    {
+        "source": "Can you make it cheaper?",
+        "target": "Può farmi uno sconto?",
+        "pronunciation": ["PWOH FAHR-mee OO-noh SKOHN-toh", "woh FAR-mee oo-noh SKON-toh"]
+    },
+    {
+        "source": "It's very fresh",
+        "target": "È molto fresco",
+        "pronunciation": ["eh MOHL-toh FREHS-koh", "eh MOL-toh FRES-koh"]
+    },
+    {
+        "source": "It looks delicious",
+        "target": "Sembra delizioso",
+        "pronunciation": ["SEHM-brah deh-lee-tsee-OH-soh", "SEHM-brah deh-lee-TSYOH-zoh"]
+    }
+],
     "Health & Emergencies": [
-        {
-            "source": "Where is the nearest pharmacy?",
-            "target": "Dov'è la farmacia più vicina?",
-            "pronunciation": "DOO-veh lah fahr-mah-CHEE-ah pyoo vee-CHEE-nah"
-        },
-        {
-            "source": "Where is the nearest doctor?",
-            "target": "Dov'è il medico più vicino?",
-            "pronunciation": "doh-VEH eel MEH-dee-koh pyoo vee-CHEE-noh"
-        },
-        {
-            "source": "Where is the nearest clinic?",
-            "target": "Dov'è la clinica più vicina?",
-            "pronunciation": "DOH-veh lah KLEE-nee-kah pyoo vee-CHEE-nah"
-        },
-        {
-            "source": "I need a doctor (formal)",
-            "target": "Ho bisogno di un medico",
-            "pronunciation": "hoh bee-ZOH-nyoh dee oon MEH-dee-koh"
-        },
-        {
-            "source": "I need a pharmacy",
-            "target": "Ho bisogno di una farmacia",
-            "pronunciation": "hoh bee-ZOH-nyoh dee OO-nah far-mah-CHEE-ah"
-        },
-        {
-            "source": "I need some medicine",
-            "target": "Ho bisogno di una medicina",
-            "pronunciation": "hoh bee-ZOH-nyoh dee OO-nah meh-dee-CHEE-nah"
-        },
-        {
-            "source": "I have a headache",
-            "target": "Ho mal di testa",
-            "pronunciation": "hoh MAHL dee TEH-stah"
-        },
-        {
-            "source": "I have a stomach ache",
-            "target": "Ho mal di pancia",
-            "pronunciation": "hoh MAHL dee PAHN-chah"
-        },
-        {
-            "source": "I have a sore throat",
-            "target": "Ho mal di gola",
-            "pronunciation": "hoh MAHL dee GOH-lah"
-        },
-        {
-            "source": "I have a fever",
-            "target": "Ho la febbre",
-            "pronunciation": "hoh lah FEHB-reh"
-        },
-        {
-            "source": "I have a cough",
-            "target": "Ho la tosse",
-            "pronunciation": "hoh-lah TOOS-seh"
-        },
-        {
-            "source": "I feel sick",
-            "target": "Mi sento male",
-            "pronunciation": "mee SEHN-toh MAH-leh"
-        },
-        {
-            "source": "I feel dizzy",
-            "target": "Mi gira la testa",
-            "pronunciation": "mee JEE-rah lah TEH-stah"
-        },
-        {
-            "source": "I have an allergy",
-            "target": "Ho un'allergia",
-            "pronunciation": "hoh oo-nah l-air-JEE-ah"
-        },
-        {
-            "source": "I am allergic to...",
-            "target": "Sono allergico a...",
-            "pronunciation": "soh-noh ahl-LEHR-jee-koh ah"
-        },
-        {
-            "source": "Do you have something for sunburn?",
-            "target": "Avete qualcosa per le scottature?",
-            "pronunciation": "ah-VEE-teh kwahl-KOH-zah? PEHR leh skoht-tah-TOO-reh?"
-        },
-        {
-            "source": "Do you have something for insect bites?",
-            "target": "Avete qualcosa per le punture di insetti?",
-            "pronunciation": "ah-VEH-teh kwahl-KOH-zah PEHR leh poon-TOO-reh deen SEHK-tee"
-        },
-        {
-            "source": "Do you have plasters?",
-            "target": "Avete dei cerotti?",
-            "pronunciation": "ah-VAY-teh day cheh-ROHT-tee"
-        },
-        {
-            "source": "Do you have painkillers?",
-            "target": "Avete degli antidolorifici?",
-            "pronunciation": "ah-VEH-teh dehl-YAHN-tee-doh-loh-REE-fee-kee"
-        },
-        {
-            "source": "I need sunscreen",
-            "target": "Ho bisogno di crema solare",
-            "pronunciation": "hoh bee-ZOH-nyoh dee KREH-mah soh-LAH-reh"
-        },
-        {
-            "source": "Call the police",
-            "target": "Chiami la polizia",
-            "pronunciation": "kyah-mee lah poh-leet-SEE-ah"
-        },
-        {
-            "source": "Call an ambulance",
-            "target": "Chiami un'ambulanza",
-            "pronunciation": "KYAH-nee OO-ne ahm-boo-LAHN-tsah"
-        },
-        {
-            "source": "Call a taxi, please",
-            "target": "Chiami un taxi, per favore",
-            "pronunciation": "KYAH-mee OON TAHK-see tay fah-VOH-ray"
-        },
-        {
-            "source": "I have lost my passport",
-            "target": "Ho perso il passaporto",
-            "pronunciation": "hoh PEHR-soh eel pahs-sah-POHR-toh"
-        },
-        {
-            "source": "I have lost my wallet",
-            "target": "Ho perso il portafoglio",
-            "pronunciation": "hoh PEHR-soh eel pohr-tah-FOH-yoh"
-        },
-        {
-            "source": "I have lost my bag",
-            "target": "Ho perso la borsa",
-            "pronunciation": "hoh PEHR-soh lah BOHR-sah"
-        },
-        {
-            "source": "I need help (formal)",
-            "target": "Ho bisogno di aiuto",
-            "pronunciation": "hoh bee-ZOH-nyoh dee ah-YOO-toh"
-        },
-        {
-            "source": "Can you help me? (informal)",
-            "target": "Puoi aiutarmi?",
-            "pronunciation": "wah-yoo-TAHR-mee"
-        },
-        {
-            "source": "Can you help me? (formal)",
-            "target": "Può aiutarmi?",
-            "pronunciation": "PWOH ah-yoo-TAR-mee"
-        },
-        {
-            "source": "It's an emergency",
-            "target": "È un'emergenza",
-            "pronunciation": "EH-oo-NAY-mee-tah JEHN-sah"
-        }
-    ],
+    {
+        "source": "Where is the nearest pharmacy?",
+        "target": "Dov'è la farmacia più vicina?",
+        "pronunciation": ["doh-VEH lah fahr-mah-CHEE-ah pyoo vee-CHEE-nah", "DOO-veh lah fahr-mah-CHEE-ah pyoo vee-CHEE-nah"]
+    },
+    {
+        "source": "Where is the nearest doctor?",
+        "target": "Dov'è il medico più vicino?",
+        "pronunciation": ["doh-VEH eel MEH-dee-koh pyoo vee-CHEE-noh"]
+    },
+    {
+        "source": "Where is the nearest clinic?",
+        "target": "Dov'è la clinica più vicina?",
+        "pronunciation": ["doh-VEH lah KLEE-nee-kah pyoo vee-CHEE-nah", "DOH-veh lah KLEE-nee-kah pyoo vee-CHEE-nah"]
+    },
+    {
+        "source": "I need a doctor (formal)",
+        "target": "Ho bisogno di un medico",
+        "pronunciation": ["oh bee-ZOHN-yoh dee oon MEH-dee-koh", "hoh bee-ZOH-nyoh dee oon MEH-dee-koh"]
+    },
+    {
+        "source": "I need a pharmacy",
+        "target": "Ho bisogno di una farmacia",
+        "pronunciation": ["oh bee-ZOHN-yoh dee OO-nah fahr-mah-CHEE-ah", "hoh bee-ZOH-nyoh dee OO-nah far-mah-CHEE-ah"]
+    },
+    {
+        "source": "I need some medicine",
+        "target": "Ho bisogno di una medicina",
+        "pronunciation": ["oh bee-ZOHN-yoh dee OO-nah meh-dee-CHEE-nah", "hoh bee-ZOH-nyoh dee OO-nah meh-dee-CHEE-nah"]
+    },
+    {
+        "source": "I have a headache",
+        "target": "Ho mal di testa",
+        "pronunciation": ["oh mahl dee TEH-stah", "hoh MAHL dee TEH-stah"]
+    },
+    {
+        "source": "I have a stomach ache",
+        "target": "Ho mal di pancia",
+        "pronunciation": ["oh mahl dee PAHN-chah", "hoh MAHL dee PAHN-chah"]
+    },
+    {
+        "source": "I have a sore throat",
+        "target": "Ho mal di gola",
+        "pronunciation": ["oh mahl dee GOH-lah", "hoh MAHL dee GOH-lah"]
+    },
+    {
+        "source": "I have a fever",
+        "target": "Ho la febbre",
+        "pronunciation": ["oh lah FEHB-breh", "hoh lah FEHB-reh"]
+    },
+    {
+        "source": "I have a cough",
+        "target": "Ho la tosse",
+        "pronunciation": ["oh lah TOHS-seh", "hoh-lah TOOS-seh"]
+    },
+    {
+        "source": "I feel sick",
+        "target": "Mi sento male",
+        "pronunciation": ["mee SEHN-toh MAH-leh"]
+    },
+    {
+        "source": "I feel dizzy",
+        "target": "Mi gira la testa",
+        "pronunciation": ["mee JEE-rah lah TEH-stah"]
+    },
+    {
+        "source": "I have an allergy",
+        "target": "Ho un'allergia",
+        "pronunciation": ["oh oo-nahl-lehr-JEE-ah", "hoh oo-nah l-air-JEE-ah"]
+    },
+    {
+        "source": "I am allergic to...",
+        "target": "Sono allergico a...",
+        "pronunciation": ["SOH-noh ahl-LEHR-jee-koh ah", "soh-noh ahl-LEHR-jee-koh ah"]
+    },
+    {
+        "source": "Do you have something for sunburn?",
+        "target": "Avete qualcosa per le scottature?",
+        "pronunciation": ["ah-VEH-teh kwahl-KOH-sah pehr leh skoht-tah-TOO-reh", "ah-VEE-teh kwahl-KOH-zah? PEHR leh skoht-tah-TOO-reh?"]
+    },
+    {
+        "source": "Do you have something for insect bites?",
+        "target": "Avete qualcosa per le punture di insetti?",
+        "pronunciation": ["ah-VEH-teh kwahl-KOH-sah pehr leh poon-TOO-reh dee een-SEHT-tee", "ah-VEH-teh kwahl-KOH-zah PEHR leh poon-TOO-reh deen SEHK-tee"]
+    },
+    {
+        "source": "Do you have plasters?",
+        "target": "Avete dei cerotti?",
+        "pronunciation": ["ah-VEH-teh day cheh-ROHT-tee", "ah-VAY-teh day cheh-ROHT-tee"]
+    },
+    {
+        "source": "Do you have painkillers?",
+        "target": "Avete degli antidolorifici?",
+        "pronunciation": ["ah-VEH-teh dehl-yee ahn-tee-doh-loh-REE-fee-chee", "ah-VEH-teh dehl-YAHN-tee-doh-loh-REE-fee-kee"]
+    },
+    {
+        "source": "I need sunscreen",
+        "target": "Ho bisogno di crema solare",
+        "pronunciation": ["oh bee-ZOHN-yoh dee KREH-mah soh-LAH-reh", "hoh bee-ZOH-nyoh dee KREH-mah soh-LAH-reh"]
+    },
+    {
+        "source": "Call the police",
+        "target": "Chiami la polizia",
+        "pronunciation": ["KYAH-mee lah poh-lee-TSEE-ah", "kyah-mee lah poh-leet-SEE-ah"]
+    },
+    {
+        "source": "Call an ambulance",
+        "target": "Chiami un'ambulanza",
+        "pronunciation": ["KYAH-mee oo-nahm-boo-LAHN-tsah", "KYAH-nee OO-ne ahm-boo-LAHN-tsah"]
+    },
+    {
+        "source": "Call a taxi, please",
+        "target": "Chiami un taxi, per favore",
+        "pronunciation": ["KYAH-mee oon TAHK-see pehr fah-VOH-reh", "KYAH-mee OON TAHK-see tay fah-VOH-ray"]
+    },
+    {
+        "source": "I have lost my passport",
+        "target": "Ho perso il passaporto",
+        "pronunciation": ["oh PEHR-soh eel pahs-sah-POHR-toh", "hoh PEHR-soh eel pahs-sah-POHR-toh"]
+    },
+    {
+        "source": "I have lost my wallet",
+        "target": "Ho perso il portafoglio",
+        "pronunciation": ["oh PEHR-soh eel pohr-tah-FOHL-yoh", "hoh PEHR-soh eel pohr-tah-FOH-yoh"]
+    },
+    {
+        "source": "I have lost my bag",
+        "target": "Ho perso la borsa",
+        "pronunciation": ["oh PEHR-soh lah BOHR-sah", "hoh PEHR-soh lah BOHR-sah"]
+    },
+    {
+        "source": "I need help (formal)",
+        "target": "Ho bisogno di aiuto",
+        "pronunciation": ["oh bee-ZOHN-yoh dee ah-YOO-toh", "hoh bee-ZOH-nyoh dee ah-YOO-toh"]
+    },
+    {
+        "source": "Can you help me? (informal)",
+        "target": "Puoi aiutarmi?",
+        "pronunciation": ["PWOH-ee ah-yoo-TAHR-mee", "wah-yoo-TAHR-mee"]
+    },
+    {
+        "source": "Can you help me? (formal)",
+        "target": "Può aiutarmi?",
+        "pronunciation": ["PWOH ah-yoo-TAHR-mee", "PWOH ah-yoo-TAR-mee"]
+    },
+    {
+        "source": "It's an emergency",
+        "target": "È un'emergenza",
+        "pronunciation": ["eh oo-neh-mehr-JEHN-tsah", "EH-oo-NAY-mee-tah JEHN-sah"]
+    }
+],
     "Sightseeing & Activities": [
-        {
-            "source": "Where is the tourist information office?",
-            "target": "Dov'è l'ufficio turistico?",
-            "pronunciation": "doo-VEH loo-FEE-choh too-REE-stee-koh"
-        },
-        {
-            "source": "Where can I buy tickets for the museum?",
-            "target": "Dove posso comprare i biglietti per il museo?",
-            "pronunciation": "DOH-veh PAW-ssaw kohm-PRAH-ray ee beel-YEHT-tee PEHR ahy moo-ZEH-oh"
-        },
-        {
-            "source": "Where can I buy tickets for the bus tour?",
-            "target": "Dove posso comprare i biglietti per il tour in autobus?",
-            "pronunciation": "DOO-vee PAW-sso kohm-PRAH-reh ee beel-YEHT-tee peh-REEL TOOR een OW-toh-boos"
-        },
-        {
-            "source": "Is there a guided tour?",
-            "target": "C'è una visita guidata?",
-            "pronunciation": "cheh oo-NAH VEE-zee-tah gwee-DAH-tah"
-        },
-        {
-            "source": "What time does it open?",
-            "target": "A che ora apre?",
-            "pronunciation": "ah kee OH-rah AH-breh"
-        },
-        {
-            "source": "What time does it close?",
-            "target": "A che ora chiude?",
-            "pronunciation": "ah kee OH-rah kee-OO-deh"
-        },
-        {
-            "source": "How much is the entrance fee?",
-            "target": "Quanto costa l'ingresso?",
-            "pronunciation": "KWAHN-toh KAW-stah leen-GREHS-soh"
-        },
-        {
-            "source": "Are there discounts for children?",
-            "target": "Ci sono sconti per i bambini?",
-            "pronunciation": "chee SOH-noh SKOHN-tee PEH-ree bahm-BEE-nee"
-        },
-        {
-            "source": "Are there discounts for students?",
-            "target": "Ci sono sconti per studenti?",
-            "pronunciation": "chee SOH-noh SKOHN-tee pehr stoo-DEHN-tee"
-        },
-        {
-            "source": "Are there discounts for seniors?",
-            "target": "Ci sono sconti per anziani?",
-            "pronunciation": "chee SOH-noh SKOHN-tee peh-rahn-TSEE-ah-nee"
-        },
-        {
-            "source": "Where is the beach?",
-            "target": "Dov'è la spiaggia?",
-            "pronunciation": "doo-VEH lah SPYAH-jah"
-        },
-        {
-            "source": "Is it safe to swim here?",
-            "target": "È sicuro nuotare qui?",
-            "pronunciation": "ay see-KOO-roh, nwah-TAH-reh kwee"
-        },
-        {
-            "source": "Can I rent a sunbed?",
-            "target": "Posso noleggiare un lettino?",
-            "pronunciation": "POS-soh noh-leh-JAH-reh oon leht-TEE-noh"
-        },
-        {
-            "source": "Can I rent an umbrella?",
-            "target": "Posso noleggiare un ombrellone?",
-            "pronunciation": "POS-soh noh-LEHJ-jah-reh oon ohm-brehl-LOH-neh"
-        },
-        {
-            "source": "Can I rent a bicycle?",
-            "target": "Posso noleggiare una bicicletta?",
-            "pronunciation": "POS-soh noh-LEH-jah-reh oo-nah bee-chee-KLEHT-tah"
-        },
-        {
-            "source": "Can I rent a boat?",
-            "target": "Posso noleggiare una barca?",
-            "pronunciation": "POS-soh noh-leh-JAH-reh OO-nah BAHR-kah"
-        },
-        {
-            "source": "How long is the tour?",
-            "target": "Quanto dura la visita?",
-            "pronunciation": "KWAHN-toh DOO-rah lah VEE-zee-tah"
-        },
-        {
-            "source": "Can I take photos?",
-            "target": "Posso fare foto?",
-            "pronunciation": "POS-soh fah-ree FOH-toh"
-        },
-        {
-            "source": "Are we allowed to film?",
-            "target": "Possiamo filmare?",
-            "pronunciation": "poh-SYAH-moh fil-MAH-reh"
-        },
-        {
-            "source": "Where can I park?",
-            "target": "Dove posso parcheggiare?",
-            "pronunciation": "DOH-vee PAHS-soh pahr-kehd-JAH-reh"
-        },
-        {
-            "source": "Where is the nearest toilet?",
-            "target": "Dov'è il bagno più vicino?",
-            "pronunciation": "doo-VEH eel BAH-nyoh pyoo vee-CHEE-noh"
-        },
-        {
-            "source": "Is there a café nearby?",
-            "target": "C'è un bar qui vicino?",
-            "pronunciation": "CHAY-oon BAR KWEE vee-CHEE-no"
-        },
-        {
-            "source": "Is there a souvenir shop nearby?",
-            "target": "C'è un negozio di souvenir qui vicino?",
-            "pronunciation": "CHO neh-GOH-tsyoh dee soh-veh-NYEER kwee vee-CHEE-no"
-        },
-        {
-            "source": "Where is the ticket office?",
-            "target": "Dov'è la biglietteria?",
-            "pronunciation": "doo VELL lah beel-yeht-teh-REE-ah"
-        },
-        {
-            "source": "When does the last bus leave?",
-            "target": "Quando parte l'ultimo autobus?",
-            "pronunciation": "KWAN-doh PAR-teh LOOL-tee-moh OW-toh-BOOS"
-        },
-        {
-            "source": "When does the last train leave?",
-            "target": "Quando parte l'ultimo treno?",
-            "pronunciation": "KWAHN-doh PAHR-teh LOO-ee-tee-moh TREH-no"
-        },
-        {
-            "source": "It's beautiful here",
-            "target": "È bellissimo qui",
-            "pronunciation": "ehb-bell-EESS-see-moh kwee"
-        },
-        {
-            "source": "I like this view",
-            "target": "Mi piace questa vista",
-            "pronunciation": "mee PYA-chay KWE-stah VEE-stah"
-        },
-        {
-            "source": "We are enjoying our holiday",
-            "target": "Ci stiamo godendo la vacanza",
-            "pronunciation": "chee STYAH-moh goh-DEHN-doh lah vah-KAHN-tsah"
-        },
-        {
-            "source": "I would like a map, please",
-            "target": "Vorrei una mappa, per favore",
-            "pronunciation": "vohr-RAY oo-nah MAHP-pah pehr fah-VOH-reh"
-        }
-    ],
+    {
+        "source": "Where is the tourist information office?",
+        "target": "Dov'è l'ufficio turistico?",
+        "pronunciation": ["doh-VEH loof-FEE-choh too-REE-stee-koh", "doo-VEH loo-FEE-choh too-REE-stee-koh"]
+    },
+    {
+        "source": "Where can I buy tickets for the museum?",
+        "target": "Dove posso comprare i biglietti per il museo?",
+        "pronunciation": ["DOH-veh POHS-soh kohm-PRAH-reh ee bee-LYEHT-tee pehr eel moo-ZEH-oh", "DOH-veh PAW-ssaw kohm-PRAH-ray ee beel-YEHT-tee PEHR ahy moo-ZEH-oh"]
+    },
+    {
+        "source": "Where can I buy tickets for the bus tour?",
+        "target": "Dove posso comprare i biglietti per il tour in autobus?",
+        "pronunciation": ["DOH-veh POHS-soh kohm-PRAH-reh ee bee-LYEHT-tee pehr eel TOOR een ah-OOH-toh-boos", "DOO-vee PAW-sso kohm-PRAH-reh ee beel-YEHT-tee peh-REEL TOOR een OW-toh-boos"]
+    },
+    {
+        "source": "Is there a guided tour?",
+        "target": "C'è una visita guidata?",
+        "pronunciation": ["cheh OO-nah VEE-zee-tah gwee-DAH-tah", "cheh oo-NAH VEE-zee-tah gwee-DAH-tah"]
+    },
+    {
+        "source": "What time does it open?",
+        "target": "A che ora apre?",
+        "pronunciation": ["ah keh OH-rah AH-preh", "ah kee OH-rah AH-breh"]
+    },
+    {
+        "source": "What time does it close?",
+        "target": "A che ora chiude?",
+        "pronunciation": ["ah keh OH-rah KYOO-deh", "ah kee OH-rah kee-OO-deh"]
+    },
+    {
+        "source": "How much is the entrance fee?",
+        "target": "Quanto costa l'ingresso?",
+        "pronunciation": ["KWAHN-toh KOH-stah leen-GREHS-soh", "KWAHN-toh KAW-stah leen-GREHS-soh"]
+    },
+    {
+        "source": "Are there discounts for children?",
+        "target": "Ci sono sconti per i bambini?",
+        "pronunciation": ["chee SOH-noh SKOHN-tee pehr ee bahm-BEE-nee", "chee SOH-noh SKOHN-tee PEH-ree bahm-BEE-nee"]
+    },
+    {
+        "source": "Are there discounts for students?",
+        "target": "Ci sono sconti per studenti?",
+        "pronunciation": ["chee SOH-noh SKOHN-tee pehr stoo-DEHN-tee"]
+    },
+    {
+        "source": "Are there discounts for seniors?",
+        "target": "Ci sono sconti per anziani?",
+        "pronunciation": ["chee SOH-noh SKOHN-tee pehr ahn-tsee-AH-nee", "chee SOH-noh SKOHN-tee peh-rahn-TSEE-ah-nee"]
+    },
+    {
+        "source": "Where is the beach?",
+        "target": "Dov'è la spiaggia?",
+        "pronunciation": ["doh-VEH lah spee-AHD-jah", "doo-VEH lah SPYAH-jah"]
+    },
+    {
+        "source": "Is it safe to swim here?",
+        "target": "È sicuro nuotare qui?",
+        "pronunciation": ["eh see-KOO-roh nwoh-TAH-reh kwee", "ay see-KOO-roh, nwah-TAH-reh kwee"]
+    },
+    {
+        "source": "Can I rent a sunbed?",
+        "target": "Posso noleggiare un lettino?",
+        "pronunciation": ["POHS-soh noh-lehd-JAH-reh oon leht-TEE-noh", "POS-soh noh-leh-JAH-reh oon leht-TEE-noh"]
+    },
+    {
+        "source": "Can I rent an umbrella?",
+        "target": "Posso noleggiare un ombrellone?",
+        "pronunciation": ["POHS-soh noh-lehd-JAH-reh oon ohm-brehl-LOH-neh", "POS-soh noh-LEHJ-jah-reh oon ohm-brehl-LOH-neh"]
+    },
+    {
+        "source": "Can I rent a bicycle?",
+        "target": "Posso noleggiare una bicicletta?",
+        "pronunciation": ["POHS-soh noh-lehd-JAH-reh OO-nah bee-chee-KLEHT-tah", "POS-soh noh-LEH-jah-reh oo-nah bee-chee-KLEHT-tah"]
+    },
+    {
+        "source": "Can I rent a boat?",
+        "target": "Posso noleggiare una barca?",
+        "pronunciation": ["POHS-soh noh-lehd-JAH-reh OO-nah BAHR-kah", "POS-soh noh-leh-JAH-reh OO-nah BAHR-kah"]
+    },
+    {
+        "source": "How long is the tour?",
+        "target": "Quanto dura la visita?",
+        "pronunciation": ["KWAHN-toh DOO-rah lah VEE-zee-tah"]
+    },
+    {
+        "source": "Can I take photos?",
+        "target": "Posso fare foto?",
+        "pronunciation": ["POHS-soh FAH-reh FOH-toh", "POS-soh fah-ree FOH-toh"]
+    },
+    {
+        "source": "Are we allowed to film?",
+        "target": "Possiamo filmare?",
+        "pronunciation": ["pohs-see-AH-moh feel-MAH-reh", "poh-SYAH-moh fil-MAH-reh"]
+    },
+    {
+        "source": "Where can I park?",
+        "target": "Dove posso parcheggiare?",
+        "pronunciation": ["DOH-veh POHS-soh pahr-kehd-JAH-reh", "DOH-vee PAHS-soh pahr-kehd-JAH-reh"]
+    },
+    {
+        "source": "Where is the nearest toilet?",
+        "target": "Dov'è il bagno più vicino?",
+        "pronunciation": ["doh-VEH eel BAH-nyoh pyoo vee-CHEE-noh", "doo-VEH eel BAH-nyoh pyoo vee-CHEE-noh"]
+    },
+    {
+        "source": "Is there a café nearby?",
+        "target": "C'è un bar qui vicino?",
+        "pronunciation": ["cheh oon bahr kwee vee-CHEE-noh", "CHAY-oon BAR KWEE vee-CHEE-no"]
+    },
+    {
+        "source": "Is there a souvenir shop nearby?",
+        "target": "C'è un negozio di souvenir qui vicino?",
+        "pronunciation": ["cheh oon neh-GOH-tsyoh dee soo-veh-NEER kwee vee-CHEE-noh", "CHO neh-GOH-tsyoh dee soh-veh-NYEER kwee vee-CHEE-no"]
+    },
+    {
+        "source": "Where is the ticket office?",
+        "target": "Dov'è la biglietteria?",
+        "pronunciation": ["doh-VEH lah bee-lyeht-teh-REE-ah", "doo VELL lah beel-yeht-teh-REE-ah"]
+    },
+    {
+        "source": "When does the last bus leave?",
+        "target": "Quando parte l'ultimo autobus?",
+        "pronunciation": ["KWAHN-doh PAHR-teh LOOL-tee-moh ah-OOH-toh-boos", "KWAN-doh PAR-teh LOOL-tee-moh OW-toh-BOOS"]
+    },
+    {
+        "source": "When does the last train leave?",
+        "target": "Quando parte l'ultimo treno?",
+        "pronunciation": ["KWAHN-doh PAHR-teh LOOL-tee-moh TREH-noh", "KWAHN-doh PAHR-teh LOO-ee-tee-moh TREH-no"]
+    },
+    {
+        "source": "It's beautiful here",
+        "target": "È bellissimo qui",
+        "pronunciation": ["eh behl-LEES-see-moh kwee", "ehb-bell-EESS-see-moh kwee"]
+    },
+    {
+        "source": "I like this view",
+        "target": "Mi piace questa vista",
+        "pronunciation": ["mee pee-AH-cheh KWEH-stah VEE-stah", "mee PYA-chay KWE-stah VEE-stah"]
+    },
+    {
+        "source": "We are enjoying our holiday",
+        "target": "Ci stiamo godendo la vacanza",
+        "pronunciation": ["chee stee-AH-moh goh-DEHN-doh lah vah-KAHN-tsah", "chee STYAH-moh goh-DEHN-doh lah vah-KAHN-tsah"]
+    },
+    {
+        "source": "I would like a map, please",
+        "target": "Vorrei una mappa, per favore",
+        "pronunciation": ["vohr-RAY OO-nah MAHP-pah pehr fah-VOH-reh", "vohr-RAY oo-nah MAHP-pah pehr fah-VOH-reh"]
+    }
+],
     "Numbers": [
-        {
-            "source": "Zero",
-            "target": "Zero",
-            "pronunciation": "een KAHZAH dhi AHmeechee"
-        },
-        {
-            "source": "One",
-            "target": "Uno",
-            "pronunciation": "OO-noo"
-        },
-        {
-            "source": "Two",
-            "target": "Due",
-            "pronunciation": "DOO-eh"
-        },
-        {
-            "source": "Three",
-            "target": "Tre",
-            "pronunciation": "EE treh"
-        },
-        {
-            "source": "Four",
-            "target": "Quattro",
-            "pronunciation": "KWAHT-troh"
-        },
-        {
-            "source": "Five",
-            "target": "Cinque",
-            "pronunciation": "CHEEN-kweh"
-        },
-        {
-            "source": "Six",
-            "target": "Sei",
-            "pronunciation": "SEH-ee"
-        },
-        {
-            "source": "Seven",
-            "target": "Sette",
-            "pronunciation": "SEHT-teh"
-        },
-        {
-            "source": "Eight",
-            "target": "Otto",
-            "pronunciation": "OH-to"
-        },
-        {
-            "source": "Nine",
-            "target": "Nove",
-            "pronunciation": "NOH-veh"
-        },
-        {
-            "source": "Ten",
-            "target": "Dieci",
-            "pronunciation": "DYEH-chee"
-        },
-        {
-            "source": "Eleven",
-            "target": "Undici",
-            "pronunciation": "OON-dee-chee"
-        },
-        {
-            "source": "Twelve",
-            "target": "Dodici",
-            "pronunciation": "DOH-dee-chee"
-        },
-        {
-            "source": "Thirteen",
-            "target": "Tredici",
-            "pronunciation": "RAY-dee-chee"
-        },
-        {
-            "source": "Fourteen",
-            "target": "Quattordici",
-            "pronunciation": "kwah-TOR-dee-chee"
-        },
-        {
-            "source": "Fifteen",
-            "target": "Quindici",
-            "pronunciation": "KWEEN-dee-chee"
-        },
-        {
-            "source": "Sixteen",
-            "target": "Sedici",
-            "pronunciation": "veh-DOO-chee-SEE-ah-stee"
-        },
-        {
-            "source": "Seventeen",
-            "target": "Diciassette",
-            "pronunciation": "dee-chah-SET-teh"
-        },
-        {
-            "source": "Eighteen",
-            "target": "Diciotto",
-            "pronunciation": "dee-CHAWT-toh"
-        },
-        {
-            "source": "Nineteen",
-            "target": "Diciannove",
-            "pronunciation": "dee-chah-NOH-veh"
-        },
-        {
-            "source": "Twenty",
-            "target": "Venti",
-            "pronunciation": "VEN-tee"
-        },
-        {
-            "source": "Thirty",
-            "target": "Trenta",
-            "pronunciation": "TREHN-tah"
-        },
-        {
-            "source": "Forty",
-            "target": "Quaranta",
-            "pronunciation": "kwah-RAHN-tah"
-        },
-        {
-            "source": "Fifty",
-            "target": "Cinquanta",
-            "pronunciation": "cheen-KWAHN-tah"
-        },
-        {
-            "source": "Sixty",
-            "target": "Sessanta",
-            "pronunciation": "see-SAHN-tah"
-        },
-        {
-            "source": "Seventy",
-            "target": "Settanta",
-            "pronunciation": "see-TAHN-tah"
-        },
-        {
-            "source": "Eighty",
-            "target": "Ottanta",
-            "pronunciation": "oh-TAHN-tah"
-        },
-        {
-            "source": "Ninety",
-            "target": "Novanta",
-            "pronunciation": "noh-VAHN-tah"
-        },
-        {
-            "source": "One hundred",
-            "target": "Cento",
-            "pronunciation": "EH-oh chee PROH-voh."
-        },
-        {
-            "source": "How much does it cost?",
-            "target": "Quanto costa?",
-            "pronunciation": "KWAHN-toh KAW-stah"
-        }
-    ],
+    {
+        "source": "Zero",
+        "target": "Zero",
+        "pronunciation": ["DZEH-roh", "een KAHZAH dhi AHmeechee"]
+    },
+    {
+        "source": "One",
+        "target": "Uno",
+        "pronunciation": ["OO-noh", "OO-noo"]
+    },
+    {
+        "source": "Two",
+        "target": "Due",
+        "pronunciation": ["DOO-eh"]
+    },
+    {
+        "source": "Three",
+        "target": "Tre",
+        "pronunciation": ["treh", "EE treh"]
+    },
+    {
+        "source": "Four",
+        "target": "Quattro",
+        "pronunciation": ["KWAHT-troh"]
+    },
+    {
+        "source": "Five",
+        "target": "Cinque",
+        "pronunciation": ["CHEEN-kweh"]
+    },
+    {
+        "source": "Six",
+        "target": "Sei",
+        "pronunciation": ["say", "SEH-ee"]
+    },
+    {
+        "source": "Seven",
+        "target": "Sette",
+        "pronunciation": ["SEHT-teh"]
+    },
+    {
+        "source": "Eight",
+        "target": "Otto",
+        "pronunciation": ["OHT-toh", "OH-to"]
+    },
+    {
+        "source": "Nine",
+        "target": "Nove",
+        "pronunciation": ["NOH-veh"]
+    },
+    {
+        "source": "Ten",
+        "target": "Dieci",
+        "pronunciation": ["dee-EH-chee", "DYEH-chee"]
+    },
+    {
+        "source": "Eleven",
+        "target": "Undici",
+        "pronunciation": ["OON-dee-chee"]
+    },
+    {
+        "source": "Twelve",
+        "target": "Dodici",
+        "pronunciation": ["DOH-dee-chee"]
+    },
+    {
+        "source": "Thirteen",
+        "target": "Tredici",
+        "pronunciation": ["TREH-dee-chee", "RAY-dee-chee"]
+    },
+    {
+        "source": "Fourteen",
+        "target": "Quattordici",
+        "pronunciation": ["kwaht-TOHR-dee-chee", "kwah-TOR-dee-chee"]
+    },
+    {
+        "source": "Fifteen",
+        "target": "Quindici",
+        "pronunciation": ["KWEEN-dee-chee"]
+    },
+    {
+        "source": "Sixteen",
+        "target": "Sedici",
+        "pronunciation": ["SEH-dee-chee", "veh-DOO-chee-SEE-ah-stee"]
+    },
+    {
+        "source": "Seventeen",
+        "target": "Diciassette",
+        "pronunciation": ["dee-chahs-SEHT-teh", "dee-chah-SET-teh"]
+    },
+    {
+        "source": "Eighteen",
+        "target": "Diciotto",
+        "pronunciation": ["dee-CHOHT-toh", "dee-CHAWT-toh"]
+    },
+    {
+        "source": "Nineteen",
+        "target": "Diciannove",
+        "pronunciation": ["dee-chahn-NOH-veh", "dee-chah-NOH-veh"]
+    },
+    {
+        "source": "Twenty",
+        "target": "Venti",
+        "pronunciation": ["VEHN-tee", "VEN-tee"]
+    },
+    {
+        "source": "Thirty",
+        "target": "Trenta",
+        "pronunciation": ["TREHN-tah"]
+    },
+    {
+        "source": "Forty",
+        "target": "Quaranta",
+        "pronunciation": ["kwah-RAHN-tah"]
+    },
+    {
+        "source": "Fifty",
+        "target": "Cinquanta",
+        "pronunciation": ["cheen-KWAHN-tah"]
+    },
+    {
+        "source": "Sixty",
+        "target": "Sessanta",
+        "pronunciation": ["sehs-SAHN-tah", "see-SAHN-tah"]
+    },
+    {
+        "source": "Seventy",
+        "target": "Settanta",
+        "pronunciation": ["seht-TAHN-tah", "see-TAHN-tah"]
+    },
+    {
+        "source": "Eighty",
+        "target": "Ottanta",
+        "pronunciation": ["oht-TAHN-tah", "oh-TAHN-tah"]
+    },
+    {
+        "source": "Ninety",
+        "target": "Novanta",
+        "pronunciation": ["noh-VAHN-tah"]
+    },
+    {
+        "source": "One hundred",
+        "target": "Cento",
+        "pronunciation": ["CHEHN-toh", "EH-oh chee PROH-voh."]
+    },
+    {
+        "source": "How much does it cost?",
+        "target": "Quanto costa?",
+        "pronunciation": ["KWAHN-toh KOH-stah", "KWAHN-toh KAW-stah"]
+    }
+],
     "Dates & Time": [
-        {
-            "source": "Monday",
-            "target": "Lunedì",
-            "pronunciation": "loo-NEH-dee"
-        },
-        {
-            "source": "Tuesday",
-            "target": "Martedì",
-            "pronunciation": "mar-teh-DEE"
-        },
-        {
-            "source": "Wednesday",
-            "target": "Mercoledì",
-            "pronunciation": "meer-koh-leh-DEE"
-        },
-        {
-            "source": "Thursday",
-            "target": "Giovedì",
-            "pronunciation": "joh-veh-DEE"
-        },
-        {
-            "source": "Friday",
-            "target": "Venerdì",
-            "pronunciation": "VAY-nair-DEE"
-        },
-        {
-            "source": "Saturday",
-            "target": "Sabato",
-            "pronunciation": "SAH-bah-toh"
-        },
-        {
-            "source": "Sunday",
-            "target": "Domenica",
-            "pronunciation": "doh-MEH-nee-kah"
-        },
-        {
-            "source": "January",
-            "target": "Gennaio",
-            "pronunciation": "jin-NYAH-yoh"
-        },
-        {
-            "source": "February",
-            "target": "Febbraio",
-            "pronunciation": "fehb-RAH-yoh"
-        },
-        {
-            "source": "March",
-            "target": "Marzo",
-            "pronunciation": "MAR-tso"
-        },
-        {
-            "source": "April",
-            "target": "Aprile",
-            "pronunciation": "ah-PREE-leh"
-        },
-        {
-            "source": "May",
-            "target": "Maggio",
-            "pronunciation": "MAH-joh"
-        },
-        {
-            "source": "June",
-            "target": "Giugno",
-            "pronunciation": "JOON-yoh"
-        },
-        {
-            "source": "July",
-            "target": "Luglio",
-            "pronunciation": "LOO-lyoh"
-        },
-        {
-            "source": "August",
-            "target": "Agosto",
-            "pronunciation": "ah-GOH-stoh"
-        },
-        {
-            "source": "September",
-            "target": "Settembre",
-            "pronunciation": "seh-TEM-breh"
-        },
-        {
-            "source": "October",
-            "target": "Ottobre",
-            "pronunciation": "OH-toh-breh"
-        },
-        {
-            "source": "November",
-            "target": "Novembre",
-            "pronunciation": "noh-VEHM-breh"
-        },
-        {
-            "source": "December",
-            "target": "Dicembre",
-            "pronunciation": "dee-CHAYM-bray"
-        },
-        {
-            "source": "What day is it today?",
-            "target": "Che giorno è oggi?",
-            "pronunciation": "too-JOR-noh EH OH-jee"
-        },
-        {
-            "source": "What is the date today?",
-            "target": "Qual è la data di oggi?",
-            "pronunciation": "wah-LEH lah DAH-tah dee OJ-jee"
-        },
-        {
-            "source": "Today is the first of July",
-            "target": "Oggi è il primo luglio",
-            "pronunciation": "OHJ-jee ay PREE-moh LOOL-yoh"
-        },
-        {
-            "source": "Today is the second of August",
-            "target": "Oggi è il due agosto",
-            "pronunciation": "OHJ-ee eh-eel DOO-eh ah-GOH-stoh"
-        },
-        {
-            "source": "Today is the third of September",
-            "target": "Oggi è il tre settembre",
-            "pronunciation": "AH-jee ehyl TREH seht-TEHM-breh"
-        },
-        {
-            "source": "What time is it?",
-            "target": "Che ore sono?",
-            "pronunciation": "tay OH reh SOH noh"
-        },
-        {
-            "source": "It is one o'clock",
-            "target": "È l'una",
-            "pronunciation": "eh LOON-ah"
-        },
-        {
-            "source": "It is half past two",
-            "target": "Sono le due e mezza",
-            "pronunciation": "soh-noh lee DOO-eh eh MEHD-zah"
-        },
-        {
-            "source": "It is quarter past three",
-            "target": "Sono le tre e un quarto",
-            "pronunciation": "SOH-noh lee TREH eh oon KWAHR-toh"
-        },
-        {
-            "source": "It is quarter to four",
-            "target": "Sono le quattro meno un quarto",
-            "pronunciation": "SOH-noh leh KWAHT-troh MEH-noh oon KWAHR-toh"
-        },
-        {
-            "source": "At what time does it open?",
-            "target": "A che ora apre?",
-            "pronunciation": "ah kee OH-rah AH-breh"
-        }
-    ],
+    {
+        "source": "Monday",
+        "target": "Lunedì",
+        "pronunciation": ["loo-neh-DEE", "loo-NEH-dee"]
+    },
+    {
+        "source": "Tuesday",
+        "target": "Martedì",
+        "pronunciation": ["mahr-teh-DEE", "mar-teh-DEE"]
+    },
+    {
+        "source": "Wednesday",
+        "target": "Mercoledì",
+        "pronunciation": ["mehr-koh-leh-DEE", "meer-koh-leh-DEE"]
+    },
+    {
+        "source": "Thursday",
+        "target": "Giovedì",
+        "pronunciation": ["joh-veh-DEE"]
+    },
+    {
+        "source": "Friday",
+        "target": "Venerdì",
+        "pronunciation": ["veh-nehr-DEE", "VAY-nair-DEE"]
+    },
+    {
+        "source": "Saturday",
+        "target": "Sabato",
+        "pronunciation": ["SAH-bah-toh"]
+    },
+    {
+        "source": "Sunday",
+        "target": "Domenica",
+        "pronunciation": ["doh-MEH-nee-kah"]
+    },
+    {
+        "source": "January",
+        "target": "Gennaio",
+        "pronunciation": ["jehn-NAH-yoh", "jin-NYAH-yoh"]
+    },
+    {
+        "source": "February",
+        "target": "Febbraio",
+        "pronunciation": ["fehb-BRAH-yoh", "fehb-RAH-yoh"]
+    },
+    {
+        "source": "March",
+        "target": "Marzo",
+        "pronunciation": ["MAHR-tsoh", "MAR-tso"]
+    },
+    {
+        "source": "April",
+        "target": "Aprile",
+        "pronunciation": ["ah-PREE-leh"]
+    },
+    {
+        "source": "May",
+        "target": "Maggio",
+        "pronunciation": ["MAHD-joh", "MAH-joh"]
+    },
+    {
+        "source": "June",
+        "target": "Giugno",
+        "pronunciation": ["JOON-yoh"]
+    },
+    {
+        "source": "July",
+        "target": "Luglio",
+        "pronunciation": ["LOOL-yoh", "LOO-lyoh"]
+    },
+    {
+        "source": "August",
+        "target": "Agosto",
+        "pronunciation": ["ah-GOH-stoh"]
+    },
+    {
+        "source": "September",
+        "target": "Settembre",
+        "pronunciation": ["seht-TEHM-breh", "seh-TEM-breh"]
+    },
+    {
+        "source": "October",
+        "target": "Ottobre",
+        "pronunciation": ["oht-TOH-breh", "OH-toh-breh"]
+    },
+    {
+        "source": "November",
+        "target": "Novembre",
+        "pronunciation": ["noh-VEHM-breh"]
+    },
+    {
+        "source": "December",
+        "target": "Dicembre",
+        "pronunciation": ["dee-CHEHM-breh", "dee-CHAYM-bray"]
+    },
+    {
+        "source": "What day is it today?",
+        "target": "Che giorno è oggi?",
+        "pronunciation": ["keh JOHR-noh eh OHD-jee", "too-JOR-noh EH OH-jee"]
+    },
+    {
+        "source": "What is the date today?",
+        "target": "Qual è la data di oggi?",
+        "pronunciation": ["kwah-LEH lah DAH-tah dee OHD-jee", "wah-LEH lah DAH-tah dee OJ-jee"]
+    },
+    {
+        "source": "Today is the first of July",
+        "target": "Oggi è il primo luglio",
+        "pronunciation": ["OHD-jee eh eel PREE-moh LOOL-yoh", "OHJ-jee ay PREE-moh LOOL-yoh"]
+    },
+    {
+        "source": "Today is the second of August",
+        "target": "Oggi è il due agosto",
+        "pronunciation": ["OHD-jee eh eel DOO-eh ah-GOH-stoh", "OHJ-ee eh-eel DOO-eh ah-GOH-stoh"]
+    },
+    {
+        "source": "Today is the third of September",
+        "target": "Oggi è il tre settembre",
+        "pronunciation": ["OHD-jee eh eel treh seht-TEHM-breh", "AH-jee ehyl TREH seht-TEHM-breh"]
+    },
+    {
+        "source": "What time is it?",
+        "target": "Che ore sono?",
+        "pronunciation": ["keh OH-reh SOH-noh", "tay OH reh SOH noh"]
+    },
+    {
+        "source": "It is one o'clock",
+        "target": "È l'una",
+        "pronunciation": ["eh LOO-nah", "eh LOON-ah"]
+    },
+    {
+        "source": "It is half past two",
+        "target": "Sono le due e mezza",
+        "pronunciation": ["SOH-noh leh DOO-eh eh MEHD-tsah", "soh-noh lee DOO-eh eh MEHD-zah"]
+    },
+    {
+        "source": "It is quarter past three",
+        "target": "Sono le tre e un quarto",
+        "pronunciation": ["SOH-noh leh treh eh oon KWAHR-toh", "SOH-noh lee TREH eh oon KWAHR-toh"]
+    },
+    {
+        "source": "It is quarter to four",
+        "target": "Sono le quattro meno un quarto",
+        "pronunciation": ["SOH-noh leh KWAHT-troh MEH-noh oon KWAHR-toh"]
+    },
+    {
+        "source": "At what time does it open?",
+        "target": "A che ora apre?",
+        "pronunciation": ["ah keh OH-rah AH-preh", "ah kee OH-rah AH-breh"]
+    }
+],
     "Weather & Environment": [
-        {
-            "source": "What is the weather like today?",
-            "target": "Che tempo fa oggi?",
-            "pronunciation": "keh TEHM-poh fah OHJ-jee"
-        },
-        {
-            "source": "It's sunny",
-            "target": "C'è il sole",
-            "pronunciation": "chay eel SOH-leh"
-        },
-        {
-            "source": "It's cloudy",
-            "target": "È nuvoloso",
-            "pronunciation": "eh-noo-voh-LOH-soh"
-        },
-        {
-            "source": "It's raining",
-            "target": "Sta piovendo",
-            "pronunciation": "stah pyoh-VEHN-doh"
-        },
-        {
-            "source": "It's snowing",
-            "target": "Sta nevicando",
-            "pronunciation": "stah neh-vee-KAHN-doh"
-        },
-        {
-            "source": "It's windy",
-            "target": "C'è vento",
-            "pronunciation": "cheh VEN-toh"
-        },
-        {
-            "source": "It's hot",
-            "target": "Fa caldo",
-            "pronunciation": "fah KAHL-doh"
-        },
-        {
-            "source": "It's cold",
-            "target": "Fa freddo",
-            "pronunciation": "fah FRED-doh"
-        },
-        {
-            "source": "It's humid",
-            "target": "È umido",
-            "pronunciation": "EH OO-mee-doh"
-        },
-        {
-            "source": "It's foggy",
-            "target": "C'è nebbia",
-            "pronunciation": "cheh NEHB-byah"
-        },
-        {
-            "source": "It's clear",
-            "target": "È sereno",
-            "pronunciation": "keh SEH-rah nyO"
-        },
-        {
-            "source": "It's stormy",
-            "target": "C'è tempesta",
-            "pronunciation": "cheh tehm-PEHS-tah"
-        },
-        {
-            "source": "The sun is shining",
-            "target": "Il sole splende",
-            "pronunciation": "eel SOH-leh SPLEN-deh"
-        },
-        {
-            "source": "The wind is strong",
-            "target": "Il vento è forte",
-            "pronunciation": "eel VEHN-toh eh FOR-teh"
-        },
-        {
-            "source": "It's mild",
-            "target": "È mite",
-            "pronunciation": "eh MEE-teh"
-        },
-        {
-            "source": "What will the weather be like tomorrow?",
-            "target": "Che tempo farà domani?",
-            "pronunciation": "keh TEM-poh fah-RAH doh-MAH-nee"
-        },
-        {
-            "source": "The forecast is good",
-            "target": "Le previsioni sono buone",
-            "pronunciation": "lay preh-vee-ZYOH-nee SOH-noh BWOH-neh"
-        },
-        {
-            "source": "The forecast is bad",
-            "target": "Le previsioni sono brutte",
-            "pronunciation": "leh preh-vee-ZYOH-nee SOH-noh BROOT-teh"
-        },
-        {
-            "source": "There will be sunshine",
-            "target": "Ci sarà il sole",
-            "pronunciation": "chee-sah-RAH eel SOH-leh"
-        },
-        {
-            "source": "There will be showers",
-            "target": "Ci saranno rovesci",
-            "pronunciation": "chee sah-RAHH-noh roh-VEH-shee"
-        },
-        {
-            "source": "There will be thunderstorms",
-            "target": "Ci saranno temporali",
-            "pronunciation": "chee-sah-RAHN-noh tehm-poh-RAH-lee"
-        },
-        {
-            "source": "There will be snow",
-            "target": "Ci sarà neve",
-            "pronunciation": "chee sah-RAH NEH-veh"
-        },
-        {
-            "source": "There will be wind",
-            "target": "Ci sarà vento",
-            "pronunciation": "chee-sah-RAH VEN-toh"
-        },
-        {
-            "source": "The temperature will be high",
-            "target": "La temperatura sarà alta",
-            "pronunciation": "lah tem-peh-rah-TOO-rah sah-RAH AHL-tah"
-        },
-        {
-            "source": "The temperature will be low",
-            "target": "La temperatura sarà bassa",
-            "pronunciation": "lah tehm-peh-rah-TOO-rah sah-RAH BAH-ssah"
-        },
-        {
-            "source": "The sea is calm",
-            "target": "Il mare è calmo",
-            "pronunciation": "eel MAH-reh eh KAHL-moh"
-        },
-        {
-            "source": "The sea is rough",
-            "target": "Il mare è mosso",
-            "pronunciation": "eel MAH-reh eh MOHS-soh"
-        },
-        {
-            "source": "It's beautiful here",
-            "target": "È bellissimo qui",
-            "pronunciation": "ehb-behl-LEE-see-moh kwee"
-        },
-        {
-            "source": "It's very green",
-            "target": "È molto verde",
-            "pronunciation": "eh MOLL-toh VEHR-deh"
-        },
-        {
-            "source": "I like this place",
-            "target": "Mi piace questo posto",
-            "pronunciation": "mee PYA-cheh KWEH-stoh POH-stoh"
-        }
-    ],
+    {
+        "source": "What is the weather like today?",
+        "target": "Che tempo fa oggi?",
+        "pronunciation": ["keh TEHM-poh fah OHD-jee", "keh TEHM-poh fah OHJ-jee"]
+    },
+    {
+        "source": "It's sunny",
+        "target": "C'è il sole",
+        "pronunciation": ["cheh eel SOH-leh", "chay eel SOH-leh"]
+    },
+    {
+        "source": "It's cloudy",
+        "target": "È nuvoloso",
+        "pronunciation": ["eh noo-voh-LOH-soh", "eh-noo-voh-LOH-soh"]
+    },
+    {
+        "source": "It's raining",
+        "target": "Sta piovendo",
+        "pronunciation": ["stah pee-oh-VEHN-doh", "stah pyoh-VEHN-doh"]
+    },
+    {
+        "source": "It's snowing",
+        "target": "Sta nevicando",
+        "pronunciation": ["stah neh-vee-KAHN-doh"]
+    },
+    {
+        "source": "It's windy",
+        "target": "C'è vento",
+        "pronunciation": ["cheh VEHN-toh", "cheh VEN-toh"]
+    },
+    {
+        "source": "It's hot",
+        "target": "Fa caldo",
+        "pronunciation": ["fah KAHL-doh"]
+    },
+    {
+        "source": "It's cold",
+        "target": "Fa freddo",
+        "pronunciation": ["fah FREHD-doh", "fah FRED-doh"]
+    },
+    {
+        "source": "It's humid",
+        "target": "È umido",
+        "pronunciation": ["eh OO-mee-doh", "EH OO-mee-doh"]
+    },
+    {
+        "source": "It's foggy",
+        "target": "C'è nebbia",
+        "pronunciation": ["cheh NEHB-bee-ah", "cheh NEHB-byah"]
+    },
+    {
+        "source": "It's clear",
+        "target": "È sereno",
+        "pronunciation": ["eh seh-REH-noh", "keh SEH-rah nyO"]
+    },
+    {
+        "source": "It's stormy",
+        "target": "C'è tempesta",
+        "pronunciation": ["cheh tehm-PEH-stah", "cheh tehm-PEHS-tah"]
+    },
+    {
+        "source": "The sun is shining",
+        "target": "Il sole splende",
+        "pronunciation": ["eel SOH-leh SPLEN-deh"]
+    },
+    {
+        "source": "The wind is strong",
+        "target": "Il vento è forte",
+        "pronunciation": ["eel VEHN-toh eh FOHR-teh", "eel VEHN-toh eh FOR-teh"]
+    },
+    {
+        "source": "It's mild",
+        "target": "È mite",
+        "pronunciation": ["eh MEE-teh"]
+    },
+    {
+        "source": "What will the weather be like tomorrow?",
+        "target": "Che tempo farà domani?",
+        "pronunciation": ["keh TEHM-poh fah-RAH doh-MAH-nee", "keh TEM-poh fah-RAH doh-MAH-nee"]
+    },
+    {
+        "source": "The forecast is good",
+        "target": "Le previsioni sono buone",
+        "pronunciation": ["leh preh-vee-see-OH-nee SOH-noh bwoh-NEH", "lay preh-vee-ZYOH-nee SOH-noh BWOH-neh"]
+    },
+    {
+        "source": "The forecast is bad",
+        "target": "Le previsioni sono brutte",
+        "pronunciation": ["leh preh-vee-see-OH-nee SOH-noh BROOT-teh", "leh preh-vee-ZYOH-nee SOH-noh BROOT-teh"]
+    },
+    {
+        "source": "There will be sunshine",
+        "target": "Ci sarà il sole",
+        "pronunciation": ["chee sah-RAH eel SOH-leh", "chee-sah-RAH eel SOH-leh"]
+    },
+    {
+        "source": "There will be showers",
+        "target": "Ci saranno rovesci",
+        "pronunciation": ["chee sah-RAHN-noh roh-VEH-shee", "chee sah-RAHH-noh roh-VEH-shee"]
+    },
+    {
+        "source": "There will be thunderstorms",
+        "target": "Ci saranno temporali",
+        "pronunciation": ["chee sah-RAHN-noh tehm-poh-RAH-lee", "chee-sah-RAHN-noh tehm-poh-RAH-lee"]
+    },
+    {
+        "source": "There will be snow",
+        "target": "Ci sarà neve",
+        "pronunciation": ["chee sah-RAH NEH-veh", "chee sah-RAH NEH-veh"]
+    },
+    {
+        "source": "There will be wind",
+        "target": "Ci sarà vento",
+        "pronunciation": ["chee sah-RAH VEHN-toh", "chee-sah-RAH VEN-toh"]
+    },
+    {
+        "source": "The temperature will be high",
+        "target": "La temperatura sarà alta",
+        "pronunciation": ["lah tehm-peh-rah-TOO-rah sah-RAH AHL-tah", "lah tem-peh-rah-TOO-rah sah-RAH AHL-tah"]
+    },
+    {
+        "source": "The temperature will be low",
+        "target": "La temperatura sarà bassa",
+        "pronunciation": ["lah tehm-peh-rah-TOO-rah sah-RAH BAHS-sah", "lah tehm-peh-rah-TOO-rah sah-RAH BAH-ssah"]
+    },
+    {
+        "source": "The sea is calm",
+        "target": "Il mare è calmo",
+        "pronunciation": ["eel MAH-reh eh KAHL-moh"]
+    },
+    {
+        "source": "The sea is rough",
+        "target": "Il mare è mosso",
+        "pronunciation": ["eel MAH-reh eh MOHS-soh"]
+    },
+    {
+        "source": "It's beautiful here",
+        "target": "È bellissimo qui",
+        "pronunciation": ["eh behl-LEES-see-moh kwee", "ehb-behl-LEE-see-moh kwee"]
+    },
+    {
+        "source": "It's very green",
+        "target": "È molto verde",
+        "pronunciation": ["eh MOHL-toh VEHR-deh", "eh MOLL-toh VEHR-deh"]
+    },
+    {
+        "source": "I like this place",
+        "target": "Mi piace questo posto",
+        "pronunciation": ["mee pee-AH-cheh KWEH-stoh POH-stoh", "mee PYA-cheh KWEH-stoh POH-stoh"]
+    }
+],
     "Basic Conversation": [
-        {
-            "source": "How are you? (informal)",
-            "target": "Come stai?",
-            "pronunciation": "koh-meh STAH-ee"
-        },
-        {
-            "source": "How are you? (formal)",
-            "target": "Come sta?",
-            "pronunciation": "koh-meh STAH"
-        },
-        {
-            "source": "I'm fine, thank you",
-            "target": "Sto bene, grazie",
-            "pronunciation": "stoh BEH-neh, GRAH-tsee-eh"
-        },
-        {
-            "source": "I'm not bad",
-            "target": "Non c'è male",
-            "pronunciation": "noh-n CHEH MAH-leh"
-        },
-        {
-            "source": "I'm tired",
-            "target": "Sono stanco",
-            "pronunciation": "SOH-no STAHN-koh"
-        },
-        {
-            "source": "I'm happy",
-            "target": "Sono felice",
-            "pronunciation": "SOH-noh feh-LEE-cheh"
-        },
-        {
-            "source": "I'm on holiday",
-            "target": "Sono in vacanza",
-            "pronunciation": "SOH-noh een vah-KAHN-tsah"
-        },
-        {
-            "source": "Where are you from? (informal)",
-            "target": "Di dove sei?",
-            "pronunciation": "dee DOH-veh SAY"
-        },
-        {
-            "source": "Where are you from? (formal)",
-            "target": "Di dov'è?",
-            "pronunciation": "dee-doh-VEH"
-        },
-        {
-            "source": "I'm from the UK",
-            "target": "Vengo dal Regno Unito",
-            "pronunciation": "VEN-goh dahl RAY-nyoh oo-NEE-toh"
-        },
-        {
-            "source": "I live in London",
-            "target": "Vivo a Londra",
-            "pronunciation": "VEE-voh ah LOHN-drah"
-        },
-        {
-            "source": "Do you speak English? (informal)",
-            "target": "Parli inglese?",
-            "pronunciation": "PAHR-leen-GLEH-zeh"
-        },
-        {
-            "source": "Do you speak English? (formal)",
-            "target": "Parla inglese?",
-            "pronunciation": "PAHR-lah een-GLEH-zeh"
-        },
-        {
-            "source": "I speak a little Italian",
-            "target": "Parlo un po' di italiano",
-            "pronunciation": "PAR-loh oon POH dee ee-tah-lee-AH-noh"
-        },
-        {
-            "source": "I don't speak Italian",
-            "target": "Non parlo italiano",
-            "pronunciation": "nohn PAR-loh ee-tah-lee-AH-noh"
-        },
-        {
-            "source": "Could you speak more slowly, please? (formal)",
-            "target": "Può parlare più lentamente, per favore?",
-            "pronunciation": "poo-woy pahr-LAH-reh pyoo len-tah-MEN-teh per fah-VOR-eh"
-        },
-        {
-            "source": "Can you repeat that, please? (informal)",
-            "target": "Puoi ripeterlo, per favore?",
-            "pronunciation": "poo-woy ree-PEH-tehr-loh? pehr fah-VOH-reh?"
-        },
-        {
-            "source": "Can you repeat that, please? (formal)",
-            "target": "Può ripeterlo, per favore?",
-            "pronunciation": "PWOH ree-PEH-tehr-loh pehr-fah-VOH-reh"
-        },
-        {
-            "source": "What does that mean?",
-            "target": "Cosa significa?",
-            "pronunciation": "KOH-zah see-NEE-fee-kah"
-        },
-        {
-            "source": "I understand",
-            "target": "Capisco",
-            "pronunciation": "kah-PEE-skoh"
-        },
-        {
-            "source": "I don't understand",
-            "target": "Non capisco",
-            "pronunciation": "nohn kah-PEES-koh"
-        },
-        {
-            "source": "That's interesting",
-            "target": "È interessante",
-            "pronunciation": "ay een-teh-reh-SSAHN-teh"
-        },
-        {
-            "source": "I like it",
-            "target": "Mi piace",
-            "pronunciation": "mee pYAH-cheh"
-        },
-        {
-            "source": "I don't like it",
-            "target": "Non mi piace",
-            "pronunciation": "noh mee PYAH-cheh"
-        },
-        {
-            "source": "Yes",
-            "target": "Sì",
-            "pronunciation": "see"
-        },
-        {
-            "source": "No",
-            "target": "No",
-            "pronunciation": "noh"
-        },
-        {
-            "source": "Maybe",
-            "target": "Forse",
-            "pronunciation": "FOR-seh"
-        },
-        {
-            "source": "Really?",
-            "target": "Davvero?",
-            "pronunciation": "dah-VEH-roh"
-        },
-        {
-            "source": "I'm joking",
-            "target": "Sto scherzando",
-            "pronunciation": "stoh skehrt-SAHN-doh"
-        },
-        {
-            "source": "Have a nice day",
-            "target": "Buona giornata",
-            "pronunciation": "BWOH-nah johr-NAH-tah"
-        }
-    ],
+    {
+        "source": "How are you? (informal)",
+        "target": "Come stai?",
+        "pronunciation": ["KOH-meh STAH-ee", "koh-meh STAH-ee"]
+    },
+    {
+        "source": "How are you? (formal)",
+        "target": "Come sta?",
+        "pronunciation": ["KOH-meh stah", "koh-meh STAH"]
+    },
+    {
+        "source": "I'm fine, thank you",
+        "target": "Sto bene, grazie",
+        "pronunciation": ["stoh BEH-neh GRAH-tsee-eh", "stoh BEH-neh, GRAH-tsee-eh"]
+    },
+    {
+        "source": "I'm not bad",
+        "target": "Non c'è male",
+        "pronunciation": ["nohn cheh mah-LEH", "noh-n CHEH MAH-leh"]
+    },
+    {
+        "source": "I'm tired",
+        "target": "Sono stanco",
+        "pronunciation": ["SOH-noh STAHN-koh", "SOH-no STAHN-koh"]
+    },
+    {
+        "source": "I'm happy",
+        "target": "Sono felice",
+        "pronunciation": ["SOH-noh feh-LEE-cheh"]
+    },
+    {
+        "source": "I'm on holiday",
+        "target": "Sono in vacanza",
+        "pronunciation": ["SOH-noh een vah-KAHN-tsah"]
+    },
+    {
+        "source": "Where are you from? (informal)",
+        "target": "Di dove sei?",
+        "pronunciation": ["dee DOH-veh say", "dee DOH-veh SAY"]
+    },
+    {
+        "source": "Where are you from? (formal)",
+        "target": "Di dov'è?",
+        "pronunciation": ["dee doh-VEH", "dee-doh-VEH"]
+    },
+    {
+        "source": "I'm from the UK",
+        "target": "Vengo dal Regno Unito",
+        "pronunciation": ["VEHN-goh dahl REH-nyoh oo-NEE-toh", "VEN-goh dahl RAY-nyoh oo-NEE-toh"]
+    },
+    {
+        "source": "I live in London",
+        "target": "Vivo a Londra",
+        "pronunciation": ["VEE-voh ah LOHN-drah"]
+    },
+    {
+        "source": "Do you speak English? (informal)",
+        "target": "Parli inglese?",
+        "pronunciation": ["PAHR-lee een-GLEH-zeh", "PAHR-leen-GLEH-zeh"]
+    },
+    {
+        "source": "Do you speak English? (formal)",
+        "target": "Parla inglese?",
+        "pronunciation": ["PAHR-lah een-GLEH-zeh"]
+    },
+    {
+        "source": "I speak a little Italian",
+        "target": "Parlo un po' di italiano",
+        "pronunciation": ["PAHR-loh oon poh dee ee-tah-lee-AH-noh", "PAR-loh oon POH dee ee-tah-lee-AH-noh"]
+    },
+    {
+        "source": "I don't speak Italian",
+        "target": "Non parlo italiano",
+        "pronunciation": ["nohn PAHR-loh ee-tah-lee-AH-noh", "nohn PAR-loh ee-tah-lee-AH-noh"]
+    },
+    {
+        "source": "Could you speak more slowly, please? (formal)",
+        "target": "Può parlare più lentamente, per favore?",
+        "pronunciation": ["PWOH pahr-LAH-reh pyoo lehn-tah-MEHN-teh pehr fah-VOH-reh", "poo-woy pahr-LAH-reh pyoo len-tah-MEN-teh per fah-VOR-eh"]
+    },
+    {
+        "source": "Can you repeat that, please? (informal)",
+        "target": "Puoi ripeterlo, per favore?",
+        "pronunciation": ["PWOH-ee ree-PEH-tehr-loh pehr fah-VOH-reh", "poo-woy ree-PEH-tehr-loh? pehr fah-VOH-reh?"]
+    },
+    {
+        "source": "Can you repeat that, please? (formal)",
+        "target": "Può ripeterlo, per favore?",
+        "pronunciation": ["PWOH ree-PEH-tehr-loh pehr fah-VOH-reh", "PWOH ree-PEH-tehr-loh pehr-fah-VOH-reh"]
+    },
+    {
+        "source": "What does that mean?",
+        "target": "Cosa significa?",
+        "pronunciation": ["KOH-sah see-nyee-FEE-kah", "KOH-zah see-NEE-fee-kah"]
+    },
+    {
+        "source": "I understand",
+        "target": "Capisco",
+        "pronunciation": ["kah-PEE-skoh"]
+    },
+    {
+        "source": "I don't understand",
+        "target": "Non capisco",
+        "pronunciation": ["nohn kah-PEE-skoh", "nohn kah-PEES-koh"]
+    },
+    {
+        "source": "That's interesting",
+        "target": "È interessante",
+        "pronunciation": ["eh een-teh-rehs-SAHN-teh", "ay een-teh-reh-SSAHN-teh"]
+    },
+    {
+        "source": "I like it",
+        "target": "Mi piace",
+        "pronunciation": ["mee pee-AH-cheh", "mee pYAH-cheh"]
+    },
+    {
+        "source": "I don't like it",
+        "target": "Non mi piace",
+        "pronunciation": ["nohn mee pee-AH-cheh", "noh mee PYAH-cheh"]
+    },
+    {
+        "source": "Yes",
+        "target": "Sì",
+        "pronunciation": ["see"]
+    },
+    {
+        "source": "No",
+        "target": "No",
+        "pronunciation": ["noh"]
+    },
+    {
+        "source": "Maybe",
+        "target": "Forse",
+        "pronunciation": ["FOHR-seh", "FOR-seh"]
+    },
+    {
+        "source": "Really?",
+        "target": "Davvero?",
+        "pronunciation": ["dahv-VEH-roh", "dah-VEH-roh"]
+    },
+    {
+        "source": "I'm joking",
+        "target": "Sto scherzando",
+        "pronunciation": ["stoh skehr-TSAHN-doh", "stoh skehrt-SAHN-doh"]
+    },
+    {
+        "source": "Have a nice day",
+        "target": "Buona giornata",
+        "pronunciation": ["bwoh-nah johr-NAH-tah", "BWOH-nah johr-NAH-tah"]
+    }
+],
     "Technology & Communication": [
-        {
-            "source": "Do you have Wi-Fi?",
-            "target": "Avete il Wi-Fi?",
-            "pronunciation": "ah-VEH-teh eel wee-FY"
-        },
-        {
-            "source": "What is the Wi-Fi password?",
-            "target": "Qual è la password del Wi-Fi?",
-            "pronunciation": "KWAH-leh lah PAHSS-wohrd deh-loo-EE-fee"
-        },
-        {
-            "source": "Is the Wi-Fi free?",
-            "target": "Il Wi-Fi è gratuito?",
-            "pronunciation": "eel WEE-fee eh gra-TOO-ee-toh"
-        },
-        {
-            "source": "Where can I charge my phone?",
-            "target": "Dove posso caricare il telefono?",
-            "pronunciation": "DOH-vee PAW-sso kah-ree-KAH-re eel teh-LEH-foh-no"
-        },
-        {
-            "source": "Do you have a charger?",
-            "target": "Avete un caricabatterie?",
-            "pronunciation": "ah-VEH-tee oon KAH-ree-kah-baht-TEH-ree-ah"
-        },
-        {
-            "source": "Can I use your phone? (formal)",
-            "target": "Posso usare il suo telefono?",
-            "pronunciation": "POS-soh oo-ZAH-ray SOO-oh teh-LEH-foh-noo"
-        },
-        {
-            "source": "I need to make a phone call",
-            "target": "Ho bisogno di fare una telefonata",
-            "pronunciation": "hoh bee-ZOH-nyoh dee FAH-reh oo-nah teh-leh-foh-NAH-tah"
-        },
-        {
-            "source": "I need to send a message",
-            "target": "Ho bisogno di mandare un messaggio",
-            "pronunciation": "hoh bee-ZOH-nyoh dee mahn-DAH-reh oom meh-SAHJ-joh"
-        },
-        {
-            "source": "My phone battery is low",
-            "target": "La batteria del mio telefono è quasi scarica",
-            "pronunciation": "lah bah-TEH-ree-ah del MEE-oh teh-LEH-foh-noh eh KWAH-zee SKAH-ree-kah"
-        },
-        {
-            "source": "My phone is not working",
-            "target": "Il mio telefono non funziona",
-            "pronunciation": "eel MEE-oh teh-LEH-foh-noh non foon-TSYOH-nah"
-        },
-        {
-            "source": "I have no signal",
-            "target": "Non ho campo",
-            "pronunciation": "NON-oh KAHM-poh"
-        },
-        {
-            "source": "The internet is not working",
-            "target": "Internet non funziona",
-            "pronunciation": "EEN-tehr-neht NOHN foon-TSYOH-nah"
-        },
-        {
-            "source": "Where can I buy a SIM card?",
-            "target": "Dove posso comprare una scheda SIM?",
-            "pronunciation": "DOH-veh POS-soh kohm-PRAH-ray oo-nah SKEH-dah SEEM"
-        },
-        {
-            "source": "I need mobile data",
-            "target": "Ho bisogno di dati mobili",
-            "pronunciation": "hoh bee-ZOH-nyoh dee DAH-tee MOH-bee-lee"
-        },
-        {
-            "source": "Is there an internet café nearby?",
-            "target": "C'è un internet café qui vicino?",
-            "pronunciation": "CHAY oo NEEN-tehr-neht kah-FEH KOO-ee vee-CHEE-no"
-        },
-        {
-            "source": "Can I print something here?",
-            "target": "Posso stampare qualcosa qui?",
-            "pronunciation": "POS-soh stahm-PAH-reh kwahl-KOH-zah kwee"
-        },
-        {
-            "source": "I need an adapter",
-            "target": "Ho bisogno di un adattatore",
-            "pronunciation": "hoh bee-ZOH-nyoh dee oo-nah dahp-tah-TOH-reh"
-        },
-        {
-            "source": "Where can I buy an adapter?",
-            "target": "Dove posso comprare un adattatore?",
-            "pronunciation": "DOH-veh POS-soh kohm-PRAH-reh oo-nah dah-tah-toh-reh"
-        },
-        {
-            "source": "Can you give me your phone number? (informal)",
-            "target": "Puoi darmi il tuo numero di telefono?",
-            "pronunciation": "POO-oy DAR-mee TWOh NOO-meh-roh dee teh-LEH-foh-noh"
-        },
-        {
-            "source": "Please call me",
-            "target": "Per favore chiamami",
-            "pronunciation": "pehr fah-VOH-reh KYAH-mah-mee"
-        }
-    ]
+    {
+        "source": "Do you have Wi-Fi?",
+        "target": "Avete il Wi-Fi?",
+        "pronunciation": ["ah-VEH-teh eel wee-fee", "ah-VEH-teh eel wee-FY"]
+    },
+    {
+        "source": "What is the Wi-Fi password?",
+        "target": "Qual è la password del Wi-Fi?",
+        "pronunciation": ["kwah-LEH lah PAHS-wohrd dehl wee-fee", "KWAH-leh lah PAHSS-wohrd deh-loo-EE-fee"]
+    },
+    {
+        "source": "Is the Wi-Fi free?",
+        "target": "Il Wi-Fi è gratuito?",
+        "pronunciation": ["eel wee-fee eh grah-too-EE-toh", "eel WEE-fee eh gra-TOO-ee-toh"]
+    },
+    {
+        "source": "Where can I charge my phone?",
+        "target": "Dove posso caricare il telefono?",
+        "pronunciation": ["DOH-veh POHS-soh kah-ree-KAH-reh eel teh-LEH-foh-noh", "DOH-vee PAW-sso kah-ree-KAH-re eel teh-LEH-foh-no"]
+    },
+    {
+        "source": "Do you have a charger?",
+        "target": "Avete un caricabatterie?",
+        "pronunciation": ["ah-VEH-teh oon kah-ree-kah-baht-teh-REE-eh", "ah-VEH-tee oon KAH-ree-kah-baht-TEH-ree-ah"]
+    },
+    {
+        "source": "Can I use your phone? (formal)",
+        "target": "Posso usare il suo telefono?",
+        "pronunciation": ["POHS-soh oo-SAH-reh eel SOO-oh teh-LEH-foh-noh", "POS-soh oo-ZAH-ray SOO-oh teh-LEH-foh-noo"]
+    },
+    {
+        "source": "I need to make a phone call",
+        "target": "Ho bisogno di fare una telefonata",
+        "pronunciation": ["oh bee-ZOHN-yoh dee FAH-reh OO-nah teh-leh-foh-NAH-tah", "hoh bee-ZOH-nyoh dee FAH-reh oo-nah teh-leh-foh-NAH-tah"]
+    },
+    {
+        "source": "I need to send a message",
+        "target": "Ho bisogno di mandare un messaggio",
+        "pronunciation": ["oh bee-ZOHN-yoh dee mahn-DAH-reh oon mehs-SAHD-joh", "hoh bee-ZOH-nyoh dee mahn-DAH-reh oom meh-SAHJ-joh"]
+    },
+    {
+        "source": "My phone battery is low",
+        "target": "La batteria del mio telefono è quasi scarica",
+        "pronunciation": ["lah baht-teh-REE-ah dehl MEE-oh teh-LEH-foh-noh eh KWAH-zee SKAH-ree-kah", "lah bah-TEH-ree-ah del MEE-oh teh-LEH-foh-noh eh KWAH-zee SKAH-ree-kah"]
+    },
+    {
+        "source": "My phone is not working",
+        "target": "Il mio telefono non funziona",
+        "pronunciation": ["eel MEE-oh teh-LEH-foh-noh nohn foon-tsee-OH-nah", "eel MEE-oh teh-LEH-foh-noh non foon-TSYOH-nah"]
+    },
+    {
+        "source": "I have no signal",
+        "target": "Non ho campo",
+        "pronunciation": ["nohn oh KAHM-poh", "NON-oh KAHM-poh"]
+    },
+    {
+        "source": "The internet is not working",
+        "target": "Internet non funziona",
+        "pronunciation": ["EEN-tehr-neht nohn foon-tsee-OH-nah", "EEN-tehr-neht NOHN foon-TSYOH-nah"]
+    },
+    {
+        "source": "Where can I buy a SIM card?",
+        "target": "Dove posso comprare una scheda SIM?",
+        "pronunciation": ["DOH-veh POHS-soh kohm-PRAH-reh OO-nah SKEH-dah seem", "DOH-veh POS-soh kohm-PRAH-ray oo-nah SKEH-dah SEEM"]
+    },
+    {
+        "source": "I need mobile data",
+        "target": "Ho bisogno di dati mobili",
+        "pronunciation": ["oh bee-ZOHN-yoh dee DAH-tee MOH-bee-lee", "hoh bee-ZOH-nyoh dee DAH-tee MOH-bee-lee"]
+    },
+    {
+        "source": "Is there an internet café nearby?",
+        "target": "C'è un internet café qui vicino?",
+        "pronunciation": ["cheh oon EEN-tehr-neht kah-FEH kwee vee-CHEE-noh", "CHAY oo NEEN-tehr-neht kah-FEH KOO-ee vee-CHEE-no"]
+    },
+    {
+        "source": "Can I print something here?",
+        "target": "Posso stampare qualcosa qui?",
+        "pronunciation": ["POHS-soh stahm-PAH-reh kwahl-KOH-sah kwee", "POS-soh stahm-PAH-reh kwahl-KOH-zah kwee"]
+    },
+    {
+        "source": "I need an adapter",
+        "target": "Ho bisogno di un adattatore",
+        "pronunciation": ["oh bee-ZOHN-yoh dee oon ah-daht-tah-TOH-reh", "hoh bee-ZOH-nyoh dee oo-nah dahp-tah-TOH-reh"]
+    },
+    {
+        "source": "Where can I buy an adapter?",
+        "target": "Dove posso comprare un adattatore?",
+        "pronunciation": ["DOH-veh POHS-soh kohm-PRAH-reh oon ah-daht-tah-TOH-reh", "DOH-veh POS-soh kohm-PRAH-reh oo-nah dah-tah-toh-reh"]
+    },
+    {
+        "source": "Can you give me your phone number? (informal)",
+        "target": "Puoi darmi il tuo numero di telefono?",
+        "pronunciation": ["PWOH-ee DAHR-mee eel TOO-oh NOO-meh-roh dee teh-LEH-foh-noh", "POO-oy DAR-mee TWOh NOO-meh-roh dee teh-LEH-foh-noh"]
+    },
+    {
+        "source": "Please call me",
+        "target": "Per favore chiamami",
+        "pronunciation": ["pehr fah-VOH-reh KYAH-mah-mee"]
+    }
+]
 }
