@@ -17,16 +17,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Only allow GET requests
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+// Allow GET and POST requests
+if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
     http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed. Use GET.']);
+    echo json_encode(['error' => 'Method not allowed. Use GET or POST.']);
     exit;
 }
 
 try {
     // Load API key from config file
     require_once '../config/config.php';
+    
+    // Get and validate model parameter
+    $model = 'gpt-4o-mini-realtime-preview'; // Default model
+    $requestData = null;
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $requestData = json_decode(file_get_contents('php://input'), true);
+        if (isset($requestData['model'])) {
+            $model = validateAndExtractModel($requestData['model']);
+        }
+    } elseif (isset($_GET['model'])) {
+        $model = validateAndExtractModel($_GET['model']);
+    }
     
     if (!defined('OPENAI_API_KEY') || empty(OPENAI_API_KEY)) {
         throw new Exception('OPENAI_API_KEY not defined in config.php');
@@ -56,7 +69,7 @@ try {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-        'model' => 'gpt-4o-mini-realtime-preview',
+        'model' => $model,
         'voice' => 'alloy'
     ]));
     
@@ -106,4 +119,43 @@ try {
         'error' => $e->getMessage(),
         'timestamp' => time()
     ]);
+}
+
+/**
+ * Validates HMAC signature and extracts the model name
+ * @param string $signedModel The model name with HMAC signature appended
+ * @return string The validated model name
+ * @throws Exception If validation fails
+ */
+function validateAndExtractModel($signedModel) {
+    if (!defined('OPENAI_HMAC_SECRET') || empty(OPENAI_HMAC_SECRET)) {
+        throw new Exception('HMAC secret not configured');
+    }
+    
+    // Split the signed model to get model and signature
+    $parts = explode('.', $signedModel);
+    if (count($parts) !== 2) {
+        throw new Exception('Invalid signed model format');
+    }
+    
+    list($model, $signature) = $parts;
+    
+    // Verify HMAC signature
+    $expectedSignature = hash_hmac('sha256', $model, OPENAI_HMAC_SECRET);
+    
+    if (!hash_equals($expectedSignature, $signature)) {
+        throw new Exception('Invalid model signature');
+    }
+    
+    // Whitelist allowed models for security
+    $allowedModels = [
+        'gpt-4o-mini-realtime-preview',
+        'gpt-4o-realtime-preview-2024-10-01'
+    ];
+    
+    if (!in_array($model, $allowedModels)) {
+        throw new Exception('Model not allowed: ' . $model);
+    }
+    
+    return $model;
 }
