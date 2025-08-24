@@ -353,7 +353,7 @@
                     
                     // Send offer to OpenAI API
                     const baseUrl = 'https://api.openai.com/v1/realtime';
-                    const model = 'gpt-4o-realtime-preview-2024-12-17';
+                    const model = 'gpt-4o-realtime-preview';
                     
                     const sdpResponse = await fetch(`${baseUrl}?model=${model}`, {
                         method: 'POST',
@@ -397,7 +397,7 @@
             async getSessionToken() {
                 try {
                     // Use pre-signed model parameter (signed offline for security) 
-                    const signedModel = 'gpt-4o-realtime-preview-2024-12-17.acc775b8cd1a7c30992f271d3191e11c379b1f168bfa1ca440842ca7b611a3c5';
+                    const signedModel = 'gpt-4o-realtime-preview.2309fdd5927589d3498897ebecedfa0982bc7b140157469197683282c8e59ad1';
                     
                     const response = await fetch('./openai.php', {
                         method: 'POST',
@@ -425,7 +425,7 @@
                     type: 'session.update',
                     session: {
                         modalities: ['text'],
-                        instructions: 'You are a live transcription assistant for deaf and hard-of-hearing users. Listen to audio input and provide both accurate transcription AND paralanguage context. Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative"}. Always include both fields even if context is minimal.',
+                        instructions: 'You are a live transcription assistant for deaf and hard-of-hearing users. Listen to audio input and provide both accurate transcription AND paralanguage context. Please use markdown formatting in the transcription to show which words are emphasised. Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken - use markdown formatting to convery emphasis", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative"}. Always include both fields even if context is minimal.',
                         input_audio_format: 'pcm16',
                         turn_detection: {
                             type: 'server_vad',
@@ -587,9 +587,9 @@
                 const utteranceDiv = document.createElement('div');
                 utteranceDiv.className = 'utterance highlight';
                 
-                // Add transcription text
+                // Add transcription text with markdown formatting
                 const textSpan = document.createElement('div');
-                textSpan.textContent = transcriptionText;
+                textSpan.innerHTML = this.parseSimpleMarkdown(transcriptionText);
                 utteranceDiv.appendChild(textSpan);
                 
                 // Add context hints if available
@@ -657,6 +657,19 @@
             
             scrollToEnd() {
                 this.transcription.scrollTop = this.transcription.scrollHeight;
+            }
+            
+            parseSimpleMarkdown(text) {
+                // First escape HTML to prevent XSS
+                text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                
+                // Handle **bold** formatting first
+                text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                
+                // Handle *italic* formatting (single asterisks not part of double)
+                text = text.replace(/\*([^*]+?)\*/g, '<em>$1</em>');
+                
+                return text;
             }
             
             requestResponse() {

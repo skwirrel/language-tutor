@@ -62,7 +62,24 @@ try {
         $headers[] = 'OpenAI-Project: ' . OPENAI_PROJECT_ID;
     }
     
-    // Generate session token for Realtime API
+    // Handle transcription models differently
+    if ($model === 'gpt-4o-transcribe') {
+        $data = createTranscriptionSession($headers);
+        
+        if (isset($data['client_secret']['value'])) {
+            echo json_encode([
+                'session_token' => $data['client_secret']['value'],
+                'session_type' => 'transcription',
+                'expires_in' => 60,
+                'generated_at' => time()
+            ]);
+            exit;
+        } else {
+            throw new Exception('No client_secret found in transcription session response');
+        }
+    }
+    
+    // Generate session token for regular Realtime API
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/realtime/sessions');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -93,6 +110,7 @@ try {
         if (isset($data['client_secret']['value'])) {
             echo json_encode([
                 'session_token' => $data['client_secret']['value'],
+                'session_type' => 'realtime',
                 'expires_in' => 60, // Session tokens expire in 60 seconds
                 'generated_at' => time()
             ]);
@@ -150,7 +168,10 @@ function validateAndExtractModel($signedModel) {
     // Whitelist allowed models for security
     $allowedModels = [
         'gpt-4o-mini-realtime-preview',
-        'gpt-4o-realtime-preview-2024-10-01'
+        'gpt-4o-realtime-preview-2024-10-01',
+        'gpt-4o-realtime-preview-2024-12-17',
+        'gpt-4o-realtime-preview',
+        'gpt-4o-transcribe'
     ];
     
     if (!in_array($model, $allowedModels)) {
@@ -158,4 +179,63 @@ function validateAndExtractModel($signedModel) {
     }
     
     return $model;
+}
+
+/**
+ * Create a transcription session for gpt-4o-transcribe model
+ * @param array $headers The headers to use for the request
+ * @return array The transcription session response
+ * @throws Exception If the request fails
+ */
+function createTranscriptionSession($headers) {
+    $transcriptionData = [
+        'input_audio_format' => 'pcm16',
+        'input_audio_transcription' => [
+            'model' => 'gpt-4o-transcribe',
+            'language' => 'en',
+            'prompt' => 'Transcribe speech accurately, including proper punctuation and capitalization.'
+        ],
+        'turn_detection' => [
+            'type' => 'server_vad',
+            'threshold' => 0.6,
+            'prefix_padding_ms' => 300,
+            'silence_duration_ms' => 800
+        ]
+    ];
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/realtime/transcription_sessions');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($transcriptionData));
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+    
+    if ($error) {
+        throw new Exception('cURL error: ' . $error);
+    }
+    
+    if ($httpCode !== 200) {
+        $errorData = json_decode($response, true);
+        $errorMessage = 'Unknown API error';
+        
+        if ($errorData && isset($errorData['error']['message'])) {
+            $errorMessage = $errorData['error']['message'];
+        } elseif ($response) {
+            $errorMessage = $response;
+        }
+        
+        throw new Exception('OpenAI API error (HTTP ' . $httpCode . '): ' . $errorMessage);
+    }
+    
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception('Invalid JSON response from transcription sessions API');
+    }
+    
+    return $data;
 }
