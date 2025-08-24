@@ -618,6 +618,8 @@
                 }, 3200);
                 
                 if (!this.isUserScrolling) {
+                    // Scroll both the window and the transcription container
+                    window.scrollTo(0, document.body.scrollHeight);
                     this.scrollToEnd();
                 }
             }
@@ -654,6 +656,8 @@
             }
             
             jumpToEndOfText() {
+                // Scroll both the window and the transcription container
+                window.scrollTo(0, document.body.scrollHeight);
                 this.scrollToEnd();
                 this.isUserScrolling = false;
                 this.jumpToEnd.classList.remove('visible');
