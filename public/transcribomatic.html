@@ -667,8 +667,11 @@
                 text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 
                 // Handle *italic* formatting (single asterisks not part of double)
-                text = text.replace(/\*([^*]+?)\*/g, '<em>$1</em>');
+                text = text.replace(/\*([^*]+?)\*/g, '<strong><em>$1</em></strong>');
                 
+                // Handle *underline* formatting 
+                text = text.replace(/_([^_]+?)_/g, '<ul>$1</ul>');
+
                 return text;
             }
             
