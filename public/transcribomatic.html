@@ -14,7 +14,8 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #f5f5f5;
-            height: 100vh;
+            height: 100vh; /* Fallback */
+            height: 100dvh; /* Dynamic viewport height - adapts to address bar */
             display: flex;
             flex-direction: column;
             padding: 10px;
@@ -268,6 +269,8 @@
                 this.currentResponseText = '';
                 this.responseInProgress = false;
                 this.pendingResponseRequest = false;
+                this.lastAudioActivity = null;
+                this.activityTimeout = null;
                 
                 this.startBtn = document.getElementById('startBtn');
                 this.stopBtn = document.getElementById('stopBtn');
@@ -432,7 +435,9 @@
                     type: 'session.update',
                     session: {
                         modalities: ['text'],
-                        instructions: 'You are a live transcription assistant for deaf and hard-of-hearing users. Listen to audio input and provide both accurate transcription AND paralanguage context. Please use markdown formatting in the transcription to show which words are emphasised. Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken - use markdown formatting to convery emphasis", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative"}. Always include both fields even if context is minimal.',
+                        instructions: `You are a live transcription assistant for deaf and hard-of-hearing users. Listen to audio input and provide both accurate transcription AND paralanguage context. Please use markdown formatting in the transcription to show which words are emphasised.
+These is no need to comment on background noise.
+Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken - use markdown formatting to convery emphasis", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative"}. Always include both fields even if context is minimal.`,
                         input_audio_format: 'pcm16',
                         turn_detection: {
                             type: 'server_vad',
@@ -448,6 +453,7 @@
                     this.updateStatus('Listening for speech...', 'listening');
                     this.stopBtn.disabled = false;
                     this.isListening = true;
+                    this.resetActivityTimeout(); // Start the activity timeout
                     console.log('Session configured for conversation mode via WebRTC data channel, now listening for audio');
                 } else {
                     console.error('Data channel not ready for session configuration');
@@ -466,6 +472,7 @@
                     case 'input_audio_buffer.speech_started':
                         console.log('Speech detected');
                         this.updateStatus('Someone is speaking...', 'listening');
+                        this.resetActivityTimeout(); // Reset timeout when speech detected
                         break;
                         
                     case 'input_audio_buffer.speech_stopped':
@@ -670,6 +677,22 @@
                 this.transcription.scrollTop = this.transcription.scrollHeight;
             }
             
+            resetActivityTimeout() {
+                this.lastAudioActivity = Date.now();
+                
+                // Clear any existing timeout
+                if (this.activityTimeout) {
+                    clearTimeout(this.activityTimeout);
+                }
+                
+                // Set 1-minute timeout
+                this.activityTimeout = setTimeout(() => {
+                    console.log('No audio activity for 1 minute, stopping session');
+                    this.updateStatus('Session stopped due to inactivity', 'idle');
+                    this.stop();
+                }, 60000); // 60 seconds
+            }
+            
             parseSimpleMarkdown(text) {
                 // First escape HTML to prevent XSS
                 text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -720,6 +743,12 @@
                 if (this.peerConnection) {
                     this.peerConnection.close();
                     this.peerConnection = null;
+                }
+                
+                // Clean up activity timeout
+                if (this.activityTimeout) {
+                    clearTimeout(this.activityTimeout);
+                    this.activityTimeout = null;
                 }
                 
                 this.isListening = false;
