@@ -382,6 +382,9 @@
                     
                     console.log('WebRTC connection established');
                     
+                    // Trigger a scroll to establish user gesture for mobile address bar hiding
+                    window.scrollTo(0, document.body.scrollHeight);
+                    
                 } catch (error) {
                     console.error('Failed to start:', error);
                     this.updateStatus('Failed to connect: ' + error.message, 'error');
