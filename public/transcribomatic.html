@@ -438,7 +438,7 @@
                         instructions: `You are a live transcription assistant for deaf and hard-of-hearing users. Listen to the English audio input and provide both accurate transcription AND paralanguage context. Please use markdown formatting in the transcription to show which words are emphasised.
 The context need not be whole sentences i.e. there is no need to start with "The speaker is..." or such like.
 These is no need to comment on in the context on background noise.
-Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken - use markdown formatting to convery emphasis", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative", "image_description": "a stripped down version of the utterance - maximum 20 words"}. Always include all three fields even if context is minimal.`,
+Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken - use markdown formatting to convery emphasis", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative", "simplified_utterance": "a stripped down version of the utterance - maximum 20 words"}. Always include all three fields even if context is minimal.`,
                         input_audio_format: 'pcm16',
                         turn_detection: {
                             type: 'server_vad',
@@ -593,7 +593,7 @@ Respond ONLY with valid JSON in this exact format: {"transcription": "the exact 
                     if (parsed.transcription) {
                         transcriptionText = parsed.transcription;
                         contextHints = parsed.context || '';
-                        imageDescription = parsed.image_description || null;
+                        imageDescription = parsed.simplified_utterance || null;
                     }
                 } catch (e) {
                     // If not JSON, use as plain text transcription
