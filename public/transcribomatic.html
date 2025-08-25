@@ -435,9 +435,9 @@
                     type: 'session.update',
                     session: {
                         modalities: ['text'],
-                        instructions: `You are a live transcription assistant for deaf and hard-of-hearing users. Listen to audio input and provide both accurate transcription AND paralanguage context. Please use markdown formatting in the transcription to show which words are emphasised.
+                        instructions: `You are a live transcription assistant for deaf and hard-of-hearing users. Listen to the English audio input and provide both accurate transcription AND paralanguage context. Please use markdown formatting in the transcription to show which words are emphasised.
 These is no need to comment on background noise.
-Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken - use markdown formatting to convery emphasis", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative"}. Always include both fields even if context is minimal.`,
+Respond ONLY with valid JSON in this exact format: {"transcription": "the exact words spoken - use markdown formatting to convery emphasis", "context": "tone, emotion, volume, pace, emphasis, background sounds, or other audio cues that provide meaning beyond the words - keep this concise but informative", "image_description": "a stripped down version of the utterance - maximum 20 words"}. Always include all three fields even if context is minimal.`,
                         input_audio_format: 'pcm16',
                         turn_detection: {
                             type: 'server_vad',
@@ -584,13 +584,15 @@ Respond ONLY with valid JSON in this exact format: {"transcription": "the exact 
                 
                 let transcriptionText = text;
                 let contextHints = '';
+                let imageDescription = null;
                 
                 // Try to parse as JSON for enhanced transcription
                 try {
                     const parsed = JSON.parse(text);
-                    if (parsed.transcription && parsed.context) {
+                    if (parsed.transcription) {
                         transcriptionText = parsed.transcription;
-                        contextHints = parsed.context;
+                        contextHints = parsed.context || '';
+                        imageDescription = parsed.image_description || null;
                     }
                 } catch (e) {
                     // If not JSON, use as plain text transcription
@@ -614,6 +616,11 @@ Respond ONLY with valid JSON in this exact format: {"transcription": "the exact 
                     utteranceDiv.appendChild(contextDiv);
                 }
                 
+                // Add image if description is available
+                if (imageDescription) {
+                    this.generateAndDisplayImage(imageDescription, utteranceDiv);
+                }
+                
                 // Add to transcription container
                 this.transcription.appendChild(utteranceDiv);
                 
@@ -632,6 +639,64 @@ Respond ONLY with valid JSON in this exact format: {"transcription": "the exact 
                     window.scrollTo(0, document.body.scrollHeight);
                     this.scrollToEnd();
                 }
+            }
+            
+            generateAndDisplayImage(description, utteranceDiv) {
+                // Create image container
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'image-container';
+                imageContainer.style.cssText = `
+                    margin-top: 8px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                `;
+                
+                // Create placeholder while loading
+                const placeholder = document.createElement('div');
+                placeholder.style.cssText = `
+                    width: 100px;
+                    height: 100px;
+                    background: #f0f0f0;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #666;
+                    font-size: 12px;
+                    text-align: center;
+                `;
+                placeholder.textContent = 'Generating image...';
+                imageContainer.appendChild(placeholder);
+                utteranceDiv.appendChild(imageContainer);
+                
+                // Generate image
+                const imageUrl = `./generate_image.php?description=${encodeURIComponent(description)}`;
+                const img = new Image();
+                
+                img.onload = () => {
+                    img.style.cssText = `
+                        width: 80dvw;
+                        height: 80dvw;
+                        object-fit: cover;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    `;
+                    imageContainer.replaceChild(img, placeholder);
+                    
+                    // Scroll to bottom after image loads if not user scrolling
+                    if (!this.isUserScrolling) {
+                        window.scrollTo(0, document.body.scrollHeight);
+                        this.scrollToEnd();
+                    }
+                };
+                
+                img.onerror = () => {
+                    placeholder.textContent = 'Image failed to load';
+                    placeholder.style.color = '#999';
+                };
+                
+                img.src = imageUrl;
             }
             
             updateStatus(message, type) {
